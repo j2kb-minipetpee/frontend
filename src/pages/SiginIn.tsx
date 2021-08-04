@@ -1,10 +1,11 @@
+import React from 'react';
 import { useEffect } from 'react';
 import OnboardingService from '../service/OnboardingService';
 
-const SignIn = () => {
+export const SignIn = () => {
   useEffect(() => {
     OnboardingService.siginin({ email, pass });
   }, []);
 
-  return <div></div>;
+  return <div>테스트</div>;
 };

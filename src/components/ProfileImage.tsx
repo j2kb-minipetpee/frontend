@@ -16,7 +16,7 @@ export const ProfileImage = ({ imageURL, onClick, width }: ProfileImageProps) =>
 };
 
 const ProfileImageContainer = styled.div<{ width?: number }>`
-  width: ${(props) => `${props.width}px` || '200px'}
+  width: ${(props) => `${props.width}px` || '200px'};
   height: 50px;
   border-radius: 50%;
 
