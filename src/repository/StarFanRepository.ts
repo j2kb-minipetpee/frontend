@@ -3,15 +3,11 @@ import { BASE_URL } from '../constants';
 
 class StarFanRepository {
   async star() {
-    return axios.post(
-      `${BASE_URL}/stars/star-id`,
-      {},
-      {
-        headers: {
-          Authorization: 'token',
-        },
+    return axios.post(`${BASE_URL}/stars/star-id`, null, {
+      headers: {
+        Authorization: 'token',
       },
-    );
+    });
   }
   async unStar() {
     return axios.delete(`${BASE_URL}/stars/star-id`, {
