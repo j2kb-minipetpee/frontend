@@ -31,14 +31,6 @@
                     ".tsx"
                 ]
             }
-        ],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "ts": "never",
-                "tsx": "never"
-            }
         ]
     },
     "settings": {
