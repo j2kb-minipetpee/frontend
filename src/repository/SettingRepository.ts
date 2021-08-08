@@ -12,7 +12,7 @@ export interface ProfileModel {
   gateImageUrl: string;
 }
 
-enum galleryType {
+export enum GalleryType {
   BOARD,
   ALBUM,
   GUEST,
@@ -21,7 +21,7 @@ enum galleryType {
 export interface TabModel {
   id: number;
   homepeeId: number;
-  type: galleryType;
+  type: GalleryType;
 }
 
 export interface ProfilesModel {
