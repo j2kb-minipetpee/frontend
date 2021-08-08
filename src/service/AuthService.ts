@@ -1,10 +1,10 @@
-import { OnboardingRepository } from '../repository';
+import { AuthRepository } from '../repository';
 
 class OnboardingService {
   isAuthroized: boolean;
 
   siginIn() {
-    OnboardingRepository.signIn();
+    AuthRepository.signIn();
 
     this.isAuthroized = true;
     // 리덕스
