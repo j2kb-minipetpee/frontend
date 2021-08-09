@@ -1,9 +1,9 @@
 import { LoginRequest, SiginInRequest, ValidateEmailRequest } from '../model';
-import customAxios from '../utils/customAxios';
+import client from '../client';
 
 class AuthRepository {
   async signUp({ email, password, name }: SiginInRequest): Promise<void> {
-    return await customAxios.post(`/members`, {
+    return await client.post(`/members`, {
       email,
       password,
       name,
@@ -11,7 +11,7 @@ class AuthRepository {
   }
 
   async validateEmail({ email }: ValidateEmailRequest): Promise<void> {
-    return await customAxios.get(`/validate-email?email=${email}`, {
+    return await client.get(`/validate-email?email=${email}`, {
       headers: {
         Authorization: `Bearer ~~`,
       },
@@ -19,14 +19,14 @@ class AuthRepository {
   }
 
   async login({ email, password }: LoginRequest): Promise<void> {
-    return await customAxios.post(`/login`, {
+    return await client.post(`/login`, {
       email,
       password,
     });
   }
 
   async logout(): Promise<void> {
-    return await customAxios.get(`/members`);
+    return await client.get(`/members`);
   }
 }
 

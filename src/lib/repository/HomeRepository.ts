@@ -1,21 +1,21 @@
 import { AddNeighborCommentRequest, AddNeighborCommentResponse, DeleteNeighborCommentRequest, EditNeighborCommentRequest, GetHomeResponse } from '../model';
-import customAxios from '../utils/customAxios';
+import client from '../client';
 
 class HomeRepository {
   async getHomeData(homepeeId: number): Promise<GetHomeResponse> {
-    return await customAxios.get(`${homepeeId}`);
+    return await client.get(`${homepeeId}`);
   }
 
   async addNeighborComments({ userId, memberId, content }: AddNeighborCommentRequest): Promise<AddNeighborCommentResponse> {
-    return await customAxios.post(`/${userId}/neighbor-comments`, { memberId, content });
+    return await client.post(`/${userId}/neighbor-comments`, { memberId, content });
   }
 
   async editNeighborComments({ userId, memberId, content }: EditNeighborCommentRequest): Promise<EditNeighborCommentRequest> {
-    return await customAxios.put(`/${userId}/neighbor-comments`, { memberId, content });
+    return await client.put(`/${userId}/neighbor-comments`, { memberId, content });
   }
 
   async deleteNeighborComments({ userId, id }: DeleteNeighborCommentRequest): Promise<void> {
-    return await customAxios.delete(`/${userId}/neighbor-comments/${id}`);
+    return await client.delete(`/${userId}/neighbor-comments/${id}`);
   }
 }
 

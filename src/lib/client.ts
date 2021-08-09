@@ -1,11 +1,12 @@
 import Axios, { AxiosRequestConfig } from 'axios';
-import { getAuthToken } from './getAuthToken';
+import { BASE_URL } from './constants';
+import { getAuthToken } from './utils/getAuthToken';
 
 const axios = Axios.create({
-  baseURL: '~/apis',
+  baseURL: `${BASE_URL}/apis`,
 });
 
-const customAxios = {
+const client = {
   async get(url: string, config?: AxiosRequestConfig) {
     const response = await axios.get(url, {
       ...config,
@@ -72,4 +73,4 @@ const customAxios = {
   },
 };
 
-export default customAxios;
+export default client;
