@@ -23,6 +23,7 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist',
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
