@@ -20,7 +20,6 @@ module.exports = {
         exclude: /node_module/,
       },
     ],
-
   },
   devServer: {
     contentBase: './dist',
@@ -32,5 +31,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new CleanWebpackPlugin(),
   ],
 };

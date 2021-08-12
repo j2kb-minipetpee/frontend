@@ -1,9 +1,14 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import styled from '@emotion/styled';
 
-const App = (): ReactElement => (
+const App = () => (
   <>
-    <h1>하이하이d</h1>
+    <HelloContainer>하이하이d123</HelloContainer>
   </>
 );
 
 export default App;
+
+const HelloContainer = styled.div<{ color?: string }>`
+  color: ${(props) => props.color || 'purple'};
+`;
