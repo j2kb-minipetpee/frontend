@@ -1,11 +1,4 @@
-export interface Profile {
-  name: string;
-  birthday?: string;
-  species?: string;
-  personality?: string;
-  gender?: string;
-  profileImageUrl?: string;
-}
+import { Profile } from './SharedModel';
 
 export interface recentPost {
   id: number;
