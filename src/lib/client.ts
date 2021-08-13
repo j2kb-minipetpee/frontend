@@ -1,10 +1,18 @@
 import Axios, { AxiosRequestConfig } from 'axios';
 import { BASE_URL } from './constants';
-import { getAuthToken } from './utils/getAuthToken';
 
 const axios = Axios.create({
   baseURL: `${BASE_URL}/apis`,
+  withCredentials: true,
 });
+
+export function setAuthToken(authToken: string): void {
+  axios.defaults.headers.common['Authorization'] = authToken;
+}
+
+export function clearAuthToken(): void {
+  axios.defaults.headers.common['Authorization'] = '';
+}
 
 const client = {
   async get(url: string, config?: AxiosRequestConfig) {
@@ -13,7 +21,6 @@ const client = {
       headers: {
         'Content-Type': 'application/json',
         ...config?.headers,
-        Authorization: `Bearer ${getAuthToken()}`,
       },
     });
 
@@ -26,7 +33,6 @@ const client = {
       headers: {
         'Content-Type': 'application/json',
         ...config?.headers,
-        Authorization: `Bearer ${getAuthToken()}`,
       },
     });
 
@@ -39,7 +45,6 @@ const client = {
       headers: {
         'Content-Type': 'application/json',
         ...config?.headers,
-        Authorization: `Bearer ${getAuthToken()}`,
       },
     });
 
@@ -52,7 +57,6 @@ const client = {
       headers: {
         'Content-Type': 'application/json',
         ...config?.headers,
-        Authorization: `Bearer ${getAuthToken()}`,
       },
     });
 
@@ -65,7 +69,6 @@ const client = {
       headers: {
         'Content-Type': 'application/json',
         ...config?.headers,
-        Authorization: `Bearer ${getAuthToken()}`,
       },
     });
 
