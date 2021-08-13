@@ -24,11 +24,11 @@ interface SearchMemberInfo extends Member {
   homepeeId: number;
 }
 
-export type GetSearchMemberResponse = SearchMemberInfo[];
+export type SearchMembersResponse = SearchMemberInfo[];
 
 interface SearchPostInfo {
   memberName: string;
   postInfo: Post;
 }
 
-export type GetSearchPostResponse = SearchPostInfo[];
+export type SearchPostsResponse = SearchPostInfo[];
