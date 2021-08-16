@@ -1,5 +1,6 @@
 import * as React from 'react';
+import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const Guestnote = () => {
-  return <div>방명록</div>;
+  return <HomepeeLayout>방명록</HomepeeLayout>;
 };

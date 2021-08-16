@@ -1,5 +1,6 @@
 import * as React from 'react';
+import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const Board = () => {
-  return <div>게시판</div>;
+  return <HomepeeLayout>게시판</HomepeeLayout>;
 };
