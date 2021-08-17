@@ -19,18 +19,30 @@ module.exports = {
         use: 'ts-loader',
         exclude: /node_module/,
       },
+      {
+        test: /\.png|jpg|gif|svg|ttf|woff|woff2|eot|ttf|otf$/,
+        loader: 'url-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          // limit: 100,
+        },
+      },
     ],
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'dist'),
+    publicPath: '/',
     historyApiFallback: true,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
   ],
