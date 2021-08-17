@@ -4,8 +4,8 @@ import {
   AddBoardCommentResponse,
   AddBoardPostRequest,
   AddBoardPostResponse,
+  DeleteBoardCommentRequest,
   DeleteBoardPostRequset,
-  DeleteCommentRequest,
   EditBoardPostRequest,
   GetBoardPostRequest,
   GetBoardPostResponse,
@@ -50,8 +50,8 @@ class BoardRepository {
       content,
     });
   }
-  async deleteBoardComment({ homepeeId, postId }: DeleteCommentRequest): Promise<void> {
-    return client.delete(`/${homepeeId}/board/post/${postId}}`);
+  async deleteBoardComment({ homepeeId, commentId }: DeleteBoardCommentRequest): Promise<void> {
+    return client.delete(`/${homepeeId}/board/post/${commentId}}`);
   }
 }
 

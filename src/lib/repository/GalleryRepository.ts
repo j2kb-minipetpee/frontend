@@ -7,12 +7,13 @@ import {
   DeleteGalleryCommentRequest,
   DeleteGalleryPostRequest,
   EditGalleryPostRequest,
+  EditGalleryPostResponse,
   GetGalleryPostRequest,
   GetGalleryPostResponse,
 } from '../model';
 
 class GalleryRepository {
-  async getGalleryPosts({ homepeeId }: GetGalleryPostRequest): Promise<GetGalleryPostResponse> {
+  async getGalleryPost({ homepeeId }: GetGalleryPostRequest): Promise<GetGalleryPostResponse> {
     return client.get(`/${homepeeId}/album/posts`);
   }
   async addGalleryPost({ homepeeId, title, images, visible }: AddGalleryPostRequest): Promise<AddGalleryPostResponse> {
@@ -22,7 +23,7 @@ class GalleryRepository {
       visible,
     });
   }
-  async editGalleryPost({ homepeeId, id, title, image, visible }: EditGalleryPostRequest): Promise<void> {
+  async editGalleryPost({ homepeeId, id, title, image, visible }: EditGalleryPostRequest): Promise<EditGalleryPostResponse> {
     return client.put(`/${homepeeId}/album/posts`, {
       id,
       title,

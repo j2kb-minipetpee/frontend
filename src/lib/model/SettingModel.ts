@@ -26,6 +26,12 @@ export interface EditSettingRequest {
   tabs: Tab;
 }
 
+export interface EditSettingResponse {
+  homepeeId: string;
+  profile: Profile;
+  tabs: Tab;
+}
+
 export interface GetSettingResponse {
   profile: Profile;
   tabs: Array<Tab>;
