@@ -12,5 +12,3 @@ export const Main = () => {
     </MainLayout>
   );
 };
-
-export default Main;
