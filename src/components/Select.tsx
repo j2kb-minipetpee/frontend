@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { useToggle } from '../hooks';
-import { useClickOutside } from '../hooks/useClickOutside';
-import { ColorMap } from '../lib/constants';
+import { useToggle, useClickOutside } from '@/hooks';
+import { ColorMap } from '@/lib/constants/color';
 
 interface Option {
   index: string;
@@ -54,15 +53,15 @@ const SelectContainer = styled.div`
   width: 100px;
   & div {
     line-height: 32px;
-    color: ${ColorMap.BLACK};
+    color: ${ColorMap.BLACK100};
   }
   & > ul {
     position: absolute;
     top: 40px;
     right: 0px;
     width: 108px;
-    background: ${ColorMap.WHITE};
-    color: ${ColorMap.BLACK};
+    background: ${ColorMap.WHITE100};
+    color: ${ColorMap.BLACK100};
   }
 `;
 
@@ -74,7 +73,7 @@ const SelectItem = styled.li<{ isSelected: boolean }>`
   ${({ isSelected }) =>
     isSelected &&
     css`
-      background-color: ${ColorMap.GREY};
-      color: ${ColorMap.WHITE};
+      background-color: ${ColorMap.GREY100};
+      color: ${ColorMap.WHITE100};
     `}
 `;

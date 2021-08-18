@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { Divider, Footer, Select } from '../components';
-import { useAuth } from '../hooks';
-import { ColorMap } from '../lib/constants';
+import { Divider, Footer, Select } from '@/components';
+import { useAuth } from '@/hooks';
+import { ColorMap } from '@/lib/constants/color';
 
 const options = [
   {
@@ -72,8 +72,8 @@ const HomepeeHeaderContainer = styled.section`
   position: relative;
   width: 100%;
   height: 40%;
-  background: ${ColorMap.EMERALD};
-  color: ${ColorMap.WHITE};
+  background: ${ColorMap.EMERALD100};
+  color: ${ColorMap.WHITE100};
 `;
 
 const HomepeeHeader = styled.section`
@@ -101,7 +101,7 @@ const HomepeeSearchWrapper = styled.div`
   outline: none;
   padding: 0.5rem 1rem;
   font-size: 16px;
-  background: ${ColorMap.WHITE};
+  background: ${ColorMap.WHITE100};
   display: flex;
 
   & select {

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ColorMap } from '../lib/constants';
+import { ColorMap } from '@/lib/constants/color';
 
 interface TabItem {
   index: string;
@@ -43,8 +43,8 @@ const TabButton = styled.button<{ isSelected: boolean }>`
   border: none;
   outline: none;
   cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? ColorMap.EMERALD : ColorMap.GREY)};
-  color: ${ColorMap.WHITE};
+  background-color: ${({ isSelected }) => (isSelected ? ColorMap.EMERALD100 : ColorMap.GREY100)};
+  color: ${ColorMap.WHITE100};
 
   transition: opacity 0.2s ease-in;
   &:hover {

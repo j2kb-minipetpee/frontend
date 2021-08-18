@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { Footer, Tab } from '../components';
-import { useAuth } from '../hooks';
+import { Footer, Tab } from '@/components';
+import { useAuth } from '@/hooks';
+import logo from '@/assets/images/logo.png';
 
 const tabs = [
   {
@@ -43,7 +44,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <MainLayoutContainer>
       <MainHeader>
         <MainHeaderTop>
-          <div>로고</div>
+          <img src={logo} width={64}></img>
 
           {id ? <div>{name} 님</div> : <div>로그인</div>}
         </MainHeaderTop>
