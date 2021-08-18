@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-export function useToggle() {
+export const useToggle = () => {
   const [value, setValue] = useState(false);
 
   const onToggle = useCallback(() => {
@@ -16,4 +16,4 @@ export function useToggle() {
   }, []);
 
   return [value, onToggle, onTrue, onFalse] as const;
-}
+};

@@ -7,8 +7,11 @@
       "jsx": "react",
       "allowJs": true,
       "moduleResolution": "node",
-      "esModuleInterop":true
-    }
+      "esModuleInterop":true,
+      "paths": {
+        "@/*": ["src/*"]
+        },
+        "baseUrl": "."
+    },
+    "include": ["./src/**/*"]
   }
-
-  // 더 자세한 정보는... typescript configuration

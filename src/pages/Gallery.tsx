@@ -1,5 +1,6 @@
 import * as React from 'react';
+import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const Gallery = () => {
-  return <div>갤러리</div>;
+  return <HomepeeLayout>갤러리</HomepeeLayout>;
 };
