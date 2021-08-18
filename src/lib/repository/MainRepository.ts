@@ -1,4 +1,4 @@
-import { GetPopularPostsResponse, GetSearchMemberResponse, GetSearchPostResponse } from '../model';
+import { GetPopularPostsResponse, SearchMembersResponse, SearchPostsResponse } from '../model';
 import client from '../client';
 
 class MainRepository {
@@ -6,11 +6,11 @@ class MainRepository {
     return client.get('/popluar-posts');
   }
 
-  async searchMember(memberName: string): Promise<GetSearchMemberResponse> {
+  async searchMembers(memberName: string): Promise<SearchMembersResponse> {
     return client.get(`/search-member?name=${memberName}`);
   }
 
-  async searchPost(postTitle: string): Promise<GetSearchPostResponse> {
+  async searchPosts(postTitle: string): Promise<SearchPostsResponse> {
     return client.get(`/search-post?title=${postTitle}`);
   }
 }

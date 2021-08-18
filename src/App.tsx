@@ -1,11 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const App = () => (
-  <>
-    <HelloContainer>하이하이d123</HelloContainer>
-  </>
-);
+const App = () => <HelloContainer>하이하이d123</HelloContainer>;
 
 export default App;
 

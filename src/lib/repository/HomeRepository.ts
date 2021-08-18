@@ -1,4 +1,11 @@
-import { AddNeighborCommentRequest, AddNeighborCommentResponse, DeleteNeighborCommentRequest, EditNeighborCommentRequest, GetHomeResponse } from '../model';
+import {
+  AddNeighborCommentRequest,
+  AddNeighborCommentResponse,
+  DeleteNeighborCommentRequest,
+  EditNeighborCommentRequest,
+  EditNeighborCommentResponse,
+  GetHomeResponse,
+} from '../model';
 import client from '../client';
 
 class HomeRepository {
@@ -10,7 +17,7 @@ class HomeRepository {
     return await client.post(`/${userId}/neighbor-comments`, { memberId, content });
   }
 
-  async editNeighborComments({ userId, memberId, content }: EditNeighborCommentRequest): Promise<EditNeighborCommentRequest> {
+  async editNeighborComments({ userId, memberId, content }: EditNeighborCommentRequest): Promise<EditNeighborCommentResponse> {
     return await client.put(`/${userId}/neighbor-comments`, { memberId, content });
   }
 

@@ -11,11 +11,7 @@ class AuthRepository {
   }
 
   async validateEmail({ email }: ValidateEmailRequest): Promise<void> {
-    return await client.get(`/validate-email?email=${email}`, {
-      headers: {
-        Authorization: `Bearer ~~`,
-      },
-    });
+    return await client.get(`/validate-email?email=${email}`);
   }
 
   async login({ email, password }: LoginRequest): Promise<void> {
