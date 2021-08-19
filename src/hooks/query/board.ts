@@ -17,15 +17,13 @@ import {
 import { BoardRepository } from '../../lib/repository';
 
 export const useGetBoardPostsQuery = ({ homepeeId, page, size }: GetBoardPostsRequest) => {
-  return useQuery<GetBoardPostsResponse, Error, GetBoardPostsRequest>([QueryKey.GetBoardPosts, homepeeId, page, size], ({ homepeeId, page, size }) =>
+  return useQuery<GetBoardPostsResponse, Error, GetBoardPostsRequest>([QueryKey.GetBoardPosts, homepeeId, page, size], () =>
     BoardRepository.getBoardPosts({ homepeeId, page, size }),
   );
 };
 
-export const useGetBoardPostQuery = () => {
-  return useQuery<GetBoardPostResponse, Error, GetBoardPostRequest>(QueryKey.GetBoardPost, ({ homepeeId, postId }) =>
-    BoardRepository.getBoardPost({ homepeeId, postId }),
-  );
+export const useGetBoardPostQuery = ({ homepeeId, postId }: GetBoardPostRequest) => {
+  return useQuery<GetBoardPostResponse, Error, GetBoardPostRequest>(QueryKey.GetBoardPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
 };
 
 export const useAddBoardPost = () => {
@@ -48,13 +46,13 @@ export const useEditBoardPost = () => {
 
 //null 부분 괜찮은지...?
 export const useDeleteBoardPost = () => {
-  return useMutation<null, Error, DeleteBoardPostRequset>(({ homepeeId, postId }) => {
+  return useMutation<void, Error, DeleteBoardPostRequset>(({ homepeeId, postId }) => {
     BoardRepository.deleteBoardPost({ homepeeId, postId });
   });
 };
 
 export const useDeleteBoardComment = () => {
-  return useMutation<null, Error, DeleteBoardCommentRequest>(({ homepeeId, commentId }) => {
+  return useMutation<void, Error, DeleteBoardCommentRequest>(({ homepeeId, commentId }) => {
     BoardRepository.deleteBoardComment({ homepeeId, commentId });
   });
 };

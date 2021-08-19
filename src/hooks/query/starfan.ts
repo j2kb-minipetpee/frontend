@@ -12,8 +12,8 @@ export const useGetMyFansQuery = () => {
 };
 
 export const useStar = () => {
-  return useMutation<GetMyStarsResponse, Error>(({ starId }) => StarFanRepository.star(starId));
+  return useMutation<GetMyStarsResponse, Error, void>(({ starId }) => StarFanRepository.star(starId));
 };
 export const useUnStart = () => {
-  return useMutation<GetMyFansResponse, Error>(({ starId }) => StarFanRepository.unStar(starId));
+  return useMutation<GetMyFansResponse, Error, void>(({ starId }) => StarFanRepository.unStar(starId));
 };
