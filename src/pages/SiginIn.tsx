@@ -1,11 +1,12 @@
-import React from 'react';
-// import { useEffect } from 'react';
-// import AuthService from '../service/AuthService';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAppDispatch } from '../store';
+import { login } from '../store/auth';
 
 export const SignIn = () => {
   // useEffect(() => {
   //   AuthService.siginin({ email, pass });
   // }, []);
 
-  return <div>테스트</div>;
+  <div>로그인</div>;
 };

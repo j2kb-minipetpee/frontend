@@ -74,6 +74,11 @@ export interface DeleteBoardPostRequset {
   postId: number;
 }
 
+export interface DeleteBoardCommentRequest {
+  hompeeId: number;
+  postId: number;
+}
+
 export interface AddBoardCommentRequest {
   homepeeId: number;
   postId: number;
@@ -88,7 +93,7 @@ export interface AddBoardCommentResponse {
   createdAt: string;
 }
 
-export interface DeleteCommentRequest {
+export interface DeleteBoardCommentRequest {
   homepeeId: number;
-  postId: number;
+  commentId: number;
 }
