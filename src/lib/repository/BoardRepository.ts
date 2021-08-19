@@ -7,6 +7,7 @@ import {
   DeleteBoardCommentRequest,
   DeleteBoardPostRequset,
   EditBoardPostRequest,
+  EditBoardPostResponse,
   GetBoardPostRequest,
   GetBoardPostResponse,
   GetBoardPostsRequest,
@@ -32,7 +33,7 @@ class BoardRepository {
     return client.get(`/${homepeeId}/board/posts/${postId}`);
   }
 
-  async editBoardPost({ homepeeId, postId, id, title, content, image }: EditBoardPostRequest): Promise<EditBoardPostRequest> {
+  async editBoardPost({ homepeeId, postId, id, title, content, image }: EditBoardPostRequest): Promise<EditBoardPostResponse> {
     return client.put(`/${homepeeId}/board/posts/${postId}}`, {
       id,
       title,
@@ -40,7 +41,8 @@ class BoardRepository {
       image,
     });
   }
-  async deleteBoardPost({ homepeeId, postId }: DeleteBoardPostRequset): Promise<void> {
+
+  async deleteBoardPost({ homepeeId, postId }: DeleteBoardPostRequset): Promise<null> {
     return client.delete(`/${homepeeId}/board/post/${postId}`);
   }
 
