@@ -17,14 +17,14 @@ const App = () => (
   <>
     <Global styles={globalStyle}></Global>
     <Switch>
-      <PublicRoute path={routes.GUESTNOTE} component={Guestnote} restricted={false} />
-      <PublicRoute path={routes.BOARD} component={Board} restricted={false} />
-      <PublicRoute path={routes.GALLERY} component={Gallery} restricted={false} />
-      <PrivateRoute path={routes.HOMEPEE} component={Homepee} />
+      <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
+      <PublicRoute path={routes.BOARD} component={Board} />
+      <PublicRoute path={routes.GALLERY} component={Gallery} />
+      <PublicRoute path={routes.HOMEPEE} component={Homepee} />
       <PrivateRoute path={routes.SETTING} component={Setting} />
-      <PublicRoute path={routes.SIGNIN} component={SignIn} restricted={true} />
-      <PublicRoute path={routes.SIGNUP} component={SignUp} restricted={true} />
-      <PublicRoute path={routes.HOME} component={Main} restricted={false} />
+      <PublicRoute path={routes.SIGNIN} component={SignIn} restricted />
+      <PublicRoute path={routes.SIGNUP} component={SignUp} restricted />
+      <PublicRoute path={routes.HOME} component={Main} />
     </Switch>
   </>
 );
