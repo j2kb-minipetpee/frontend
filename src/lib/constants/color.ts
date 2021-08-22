@@ -7,4 +7,4 @@ export enum ColorMap {
   BLACK100 = 'black',
 }
 
-export type Color = keyof ColorMap;
+export type Color = keyof typeof ColorMap;
