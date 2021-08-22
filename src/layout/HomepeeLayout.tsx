@@ -1,61 +1,60 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { Divider, Footer, Select } from '@/components';
+import { Footer, Tab } from '@/components';
 import { useAuth } from '@/hooks';
-import { ColorMap } from '@/lib/constants/color';
+import logo from '@/assets/images/logo.png';
 
-const options = [
+const tabs = [
   {
-    index: 'popular',
-    text: '인기 게시글',
+    index: 'home',
+    text: '홈',
   },
   {
-    index: 'user',
-    text: '계정',
+    index: 'board',
+    text: '게시판',
+  },
+  {
+    index: 'gallery',
+    text: '갤러리',
+  },
+  {
+    index: 'guest',
+    text: '방명록',
+  },
+  {
+    index: 'settings',
+    text: '관리',
   },
 ];
 
-interface HommeLayoutProps {
+interface HomepeeLayoutProps {
   children: React.ReactNode;
 }
 
-export const HomepeeLayout = ({ children }: HommeLayoutProps) => {
+export const HomepeeLayout = ({ children }: HomepeeLayoutProps) => {
   const { id, name } = useAuth();
-  const [selectedIndex, setSelectedIndex] = useState('popular');
+  const HomepeeName = '홈피 네임'; // useQuery 를 통해서 가져온 홈피 이름
 
-  const onChange = (value: string) => {
-    setSelectedIndex(value);
+  const [selectedTab, setSelectedTab] = useState('home');
+  const onChange = (index: string) => {
+    setSelectedTab(index);
   };
 
   return (
     <HomepeeLayoutContainer>
-      <HomepeeHeaderContainer>
-        <HomepeeHeader>
-          <div>로고</div>
-          <div className="auth_box">
-            {id ? (
-              <>
-                <div>{name} 님</div>
-                <div>로그아웃 </div>
-              </>
-            ) : (
-              <>
-                <div>로그인</div>
-                <div>회원가입</div>
-              </>
-            )}
-          </div>
-        </HomepeeHeader>
+      <HomepeeHeader>
+        <HomepeeHeaderTop>
+          <img src={logo} width={64}></img>
 
-        <HomepeeSearchWrapper>
-          <Select options={options} selectedIndex={selectedIndex} onChange={onChange} />
+          {id ? <div>{name} 님</div> : <div>로그인</div>}
+        </HomepeeHeaderTop>
 
-          <Divider type="column" />
-          <input placeholder="검색해주세요~" />
-        </HomepeeSearchWrapper>
-      </HomepeeHeaderContainer>
+        <HomepeeHeaderBottom>
+          <div>{HomepeeName}</div>
+          <Tab tabs={tabs} selectedTabIndex={selectedTab} onChange={onChange} />
+        </HomepeeHeaderBottom>
+      </HomepeeHeader>
       <section>{children}</section>
-
       <Footer />
     </HomepeeLayoutContainer>
   );
@@ -68,50 +67,20 @@ const HomepeeLayoutContainer = styled.section`
   flex-direction: column;
 `;
 
-const HomepeeHeaderContainer = styled.section`
-  position: relative;
-  width: 100%;
-  height: 40%;
-  background: ${ColorMap.EMERALD100};
-  color: ${ColorMap.WHITE100};
+const HomepeeHeader = styled.header`
+  margin-bottom: auto;
 `;
 
-const HomepeeHeader = styled.section`
+const HomepeeHeaderTop = styled.section`
   display: flex;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
-
-  & .auth_box {
-    display: flex;
-    & div {
-      margin-right: 0.5rem;
-    }
-  }
+  padding: 1rem;
 `;
 
-const HomepeeSearchWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 508px;
-  height: 48px;
-  border-radius: 12px;
-  border: none;
-  outline: none;
-  padding: 0.5rem 1rem;
-  font-size: 16px;
-  background: ${ColorMap.WHITE100};
+const HomepeeHeaderBottom = styled.section`
   display: flex;
-
-  & select {
-  }
-
-  & input {
-    width: 400px;
-    padding: 0 1rem;
-    border: none;
-    outline: none;
-    font-size: 16px;
-  }
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 0 2rem;
 `;

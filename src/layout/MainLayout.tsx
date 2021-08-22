@@ -1,29 +1,17 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
-import { Footer, Tab } from '@/components';
+import { Divider, Footer, Select } from '@/components';
 import { useAuth } from '@/hooks';
-import logo from '@/assets/images/logo.png';
+import { ColorMap } from '@/lib/constants/color';
 
-const tabs = [
+const options = [
   {
-    index: 'home',
-    text: '홈',
+    index: 'popular',
+    text: '인기 게시글',
   },
   {
-    index: 'board',
-    text: '게시판',
-  },
-  {
-    index: 'gallery',
-    text: '갤러리',
-  },
-  {
-    index: 'guest',
-    text: '방명록',
-  },
-  {
-    index: 'settings',
-    text: '관리',
+    index: 'user',
+    text: '계정',
   },
 ];
 
@@ -33,28 +21,41 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const { id, name } = useAuth();
-  const HomepeeName = '홈피 네임'; // useQuery 를 통해서 가져온 홈피 이름
+  const [selectedIndex, setSelectedIndex] = useState('popular');
 
-  const [selectedTab, setSelectedTab] = useState('home');
-  const onChange = (index: string) => {
-    setSelectedTab(index);
+  const onChange = (value: string) => {
+    setSelectedIndex(value);
   };
 
   return (
     <MainLayoutContainer>
-      <MainHeader>
-        <MainHeaderTop>
-          <img src={logo} width={64}></img>
+      <MainHeaderContainer>
+        <MainHeader>
+          <div>로고</div>
+          <div className="auth_box">
+            {id ? (
+              <>
+                <div>{name} 님</div>
+                <div>로그아웃 </div>
+              </>
+            ) : (
+              <>
+                <div>로그인</div>
+                <div>회원가입</div>
+              </>
+            )}
+          </div>
+        </MainHeader>
 
-          {id ? <div>{name} 님</div> : <div>로그인</div>}
-        </MainHeaderTop>
+        <MainSearchWrapper>
+          <Select options={options} selectedIndex={selectedIndex} onChange={onChange} />
 
-        <MainHeaderBottom>
-          <div>{HomepeeName}</div>
-          <Tab tabs={tabs} selectedTabIndex={selectedTab} onChange={onChange} />
-        </MainHeaderBottom>
-      </MainHeader>
+          <Divider type="column" />
+          <input placeholder="검색해주세요~" />
+        </MainSearchWrapper>
+      </MainHeaderContainer>
       <section>{children}</section>
+
       <Footer />
     </MainLayoutContainer>
   );
@@ -67,20 +68,50 @@ const MainLayoutContainer = styled.section`
   flex-direction: column;
 `;
 
-const MainHeader = styled.header`
-  margin-bottom: auto;
+const MainHeaderContainer = styled.section`
+  position: relative;
+  width: 100%;
+  height: 40%;
+  background: ${ColorMap.EMERALD100};
+  color: ${ColorMap.WHITE100};
 `;
 
-const MainHeaderTop = styled.section`
+const MainHeader = styled.section`
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
+
+  & .auth_box {
+    display: flex;
+    & div {
+      margin-right: 0.5rem;
+    }
+  }
 `;
 
-const MainHeaderBottom = styled.section`
+const MainSearchWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 508px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  font-size: 16px;
+  background: ${ColorMap.WHITE100};
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1.5rem;
-  padding: 0 2rem;
+
+  & select {
+  }
+
+  & input {
+    width: 400px;
+    padding: 0 1rem;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
 `;
