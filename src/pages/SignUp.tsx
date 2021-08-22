@@ -1,5 +1,11 @@
-import * as React from 'react';
+import { SignUp } from '@/components/SiginUp';
+import { AuthLayout } from '@/layout/AuthLayout';
+import React from 'react';
 
-export const SignUp = () => {
-  return <div>회원가입</div>;
+export const SignUpPage = () => {
+  return (
+    <AuthLayout>
+      <SignUp />
+    </AuthLayout>
+  );
 };

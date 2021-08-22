@@ -9,8 +9,8 @@ import { Gallery } from './pages/Gallery';
 import { Board } from './pages/Board';
 import { Guestnote } from './pages/Guestnote';
 import { PrivateRoute, PublicRoute } from './lib/constants/PrivateRoute';
-import { SignIn } from './pages/SiginIn';
-import { SignUp } from './pages/SignUp';
+import { SignInPage } from './pages/SiginIn';
+import { SignUpPage } from './pages/SignUp';
 import { Setting } from './pages/Setting';
 
 const App = () => (
@@ -22,8 +22,8 @@ const App = () => (
       <PublicRoute path={routes.GALLERY} component={Gallery} />
       <PublicRoute path={routes.HOMEPEE} component={Homepee} />
       <PrivateRoute path={routes.SETTING} component={Setting} />
-      <PublicRoute path={routes.SIGNIN} component={SignIn} restricted />
-      <PublicRoute path={routes.SIGNUP} component={SignUp} restricted />
+      <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
+      <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
       <PublicRoute path={routes.HOME} component={Main} />
     </Switch>
   </>
@@ -36,6 +36,7 @@ const globalStyle = css`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Nanum Gothic', sans-serif;
   }
 
   html {
@@ -45,6 +46,10 @@ const globalStyle = css`
 
   body {
     width: 100%;
+    height: 100%;
+  }
+
+  #root {
     height: 100%;
   }
 
