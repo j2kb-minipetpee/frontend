@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { QueryKey } from '../../lib/constants';
-import { GetMyFansResponse, GetMyStarsResponse } from '../../lib/model';
+import { GetMyFansResponse, GetMyStarsResponse, StarRequest, UnstarRequest } from '../../lib/model';
 import { StarFanRepository } from '../../lib/repository';
 
 export const useGetMyStarsQuery = () => {
@@ -12,8 +12,9 @@ export const useGetMyFansQuery = () => {
 };
 
 export const useStar = () => {
-  return useMutation<GetMyStarsResponse, Error, void>(({ starId }) => StarFanRepository.star(starId));
+  return useMutation<void, Error, StarRequest>(({ starId }) => StarFanRepository.star({ starId }));
 };
+
 export const useUnStart = () => {
-  return useMutation<GetMyFansResponse, Error, void>(({ starId }) => StarFanRepository.unStar(starId));
+  return useMutation<void, Error, UnstarRequest>(({ starId }) => StarFanRepository.unStar({ starId }));
 };

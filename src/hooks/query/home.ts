@@ -10,8 +10,8 @@ import {
 } from '../../lib/model';
 import { HomeRepository } from '../../lib/repository';
 
-export const useGetHomeDataQuery = (hompeeId: number) => {
-  return useQuery<GetHomeResponse, Error>([QueryKey.GetHomeData, hompeeId], () => HomeRepository.getHomeData(hompeeId));
+export const useGetHomeDataQuery = (homepeeId: number) => {
+  return useQuery<GetHomeResponse, Error>([QueryKey.GetHomeData, homepeeId], () => HomeRepository.getHomeData(homepeeId));
 };
 
 export const useAddNeighborComments = () => {

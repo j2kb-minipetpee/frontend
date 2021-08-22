@@ -46,13 +46,9 @@ export const useEditBoardPost = () => {
 
 //null 부분 괜찮은지...?
 export const useDeleteBoardPost = () => {
-  return useMutation<void, Error, DeleteBoardPostRequset>(({ homepeeId, postId }) => {
-    BoardRepository.deleteBoardPost({ homepeeId, postId });
-  });
+  return useMutation<void, Error, DeleteBoardPostRequset>(({ homepeeId, postId }) => BoardRepository.deleteBoardPost({ homepeeId, postId }));
 };
 
 export const useDeleteBoardComment = () => {
-  return useMutation<void, Error, DeleteBoardCommentRequest>(({ homepeeId, commentId }) => {
-    BoardRepository.deleteBoardComment({ homepeeId, commentId });
-  });
+  return useMutation<void, Error, DeleteBoardCommentRequest>(({ homepeeId, commentId }) => BoardRepository.deleteBoardComment({ homepeeId, commentId }));
 };

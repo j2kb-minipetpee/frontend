@@ -13,9 +13,9 @@ import {
 } from '../../lib/model';
 import { GalleryRepository } from '../../lib/repository';
 
-export const useGetGalleryPostQuery = ({ homepeeId }: string) => {
-  return useQuery<GetGalleryPostResponse, Error, GetGalleryPostResponse>([QueryKey.GetGalleryPost, homepeeId], ({ homepeeId }) =>
-    GalleryRepository.getGalleryPost(homepeeId),
+export const useGetGalleryPostQuery = (homepeeId: number) => {
+  return useQuery<GetGalleryPostResponse, Error, GetGalleryPostResponse>([QueryKey.GetGalleryPost, homepeeId], () =>
+    GalleryRepository.getGalleryPost({ homepeeId }),
   );
 };
 
@@ -38,11 +38,11 @@ export const useEditGalleryPost = () => {
 };
 
 export const useDeleteGalleryPost = () => {
-  return useMutation<null, Error, DeleteGalleryPostRequest>(({ homepeeId, postId }) => GalleryRepository.deleteGalleryPost({ homepeeId, postId }));
+  return useMutation<void, Error, DeleteGalleryPostRequest>(({ homepeeId, postId }) => GalleryRepository.deleteGalleryPost({ homepeeId, postId }));
 };
 
 export const useDeleteGalleryComment = () => {
-  return useMutation<null, Error, DeleteGalleryCommentRequest>(({ homepeeId, postId, commentId }) =>
-    GalleryRepository.deleteGalleryPost({ homepeeId, postId, commentId }),
+  return useMutation<void, Error, DeleteGalleryCommentRequest>(({ homepeeId, postId, commentId }) =>
+    GalleryRepository.deleteGalleryComment({ homepeeId, postId, commentId }),
   );
 };
