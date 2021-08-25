@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://test.com';
+export const BASE_URL = 'https://api.minipetpee.ml';
 
 export enum QueryKey {
   GetHomeData = 'GetHomeData',
