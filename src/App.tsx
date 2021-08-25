@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Main } from './pages/Main';
 import { Route, Switch } from 'react-router-dom';
 import { routes } from './lib/constants/routes';
-import { Homepee } from './pages/Homepee';
+import { HomepeePage } from './pages/Homepee';
 import { Gallery } from './pages/Gallery';
 import { Board } from './pages/Board';
 import { Guestnote } from './pages/Guestnote';
@@ -12,6 +12,7 @@ import { PrivateRoute, PublicRoute } from './lib/constants/PrivateRoute';
 import { SignInPage } from './pages/SiginIn';
 import { SignUpPage } from './pages/SignUp';
 import { Setting } from './pages/Setting';
+import { ColorMap } from './lib/constants/color';
 
 const App = () => (
   <>
@@ -20,8 +21,9 @@ const App = () => (
       <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
       <PublicRoute path={routes.BOARD} component={Board} />
       <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PublicRoute path={routes.HOMEPEE} component={Homepee} />
       <PrivateRoute path={routes.SETTING} component={Setting} />
+      <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
+
       <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
       <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
       <PublicRoute path={routes.HOME} component={Main} />
@@ -37,6 +39,7 @@ const globalStyle = css`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Nanum Gothic', sans-serif;
+    color: ${ColorMap.GREY100};
   }
 
   html {

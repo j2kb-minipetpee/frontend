@@ -12,27 +12,25 @@ export const SignUp = () => {
         <Logo height={100} />
       </LogoConatiner>
 
-      <Spacing vertical={90} />
+      <Spacing vertical={113} />
       <Title>JOIN US</Title>
-      <Spacing vertical={60} />
+      <Spacing vertical={114} />
 
       <Form>
         <label htmlFor="email">이메일</label>
-        <Spacing vertical={8} />
+        <Spacing vertical={30} />
         <Input id="email" type="email" />
-        <Spacing vertical={16} />
+        <Spacing vertical={41} />
 
         <label htmlFor="name">이름</label>
-        <Spacing vertical={8} />
-
+        <Spacing vertical={30} />
         <Input id="name" type="text" />
-        <Spacing vertical={16} />
+        <Spacing vertical={41} />
 
         <label htmlFor="password">비밀번호</label>
-        <Spacing vertical={8} />
-
+        <Spacing vertical={30} />
         <Input id="password" type="password" />
-        <Spacing vertical={48} />
+        <Spacing vertical={57} />
 
         <Button>회원가입하기</Button>
       </Form>
@@ -44,7 +42,7 @@ const SignUpContainer = styled.section`
   display: flex;
   height: 100%;
   flex-direction: column;
-  margin-top: 200px;
+  margin-top: 56px;
 `;
 
 const LogoConatiner = styled.div`
@@ -70,7 +68,7 @@ const Input = styled.input`
   width: 406px;
   height: 35px;
   border: none;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
 
   outline: none;
 `;

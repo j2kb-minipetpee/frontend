@@ -11,16 +11,16 @@ export const SiginIn = () => {
         <Logo height={100} />
       </LogoConatiner>
 
-      <Spacing vertical={90} />
+      <Spacing vertical={30} />
       <Title>JOIN US</Title>
-      <Spacing vertical={60} />
+      <Spacing vertical={30} />
 
       <Form>
         <Input id="email" type="email" placeholder="이메일" />
-        <Spacing vertical={8} />
+        <Spacing vertical={11} />
 
         <Input id="password" type="password" placeholder="비밀번호" />
-        <Spacing vertical={48} />
+        <Spacing vertical={39} />
 
         <Button>로그인</Button>
       </Form>
@@ -32,7 +32,7 @@ const SiginInContainer = styled.section`
   display: flex;
   height: 100%;
   flex-direction: column;
-  margin-top: 200px;
+  margin-top: 304px;
 `;
 
 const LogoConatiner = styled.div`
@@ -59,11 +59,13 @@ const Input = styled.input`
   height: 35px;
   border: none;
   color: ${ColorMap.EMERALD100};
-  padding: 0 0.5rem;
+  padding: 0 16px;
   outline: none;
 
   &::placeholder {
-    color: ${ColorMap.EMERALD100};
+    color: #9dd6bc;
+    font-size: 17px;
+    letter-spacing: 0.075em;
   }
 `;
 
