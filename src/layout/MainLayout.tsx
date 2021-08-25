@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Divider, Footer, Select } from '@/components';
 import { useAuth } from '@/hooks';
 import { ColorMap } from '@/lib/constants/color';
+import logo from '@/assets/images/logo.png';
 
 const options = [
   {
@@ -31,7 +32,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     <MainLayoutContainer>
       <MainHeaderContainer>
         <MainHeader>
-          <div>로고</div>
+          <img src={logo} width={64} />
           <div className="auth_box">
             {id ? (
               <>

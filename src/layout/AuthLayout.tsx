@@ -1,3 +1,4 @@
+import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -15,4 +16,5 @@ const AuthLayoutContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: ${ColorMap.WHITE80};
 `;
