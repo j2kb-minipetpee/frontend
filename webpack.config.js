@@ -11,6 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js',
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -33,6 +34,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     publicPath: '/',
     historyApiFallback: true,
+    hot: true,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
