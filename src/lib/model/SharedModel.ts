@@ -1,10 +1,9 @@
 export interface Profile {
-  email: string;
+  email?: string;
   name: string;
   birthday: string;
   species: string;
   personality: string;
-  gender: string;
+  gender: 'MALE' | 'FEMALE';
   profileImageUrl: string;
-  gateImageUrl: string;
 }
