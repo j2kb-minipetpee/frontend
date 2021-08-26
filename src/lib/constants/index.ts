@@ -13,3 +13,5 @@ export enum QueryKey {
   GetMyStarsData = 'GetMyStarsData',
   GetMyFansData = 'GetMyStarsData',
 }
+
+export type SelectedTab = 'HOMEPEE' | 'BOARD' | 'GALLERY' | 'GUESTNOTE' | 'SETTING';
