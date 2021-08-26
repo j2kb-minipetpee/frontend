@@ -40,6 +40,7 @@ const PostContainer = styled.div`
   padding: 20px;
   border: 1px solid black;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 const ProfileWrapper = styled.div`

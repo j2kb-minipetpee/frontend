@@ -14,6 +14,11 @@ export const HomepeePage = () => {
   return (
     <HomepeeLayout>
       <ContentContainer>
+        {data?.gateImageUrl && (
+          <div>
+            <img src={data.gateImageUrl} />
+          </div>
+        )}
         {data && (
           <>
             <ProfileDetail {...data.profile} visitCount={data.visitCount} />
