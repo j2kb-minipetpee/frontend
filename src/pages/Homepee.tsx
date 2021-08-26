@@ -4,7 +4,7 @@ import { ProfileDetail } from '@/components/Homepee/ProfileDetail';
 import { useGetHomeDataQuery } from '@/hooks';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Link, useParams, useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const HomepeePage = () => {

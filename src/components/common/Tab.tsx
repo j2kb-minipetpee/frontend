@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { ColorMap } from '@/lib/constants/color';
+import { Link } from 'react-router-dom';
+import { routes } from '@/lib/constants/routes';
 
 interface TabItem {
   index: string;
