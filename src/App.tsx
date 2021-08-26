@@ -21,17 +21,16 @@ const App = () => (
   <>
     <Global styles={globalStyle}></Global>
     <Switch>
+      <PublicRoute path={routes.HOME} component={Main} exact />
       <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
       <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedPost} />
       <PublicRoute path={routes.BOARD} component={Board} exact />
       <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
       <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PrivateRoute path={routes.SETTING} component={Setting} />
+      <PrivateRoute path={routes.SETTINGS} component={Setting} />
       <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
-
       <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
       <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
-      <PublicRoute path={routes.HOME} component={Main} exact />
     </Switch>
   </>
 );

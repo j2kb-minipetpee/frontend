@@ -60,7 +60,7 @@ const DetailedPostContainer = styled.section`
   height: auto;
   display: flex;
   flex-direction: column;
-  background: ${ColorMap.Grey50};
+  background: ${ColorMap.GREY70};
   align-items: center;
 `;
 

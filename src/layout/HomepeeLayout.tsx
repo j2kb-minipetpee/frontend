@@ -29,7 +29,7 @@ const tabs = [
     text: '방명록',
   },
   {
-    index: 'SETTING',
+    index: 'SETTINGS',
     text: '관리',
   },
 ];
