@@ -1,8 +1,9 @@
+import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { css, Global } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Main } from './pages/Main';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { routes } from './lib/constants/routes';
 import { HomepeePage } from './pages/Homepee';
 import { Gallery } from './pages/Gallery';
@@ -13,25 +14,26 @@ import { SignInPage } from './pages/SiginIn';
 import { SignUpPage } from './pages/SignUp';
 import { Setting } from './pages/Setting';
 import { ColorMap } from './lib/constants/color';
+import { WriteBoardPost } from './pages/WriteBoardPost';
+import { DetailedPost } from './pages/DetailedPost';
 
 const App = () => (
   <>
     <Global styles={globalStyle}></Global>
     <Switch>
+      <PublicRoute path={routes.HOME} component={Main} exact />
       <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
-      <PublicRoute path={routes.BOARD} component={Board} />
+      <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedPost} />
+      <PublicRoute path={routes.BOARD} component={Board} exact />
+      <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
       <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PrivateRoute path={routes.SETTING} component={Setting} />
+      <PrivateRoute path={routes.SETTINGS} component={Setting} />
       <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
-
       <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
       <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
-      <PublicRoute path={routes.HOME} component={Main} />
     </Switch>
   </>
 );
-
-export default App;
 
 const globalStyle = css`
   * {
@@ -59,4 +61,10 @@ const globalStyle = css`
   ul {
     list-style: none;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
+
+export default hot(App);

@@ -46,6 +46,10 @@ export interface SimplifiedPost {
   id: number;
   title: string;
   createdAt: string;
+  image: {
+    id: number;
+    url: string;
+  };
 }
 
 export interface EditBoardPostRequest {

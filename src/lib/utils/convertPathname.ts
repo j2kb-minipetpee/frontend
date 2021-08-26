@@ -9,7 +9,7 @@ export const convertPathname = (pathname: string): SelectedTab => {
     case pathname.includes('board'):
       return 'BOARD';
     case pathname.includes('setting'):
-      return 'SETTING';
+      return 'SETTINGS';
     default:
       return 'HOMEPEE';
   }

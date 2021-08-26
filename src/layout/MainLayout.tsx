@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react';
 import { Divider, Footer, Select } from '@/components';
+import logo from '@/assets/images/logo.png';
 import { useAuth } from '@/hooks';
 import { ColorMap } from '@/lib/constants/color';
-import logo from '@/assets/images/logo.png';
+import { Link } from 'react-router-dom';
+import { routes } from '@/lib/constants/routes';
 
 const options = [
   {
@@ -41,8 +43,12 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
               </>
             ) : (
               <>
-                <div>로그인</div>
-                <div>회원가입</div>
+                <Link to={routes.SIGNIN}>
+                  <div style={{ color: `${ColorMap.WHITE100}` }}>로그인</div>
+                </Link>
+                <Link to={routes.SIGNUP}>
+                  <div style={{ color: `${ColorMap.WHITE100}` }}>회원가입</div>
+                </Link>
               </>
             )}
           </div>
