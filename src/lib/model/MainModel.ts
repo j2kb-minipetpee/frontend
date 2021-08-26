@@ -9,7 +9,7 @@ interface Post {
 interface Member {
   id: number;
   name: string;
-  profileUrl: string;
+  profileImageUrl: string;
 }
 
 interface PopularPost {

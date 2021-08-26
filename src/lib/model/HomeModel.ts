@@ -6,7 +6,7 @@ export interface recentPost {
   createdAt: string;
 }
 
-export interface NeighborComment {
+export interface fanComments {
   id: number;
   memberId: number;
   memberName: string;
@@ -19,8 +19,8 @@ export interface GetHomeResponse {
   gateImageUrl?: string;
   recentPosts?: recentPost[];
   title: string;
-  visitCount: string;
-  neighborComments?: NeighborComment[];
+  visitCount: number;
+  fanComments?: fanComments[];
 }
 
 export interface AddNeighborCommentRequest {

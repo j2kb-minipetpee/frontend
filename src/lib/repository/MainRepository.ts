@@ -3,7 +3,7 @@ import client from '../client';
 
 class MainRepository {
   async getPopularPosts(): Promise<GetPopularPostsResponse> {
-    return client.get('/popluar-posts');
+    return client.get('/popular-posts?size=5&page=0');
   }
 
   async searchMembers(memberName: string): Promise<SearchMembersResponse> {

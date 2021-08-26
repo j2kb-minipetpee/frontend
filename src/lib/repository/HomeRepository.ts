@@ -10,7 +10,7 @@ import client from '../client';
 
 class HomeRepository {
   async getHomeData(homepeeId: number): Promise<GetHomeResponse> {
-    return await client.get(`${homepeeId}`);
+    return await client.get(`/${homepeeId}`);
   }
 
   async addNeighborComments({ userId, memberId, content }: AddNeighborCommentRequest): Promise<AddNeighborCommentResponse> {

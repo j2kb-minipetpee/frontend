@@ -5,11 +5,12 @@ import styled from '@emotion/styled';
 interface LogoProps {
   width?: number;
   height?: number;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-export const Logo = ({ width = 200, height = 150 }: LogoProps) => {
+export const Logo = ({ width = 200, height = 150, onClick }: LogoProps) => {
   return (
-    <LogoContainer width={width} height={height}>
+    <LogoContainer width={width} height={height} onClick={onClick}>
       <img src={logo} alt="logo" />
     </LogoContainer>
   );
@@ -18,6 +19,7 @@ export const Logo = ({ width = 200, height = 150 }: LogoProps) => {
 const LogoContainer = styled.div<LogoProps>`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  cursor: pointer;
 
   & img {
     width: 100%;
