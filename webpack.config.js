@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   mode: 'development',
@@ -41,11 +42,13 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+    fallback: { path: false, os: false },
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new Dotenv(),
   ],
 };
