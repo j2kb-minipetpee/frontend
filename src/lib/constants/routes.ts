@@ -2,9 +2,9 @@ export const routes: routesType = {
   HOME: '/',
   HOMEPEE: '/homepee/:id',
   GALLERY: '/homepee/:id/gallery',
-  BOARD: `/homepee/:id/board`,
-  BOARD_DETAILED_POST: '/homepee/:id/board/posts/:post-id',
-  BOARD_WRITE: '/homepee/:id/write',
+  BOARD: `/homepee/:id/board/posts`,
+  BOARD_DETAILED_POST: '/homepee/:id/board/posts/:postId',
+  BOARD_WRITE: '/homepee/:id/board/posts/write',
   GUESTNOTE: '/homepee/:id/guestnote',
   SETTINGS: '/homepee/:id/settings',
   SIGNIN: '/signin',
@@ -12,7 +12,7 @@ export const routes: routesType = {
 };
 
 interface routesType {
-  [index: string]: string;
+  //[index: string]: string;
   HOME: string;
   HOMEPEE: string;
   GALLERY: string;

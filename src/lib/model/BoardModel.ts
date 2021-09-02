@@ -22,7 +22,7 @@ export interface AddBoardPostResponse {
 
 export interface GetBoardPostRequest {
   homepeeId: string;
-  postId: number;
+  postId: string;
 }
 
 export interface GetBoardPostResponse {
@@ -30,17 +30,20 @@ export interface GetBoardPostResponse {
   title: string;
   content: string;
   viewCount: number;
-  imageId: number;
-  imageUrl: string;
+  image: {
+    id: number;
+    url: string;
+  };
+  createdAt: string;
 }
 
 export interface GetBoardPostsRequest {
   homepeeId: string;
-  size: number;
-  page: number;
+  size?: number;
+  page?: number;
 }
 
-export type GetBoardPostsResponse = Array<SimplifiedPost>;
+export type GetBoardPostsResponse = SimplifiedPost[];
 
 export interface SimplifiedPost {
   id: number;
