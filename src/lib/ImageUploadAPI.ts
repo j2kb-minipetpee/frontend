@@ -12,6 +12,6 @@ export const uploadImage = async (imageData: any) => {
 export const makeImageFormData = (image: any) => {
   const newImageData = new FormData();
   newImageData.append('image', image);
-  newImageData.append('key', 'befecb092df951f4dcbfe856c2369fb1');
+  newImageData.append('key', process.env.REACT_APP_IMAGEBB_API_KEY);
   return newImageData;
 };
