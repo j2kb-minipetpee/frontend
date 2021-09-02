@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from 'react-query';
-import { QueryKey } from '../../lib/constants';
+import { QueryKey } from '@/lib/constants';
 import {
   AddBoardCommentRequest,
   AddBoardCommentResponse,
@@ -13,20 +13,18 @@ import {
   GetBoardPostResponse,
   GetBoardPostsRequest,
   GetBoardPostsResponse,
-} from '../../lib/model';
-import { BoardRepository } from '../../lib/repository';
+} from '@/lib/model';
+import { BoardRepository } from '@/lib/repository';
 
-export const useGetBoardPostsQuery = ({ homepeeId, page, size }: GetBoardPostsRequest) => {
-  return useQuery<GetBoardPostsResponse, Error, GetBoardPostsRequest>([QueryKey.GetBoardPosts, homepeeId, page, size], () =>
-    BoardRepository.getBoardPosts({ homepeeId, page, size }),
-  );
+export const useGetBoardPostsQuery = ({ homepeeId }: GetBoardPostsRequest) => {
+  return useQuery<GetBoardPostsResponse, Error>([QueryKey.GetBoardPosts, homepeeId], () => BoardRepository.getBoardPosts({ homepeeId }));
 };
 
 export const useGetBoardPostQuery = ({ homepeeId, postId }: GetBoardPostRequest) => {
-  return useQuery<GetBoardPostResponse, Error, GetBoardPostRequest>(QueryKey.GetBoardPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
+  return useQuery<GetBoardPostResponse, Error>(QueryKey.GetBoardPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
 };
 
-export const useAddBoardPost = () => {
+export const useAddBoardPostMutation = () => {
   return useMutation<AddBoardPostResponse, Error, AddBoardPostRequest>(({ title, content, image, visible, homepeeId }) =>
     BoardRepository.addBoardPost({ title, content, image, visible, homepeeId }),
   );
@@ -38,7 +36,7 @@ export const useAddBoardComment = () => {
   );
 };
 
-export const useEditBoardPost = () => {
+export const useEditBoardPostMutation = () => {
   return useMutation<EditBoardPostResponse, Error, EditBoardPostRequest>(({ id, title, content, image, homepeeId, postId }) =>
     BoardRepository.editBoardPost({ id, title, content, image, homepeeId, postId }),
   );
