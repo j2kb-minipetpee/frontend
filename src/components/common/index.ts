@@ -8,3 +8,4 @@ export * from './Profile';
 export * from './Progressbar';
 export * from './Spacing';
 export * from './Logo';
+export * from './ImageUploader';
