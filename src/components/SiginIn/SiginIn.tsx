@@ -1,10 +1,31 @@
-import { ColorMap } from '@/lib/constants/color';
-import styled from '@emotion/styled';
 import React from 'react';
-import { Spacing } from '../common';
-import { Logo } from '../common/Logo';
+
+import styled from '@emotion/styled';
+import { ColorMap } from '@/lib/constants/color';
+import { AuthRepository } from '@/lib/repository';
+import { setAuthToken } from '@/lib/client';
+
+import { Spacing, Logo } from '@/components/common';
+import { useInput } from '@/hooks';
+import { login } from '@/store/auth';
+import { useDispatch } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 export const SiginIn = () => {
+  const dispatch = useDispatch();
+
+  const [email, onChangeEmail] = useInput('');
+  const [password, onChangePassword] = useInput('');
+
+  const onClickLogin = async () => {
+    const { accessToken } = await AuthRepository.login({ email, password });
+    setAuthToken(accessToken);
+
+    const decode = jwtDecode(accessToken);
+
+    dispatch(login({ email: '', id: 1234, name: '' })); // 디코드해서 받은 결과물 넣어줌.
+  };
+
   return (
     <SiginInContainer>
       <LogoConatiner>
@@ -16,13 +37,13 @@ export const SiginIn = () => {
       <Spacing vertical={30} />
 
       <Form>
-        <Input id="email" type="email" placeholder="이메일" />
+        <Input id="email" type="email" placeholder="이메일" value={email} onChange={onChangeEmail} />
         <Spacing vertical={11} />
 
-        <Input id="password" type="password" placeholder="비밀번호" />
+        <Input id="password" type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
         <Spacing vertical={39} />
 
-        <Button>로그인</Button>
+        <Button onClick={onClickLogin}>로그인</Button>
       </Form>
     </SiginInContainer>
   );

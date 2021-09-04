@@ -2,10 +2,35 @@ import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
 import React from 'react';
 
-import { Logo } from '../common/Logo';
-import { Spacing } from '../common/Spacing';
+import { Logo, Spacing } from '@/components/common';
+import { useInput } from '@/hooks';
+import { useHistory } from 'react-router-dom';
+import { useSignUpMutation } from '@/hooks/query/auth';
 
 export const SignUp = () => {
+  const history = useHistory();
+
+  const signUpMutation = useSignUpMutation();
+
+  const [email, onChangeEmail] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [name, onChangeName] = useInput('');
+
+  const onClickSignUp = () => {
+    signUpMutation.mutate(
+      {
+        email,
+        password,
+        name,
+      },
+      {
+        onSuccess: () => {
+          history.push('/login');
+        },
+      },
+    );
+  };
+
   return (
     <SignUpContainer>
       <LogoConatiner>
@@ -19,20 +44,20 @@ export const SignUp = () => {
       <Form>
         <label htmlFor="email">이메일</label>
         <Spacing vertical={30} />
-        <Input id="email" type="email" />
+        <Input id="email" type="email" value={email} onChange={onChangeEmail} />
         <Spacing vertical={41} />
 
         <label htmlFor="name">이름</label>
         <Spacing vertical={30} />
-        <Input id="name" type="text" />
+        <Input id="name" type="text" value={name} onChange={onChangeName} />
         <Spacing vertical={41} />
 
         <label htmlFor="password">비밀번호</label>
         <Spacing vertical={30} />
-        <Input id="password" type="password" />
+        <Input id="password" type="password" value={password} onChange={onChangePassword} />
         <Spacing vertical={57} />
 
-        <Button>회원가입하기</Button>
+        <Button onClick={onClickSignUp}>회원가입하기</Button>
       </Form>
     </SignUpContainer>
   );
