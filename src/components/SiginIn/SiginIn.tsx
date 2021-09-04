@@ -10,20 +10,27 @@ import { useInput } from '@/hooks';
 import { login } from '@/store/auth';
 import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import { useHistory } from 'react-router-dom';
+import { routes } from '@/lib/constants/routes';
 
 export const SiginIn = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const [email, onChangeEmail] = useInput('');
-  const [password, onChangePassword] = useInput('');
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
 
-  const onClickLogin = async () => {
+  const onLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     const { accessToken } = await AuthRepository.login({ email, password });
     setAuthToken(accessToken);
+    localStorage.setItem('accessToken', accessToken);
 
-    const decode = jwtDecode(accessToken);
+    const { email: userEmail, homepeeId, id, name } = jwtDecode<{ id: number; homepeeId: number; name: string; email: string }>(accessToken);
 
-    dispatch(login({ email: '', id: 1234, name: '' })); // 디코드해서 받은 결과물 넣어줌.
+    dispatch(login({ email: userEmail, name, id, homepeeId }));
+    history.push(routes.HOME);
   };
 
   return (
@@ -36,14 +43,14 @@ export const SiginIn = () => {
       <Title>JOIN US</Title>
       <Spacing vertical={30} />
 
-      <Form>
-        <Input id="email" type="email" placeholder="이메일" value={email} onChange={onChangeEmail} />
+      <Form onSubmit={onLoginSubmit}>
+        <Input id="email" type="email" placeholder="이메일" value={email} onChange={onEmailChange} />
         <Spacing vertical={11} />
 
-        <Input id="password" type="password" placeholder="비밀번호" value={password} onChange={onChangePassword} />
+        <Input id="password" type="password" placeholder="비밀번호" value={password} onChange={onPasswordChange} />
         <Spacing vertical={39} />
 
-        <Button onClick={onClickLogin}>로그인</Button>
+        <Button>로그인</Button>
       </Form>
     </SiginInContainer>
   );

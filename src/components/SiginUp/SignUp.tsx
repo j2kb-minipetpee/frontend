@@ -6,6 +6,7 @@ import { Logo, Spacing } from '@/components/common';
 import { useInput } from '@/hooks';
 import { useHistory } from 'react-router-dom';
 import { useSignUpMutation } from '@/hooks/query/auth';
+import { routes } from '@/lib/constants/routes';
 
 export const SignUp = () => {
   const history = useHistory();
@@ -16,7 +17,9 @@ export const SignUp = () => {
   const [password, onChangePassword] = useInput('');
   const [name, onChangeName] = useInput('');
 
-  const onClickSignUp = () => {
+  const onClickSignUp = (e: React.FormEvent) => {
+    e.preventDefault();
+
     signUpMutation.mutate(
       {
         email,
@@ -25,7 +28,7 @@ export const SignUp = () => {
       },
       {
         onSuccess: () => {
-          history.push('/login');
+          history.push(routes.SIGNIN);
         },
       },
     );
@@ -41,7 +44,7 @@ export const SignUp = () => {
       <Title>JOIN US</Title>
       <Spacing vertical={114} />
 
-      <Form>
+      <Form onSubmit={onClickSignUp}>
         <label htmlFor="email">이메일</label>
         <Spacing vertical={30} />
         <Input id="email" type="email" value={email} onChange={onChangeEmail} />
@@ -57,7 +60,7 @@ export const SignUp = () => {
         <Input id="password" type="password" value={password} onChange={onChangePassword} />
         <Spacing vertical={57} />
 
-        <Button onClick={onClickSignUp}>회원가입하기</Button>
+        <Button>회원가입하기</Button>
       </Form>
     </SignUpContainer>
   );
