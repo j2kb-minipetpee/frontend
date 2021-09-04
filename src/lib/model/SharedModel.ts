@@ -7,3 +7,18 @@ export interface Profile {
   gender: 'MALE' | 'FEMALE';
   profileImageUrl: string;
 }
+
+export interface PagableData<T> {
+  content: T;
+  page: {
+    totalElements: number;
+    totalPages: number;
+  };
+}
+
+export interface PagenationRequest {
+  page?: number;
+  size?: number;
+}
+
+export type SearchType = 'popular' | 'user' | 'post';
