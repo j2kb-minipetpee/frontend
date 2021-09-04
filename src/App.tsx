@@ -15,21 +15,23 @@ import { Setting } from './pages/Setting';
 import { ColorMap } from './lib/constants/color';
 import { WriteBoardPost } from './pages/WriteBoardPost';
 import { DetailedBoardPost } from './pages/DetailedBoardPost';
+import { WriteGalleryPost } from './pages/WriteGalleryPost';
 
 const App = () => (
   <>
     <Global styles={globalStyle}></Global>
     <Switch>
-      <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
-      <PublicRoute path={routes.HOME} component={Main} exact />
-      <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
       <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
-      <PublicRoute path={routes.BOARD} component={Board} exact />
+      <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
+      <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
+      <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
       <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PrivateRoute path={routes.SETTINGS} component={Setting} />
+      <PublicRoute path={routes.BOARD} component={Board} exact />
       <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
       <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
       <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
+      <PrivateRoute path={routes.SETTINGS} component={Setting} />
+      <PublicRoute path={routes.HOME} component={Main} exact />
     </Switch>
   </>
 );
