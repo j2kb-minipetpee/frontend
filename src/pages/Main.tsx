@@ -1,6 +1,6 @@
 import { MainLayout } from '../layout/MainLayout';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Post } from '@/components/Main/Post';
 import styled from '@emotion/styled';
 import { useGetPopularPostsQuery } from '@/hooks';
@@ -71,6 +71,7 @@ const POSTS = [
 export const Main = () => {
   const { data } = useGetPopularPostsQuery();
   const history = useHistory();
+
   return (
     <MainLayout>
       <PostContainer>
