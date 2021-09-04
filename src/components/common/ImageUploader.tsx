@@ -12,6 +12,10 @@ interface ImageUploaderProps {
 export const ImageUploader = ({ width, height, handleImageChange }: ImageUploaderProps) => {
   const inputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const handleClick = () => {
+    handleImageChange('');
+    setImagePreview('');
+  };
 
   const completeImageLoad = async () => {
     try {
@@ -29,14 +33,7 @@ export const ImageUploader = ({ width, height, handleImageChange }: ImageUploade
 
   return (
     <ImageUploaderContainer width={width} height={height}>
-      <RemoveImageButton
-        onClick={() => {
-          handleImageChange('');
-          setImagePreview('');
-        }}
-      >
-        x
-      </RemoveImageButton>
+      <RemoveImageButton onClick={handleClick}>x</RemoveImageButton>
       {imagePreview ? <PreviewImage src={imagePreview} /> : <PlusShapedBox src={bigPlusIcon} />}
       <ImageUploaderInput type="file" accept="image/*" onChange={completeImageLoad} ref={inputRef} />
     </ImageUploaderContainer>
