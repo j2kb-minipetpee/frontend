@@ -9,11 +9,12 @@ export interface Tab {
   id: number;
   homepeeId: number;
   type: GalleryType;
+  visible?: boolean;
 }
 
 export interface Profiles {
   profile: Profile;
-  tabs: Tab;
+  tabs: Tab[];
 }
 
 export interface GetSettingRequest {
@@ -23,16 +24,21 @@ export interface GetSettingRequest {
 export interface EditSettingRequest {
   homepeeId: string;
   profile: Profile;
-  tabs: Tab;
+  tabs: Tab[];
 }
 
 export interface EditSettingResponse {
   homepeeId: string;
   profile: Profile;
-  tabs: Tab;
+  tabs: Tab[];
+}
+
+export interface EditTabsRequest {
+  homepeeId: string;
+  tabs: Tab[];
 }
 
 export interface GetSettingResponse {
   profile: Profile;
-  tabs: Array<Tab>;
+  tabs: Tab[];
 }
