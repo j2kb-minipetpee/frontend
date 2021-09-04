@@ -2,13 +2,8 @@ import React from 'react';
 import { Button } from '@/components';
 import { useGetBoardPostsQuery } from '@/hooks';
 import { PostListLayout } from '@/layout/PostListLayout';
-import { GetBoardPostsResponse } from '@/lib/model';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
-
-export interface IProps {
-  postList: GetBoardPostsResponse;
-}
 
 export const Board = () => {
   const history = useHistory();

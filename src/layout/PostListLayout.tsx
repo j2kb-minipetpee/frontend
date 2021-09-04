@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { IProps } from '@/pages/Board';
 import { SimplePost } from '@/components/common/SimplePost';
+import { GetBoardPostsResponse } from '@/lib/model';
+
+export interface IProps {
+  postList: GetBoardPostsResponse;
+}
 
 export const PostListLayout = ({ postList }: IProps) => {
   return (
