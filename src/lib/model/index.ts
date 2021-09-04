@@ -3,7 +3,7 @@ export * from './MainModel';
 export * from './HomeModel';
 export * from './BoardModel';
 export * from './GalleryModel';
-export * from './GuestnoteModel';
+export * from './GuestNoteModel';
 export * from './SettingModel';
 export * from './SharedModel';
 export * from './StarFanModel';

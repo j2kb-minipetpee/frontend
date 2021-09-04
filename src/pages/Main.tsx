@@ -9,8 +9,7 @@ import { getQueryString } from '@/lib/utils/getQueryString';
 import { Member } from '@/components/Main/Member';
 import { SearchType } from '@/lib/model';
 import { MainText } from '@/components/Main/MainText';
-import nextImage from '@/assets/images/next_large.png';
-import { Spacing } from '@/components';
+import { NextButton } from '@/components/common/NextButton';
 
 export const Main = () => {
   const history = useHistory();
@@ -90,12 +89,7 @@ export const Main = () => {
             .map(({ homepeeId, id, name, profileImageUrl }) => <Member key={id} homepeeId={homepeeId} name={name} id={id} profileImageUrl={profileImageUrl} />)}
       </PostContainer>
 
-      {isMore && (
-        <NextButtonWrapper onClick={onMoreClick}>
-          <span>더보기</span>
-          <Spacing horizon={4} /> <img src={nextImage} />
-        </NextButtonWrapper>
-      )}
+      {isMore && <NextButton onClick={onMoreClick} />}
     </MainLayout>
   );
 };
@@ -106,15 +100,4 @@ const PostContainer = styled.div`
   flex-wrap: wrap;
   overflow-y: auto;
   padding: 50px 449px;
-`;
-
-const NextButtonWrapper = styled.button`
-  border: none;
-  background-color: white;
-  outline: none;
-  display: flex;
-  align-items: center;
-  font-size: 1rem;
-  margin-left: auto;
-  margin-right: 449px;
 `;

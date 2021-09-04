@@ -7,7 +7,7 @@ import { routes } from './lib/constants/routes';
 import { HomepeePage } from './pages/Homepee';
 import { Gallery } from './pages/Gallery';
 import { Board } from './pages/Board';
-import { Guestnote } from './pages/Guestnote';
+import { GuestNotePage } from './pages/GuestNote';
 import { PrivateRoute, PublicRoute } from './lib/constants/PrivateRoute';
 import { SignInPage } from './pages/SiginIn';
 import { SignUpPage } from './pages/SignUp';
@@ -21,7 +21,9 @@ const App = () => (
   <>
     <Global styles={globalStyle}></Global>
     <Switch>
-      <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
+      <PublicRoute path={routes.HOME} component={Main} exact />
+      <PublicRoute path={routes.GUESTNOTE} component={GuestNotePage} />
+      <PublicRoute path={routes.BOARD} component={Board} exact />
       <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
       <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
       <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
