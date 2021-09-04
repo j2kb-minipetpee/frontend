@@ -16,7 +16,7 @@ interface GuestNoteInputProps {
 
 export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => {
   const [selectedNoteType, setSelectedNoteType] = useState<SelectedNoteType>('normal');
-  const [content, onContentChange] = useInput<HTMLTextAreaElement>('');
+  const [content, onContentChange, reset] = useInput<HTMLTextAreaElement>('');
   const queryClient = useQueryClient();
 
   const addGuestNoteMutation = useAddGeustNoteMutation();
@@ -31,7 +31,9 @@ export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => 
       { content, visible: selectedNoteType === 'normal', memberId, homepeeId },
       {
         onSuccess: () => {
-          queryClient.refetchQueries([QueryKey.GetGuestNotes, homepeeId]);
+          console.log('성공');
+          reset();
+          queryClient.invalidateQueries([QueryKey.GetGuestNotes, Number(homepeeId)]);
         },
       },
     );
