@@ -15,7 +15,7 @@ class GuestNoteRepository {
   }
 
   async addGuestNote({ homepeeId, memberId, content, visible }: AddGuestNoteRequest): Promise<AddGuestNoteResponse> {
-    return client.post(`/${homepeeId}/guest/guestnotes`, {
+    return client.post(`/${homepeeId}/guest/guest-notes`, {
       memberId,
       content,
       visible,

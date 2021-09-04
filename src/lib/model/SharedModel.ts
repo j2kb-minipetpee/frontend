@@ -8,6 +8,12 @@ export interface Profile {
   profileImageUrl: string;
 }
 
+export interface Member {
+  id: number;
+  name: string;
+  profileImageUrl: string;
+}
+
 export interface PagableData<T> {
   content: T;
   page: {

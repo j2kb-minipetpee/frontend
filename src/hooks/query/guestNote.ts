@@ -5,7 +5,7 @@ import { useInfiniteQuery, useMutation } from 'react-query';
 
 export const useGetGuestNoteQuery = (homepeeId: number, enabled?: boolean) => {
   return useInfiniteQuery<GetGuestNotesResponse, Error>(
-    [QueryKey.GetGuestNotes],
+    [QueryKey.GetGuestNotes, homepeeId],
     ({ pageParam = { page: 0, size: 5 } }) => GuestNoteRepository.getGuestNotes({ homepeeId, ...pageParam }),
     {
       enabled,

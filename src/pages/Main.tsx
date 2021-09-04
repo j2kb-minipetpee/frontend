@@ -95,9 +95,11 @@ export const Main = () => {
 };
 
 const PostContainer = styled.div`
+  width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  margin: 0 auto;
   flex-wrap: wrap;
   overflow-y: auto;
-  padding: 50px 449px;
+  padding: 50px;
 `;

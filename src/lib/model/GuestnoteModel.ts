@@ -1,8 +1,8 @@
-import { PagableData } from './SharedModel';
+import { Member, PagableData } from './SharedModel';
 
 export interface GuestNote {
   id: number;
-  memberId: number;
+  member: Member;
   content: string;
   visible: boolean;
   createdAt: string;

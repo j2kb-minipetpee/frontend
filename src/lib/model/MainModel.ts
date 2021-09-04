@@ -1,4 +1,4 @@
-import { PagableData } from './SharedModel';
+import { Member, PagableData } from './SharedModel';
 
 interface Post {
   id: number;
@@ -6,12 +6,6 @@ interface Post {
   createdAt: string;
   imageUrl: string;
   content: string;
-}
-
-interface Member {
-  id: number;
-  name: string;
-  profileImageUrl: string;
 }
 
 export interface PopularPost {

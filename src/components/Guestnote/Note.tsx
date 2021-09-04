@@ -1,5 +1,6 @@
+import styled from '@emotion/styled';
 import React from 'react';
-import { Profile } from '../common';
+import { Profile, Spacing } from '../common';
 
 interface NoteProps {
   name: string;
@@ -11,14 +12,34 @@ interface NoteProps {
 
 export const Note = ({ name, profileImage, content, createdAt, visible }: NoteProps) => {
   return (
-    <div>
-      <div>
+    <NoteContainer>
+      <NoteInfo>
         <Profile size="small" imageURL={profileImage} />
-        <span>{name}</span>
-        <span>{createdAt}</span>
-      </div>
+        <Spacing horizon={7} />
+
+        <div className="note-info">
+          <span>{name}</span>
+          <Spacing horizon={5} />
+          <span>{createdAt.split(' ')[0]}</span>
+        </div>
+      </NoteInfo>
+
+      <Spacing vertical={16} />
 
       {visible ? <div>{content}</div> : <div>비밀 글 입니다.</div>}
-    </div>
+    </NoteContainer>
   );
 };
+
+const NoteContainer = styled.div`
+  margin: 16px 12px;
+`;
+
+const NoteInfo = styled.div`
+  display: flex;
+  align-items: flex-end;
+
+  & .note-info {
+    display: flex;
+  }
+`;
