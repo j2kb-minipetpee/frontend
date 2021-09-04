@@ -2,10 +2,19 @@ import React from 'react';
 import { PostListLayout } from '@/layout/PostListLayout';
 import { SimplifiedPost } from '@/lib/model';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
+import { Button } from '@/components';
+import { useHistory, useRouteMatch } from 'react-router';
 
 export const Gallery = () => {
+  const history = useHistory();
+  const { url } = useRouteMatch();
+  const handleClick = () => {
+    history.push(`${url}/write`);
+  };
+
   return (
     <HomepeeLayout>
+      <Button color="GREY100" text="글 쓰기" onClick={handleClick} />
       <PostListLayout postList={dummyData} />
     </HomepeeLayout>
   );
