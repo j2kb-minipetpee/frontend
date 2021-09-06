@@ -4,17 +4,20 @@ import { ColorMap } from '@/lib/constants/color';
 import { makeImageFormData, uploadImage } from '@/lib/ImageUploadAPI';
 import bigPlusIcon from '@/assets/images/plus_big.png';
 interface ImageUploaderProps {
+  id?: number;
   width: string;
   height: string;
-  handleImageChange: (targetImageUrl: string) => void;
+  handleImageChange: (targetImageUrl: string, targetDOMId?: number) => void;
+  handleImageRemove: (targetDOMId?: number) => void;
 }
 
-export const ImageUploader = ({ width, height, handleImageChange }: ImageUploaderProps) => {
+export const ImageUploader = ({ width, height, handleImageChange, handleImageRemove, id }: ImageUploaderProps) => {
   const inputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const handleClick = () => {
-    handleImageChange('');
-    setImagePreview('');
+
+  const handleRemoveClick = () => {
+    setImagePreview(null);
+    id ? handleImageRemove(id) : handleImageRemove();
   };
 
   const completeImageLoad = async () => {
@@ -22,7 +25,7 @@ export const ImageUploader = ({ width, height, handleImageChange }: ImageUploade
       if (inputRef.current.files && inputRef.current.files[0]) {
         const newImage = makeImageFormData(inputRef.current.files[0]);
         const imageUrl = await uploadImage(newImage);
-        handleImageChange(imageUrl);
+        id ? handleImageChange(imageUrl, id) : handleImageChange(imageUrl);
         setImagePreview(imageUrl);
       }
     } catch (error) {
@@ -33,7 +36,7 @@ export const ImageUploader = ({ width, height, handleImageChange }: ImageUploade
 
   return (
     <ImageUploaderContainer width={width} height={height}>
-      <RemoveImageButton onClick={handleClick}>x</RemoveImageButton>
+      <RemoveImageButton onClick={handleRemoveClick}>x</RemoveImageButton>
       {imagePreview ? <PreviewImage src={imagePreview} /> : <PlusShapedBox src={bigPlusIcon} />}
       <ImageUploaderInput type="file" accept="image/*" onChange={completeImageLoad} ref={inputRef} />
     </ImageUploaderContainer>
@@ -41,13 +44,13 @@ export const ImageUploader = ({ width, height, handleImageChange }: ImageUploade
 };
 
 const ImageUploaderContainer = styled.section<{ width: string; height: string }>`
-  margin-top: 30px;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
+  border: 1px solid ${ColorMap.GREY70};
 `;
 
 const RemoveImageButton = styled.button`
@@ -60,7 +63,7 @@ const RemoveImageButton = styled.button`
   background: ${ColorMap.EMERALD100};
   border: none;
   outline: none;
-  z-index: 3;
+  z-index: 4;
 `;
 
 const PlusShapedBox = styled.img`
@@ -82,8 +85,8 @@ const PreviewImage = styled.img`
 `;
 
 const ImageUploaderInput = styled.input`
-  width: 592px;
-  height: 383px;
+  width: 100%;
+  height: 100%;
   background: ${ColorMap.EMERALD50};
   z-index: 3;
   opacity: 0;
