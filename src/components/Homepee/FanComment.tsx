@@ -42,6 +42,7 @@ export const FanComment = ({ fanComments }: FanCommentProps) => {
 
 const FanCommentContainer = styled.div`
   width: 711px;
+  padding-top: 117px;
 `;
 
 const FanCommentWrapper = styled.div`

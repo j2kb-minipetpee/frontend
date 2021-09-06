@@ -7,7 +7,10 @@ export const Footer = () => {
 };
 
 const FooterContainer = styled.footer`
-  margin-top: auto;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  bottom: 0;
   background: ${ColorMap.GREY100};
   color: ${ColorMap.WHITE100};
   padding: 1rem;

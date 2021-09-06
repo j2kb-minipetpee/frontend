@@ -1,3 +1,5 @@
+import { Member, PagableData } from './SharedModel';
+
 interface Post {
   id: number;
   title: string;
@@ -6,29 +8,24 @@ interface Post {
   content: string;
 }
 
-interface Member {
-  id: number;
-  name: string;
-  profileImageUrl: string;
-}
-
-interface PopularPost {
+export interface PopularPost {
   homepeeId: number;
   post: Post;
   member: Member;
 }
 
-export type GetPopularPostsResponse = PopularPost[];
+export type GetPopularPostsResponse = PagableData<PopularPost[]>;
 
-interface SearchMemberInfo extends Member {
+export interface SearchMemberInfo extends Member {
   homepeeId: number;
 }
 
-export type SearchMembersResponse = SearchMemberInfo[];
+export type SearchMembersResponse = PagableData<SearchMemberInfo[]>;
 
-interface SearchPostInfo {
-  memberName: string;
-  postInfo: Post;
+export interface SearchPostInfo {
+  homepeeId: number;
+  post: Post;
+  member: Member;
 }
 
-export type SearchPostsResponse = SearchPostInfo[];
+export type SearchPostsResponse = PagableData<SearchPostInfo[]>;

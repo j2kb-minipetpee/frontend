@@ -1,5 +1,5 @@
 import { hot } from 'react-hot-loader/root';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { css, Global } from '@emotion/react';
 import { Main } from './pages/Main';
 import { Switch } from 'react-router-dom';
@@ -7,8 +7,8 @@ import { routes } from './lib/constants/routes';
 import { HomepeePage } from './pages/Homepee';
 import { Gallery } from './pages/Gallery';
 import { Board } from './pages/Board';
-import { Guestnote } from './pages/Guestnote';
-import { PrivateRoute, PublicRoute } from './lib/constants/PrivateRoute';
+import { GuestNotePage } from './pages/GuestNote';
+import { PrivateRoute, PublicRoute } from './lib/constants/Route';
 import { SignInPage } from './pages/SiginIn';
 import { SignUpPage } from './pages/SignUp';
 import { Setting } from './pages/Setting';
@@ -16,25 +16,46 @@ import { ColorMap } from './lib/constants/color';
 import { WriteBoardPost } from './pages/WriteBoardPost';
 import { DetailedBoardPost } from './pages/DetailedBoardPost';
 import { WriteGalleryPost } from './pages/WriteGalleryPost';
+import { useAuth } from './hooks';
+import { useDispatch } from 'react-redux';
+import { login } from './store/auth';
+import jwtDecode from 'jwt-decode';
+import { setAuthToken } from './lib/client';
 
-const App = () => (
-  <>
-    <Global styles={globalStyle}></Global>
-    <Switch>
-      <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
-      <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
-      <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
-      <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
-      <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PublicRoute path={routes.BOARD} component={Board} exact />
-      <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
-      <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
-      <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
-      <PrivateRoute path={routes.SETTINGS} component={Setting} />
-      <PublicRoute path={routes.HOME} component={Main} exact />
-    </Switch>
-  </>
-);
+const App = () => {
+  const dispatch = useDispatch();
+  const { id } = useAuth();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!id && accessToken) {
+      const decode = jwtDecode<{ id: number; homepeeId: number; name: string; email: string }>(accessToken);
+      setAuthToken(accessToken);
+      dispatch(login({ ...decode }));
+    }
+  }, []);
+
+  return (
+    <>
+      <Global styles={globalStyle}></Global>
+      <Switch>
+        <PublicRoute path={routes.HOME} component={Main} exact />
+        <PublicRoute path={routes.GUESTNOTE} component={GuestNotePage} />
+        <PublicRoute path={routes.BOARD} component={Board} exact />
+        <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
+        <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
+        <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
+        <PublicRoute path={routes.GALLERY} component={Gallery} />
+        <PrivateRoute path={routes.SETTINGS} component={Setting} />
+        <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
+        <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
+        <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
+        <PublicRoute path={routes.HOME} component={Main} exact />
+      </Switch>
+    </>
+  );
+};
 
 const globalStyle = css`
   * {

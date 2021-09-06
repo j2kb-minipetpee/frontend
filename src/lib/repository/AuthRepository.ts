@@ -1,8 +1,8 @@
-import { LoginRequest, SiginInRequest, ValidateEmailRequest } from '../model';
+import { LoginRequest, LoginResponse, SignUpRequest, ValidateEmailRequest } from '../model';
 import client from '../client';
 
 class AuthRepository {
-  async signUp({ email, password, name }: SiginInRequest): Promise<void> {
+  async signUp({ email, password, name }: SignUpRequest): Promise<void> {
     return await client.post(`/members`, {
       email,
       password,
@@ -14,7 +14,7 @@ class AuthRepository {
     return await client.get(`/validate-email?email=${email}`);
   }
 
-  async login({ email, password }: LoginRequest): Promise<void> {
+  async login({ email, password }: LoginRequest): Promise<LoginResponse> {
     return await client.post(`/login`, {
       email,
       password,

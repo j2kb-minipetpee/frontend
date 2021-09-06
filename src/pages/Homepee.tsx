@@ -15,16 +15,19 @@ export const HomepeePage = () => {
     <HomepeeLayout>
       <ContentContainer>
         {data?.gateImageUrl && (
-          <div>
-            <img src={data.gateImageUrl} />
-          </div>
+          <>
+            <GateImageWrapper>
+              <img src={data.gateImageUrl} />
+            </GateImageWrapper>
+            <Spacing vertical={48} />
+          </>
         )}
         {data && (
-          <>
+          <ContentWrapper>
             <ProfileDetail {...data.profile} visitCount={data.visitCount} />
             <Spacing horizon={50} />
             <FanComment fanComments={data.fanComments}></FanComment>
-          </>
+          </ContentWrapper>
         )}
       </ContentContainer>
     </HomepeeLayout>
@@ -35,6 +38,21 @@ const ContentContainer = styled.section`
   width: 100%;
   height: 100%;
   padding: 80px 120px 0 198px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const GateImageWrapper = styled.div`
+  width: 978px;
+  height: 149px;
+
+  & img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;

@@ -1,4 +1,3 @@
-import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
 import React from 'react';
 

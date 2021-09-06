@@ -7,7 +7,7 @@ const axios = Axios.create({
 });
 
 export function setAuthToken(authToken: string): void {
-  axios.defaults.headers.common['Authorization'] = authToken;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
 }
 
 export function clearAuthToken(): void {

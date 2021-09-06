@@ -1,25 +1,27 @@
+import { Member, PagableData } from './SharedModel';
+
 export interface GuestNote {
   id: number;
-  memberId: number;
+  member: Member;
   content: string;
   visible: boolean;
   createdAt: string;
 }
 
-export interface GetGuestnotesRequest {
+export interface GetGuestNotesRequest {
   homepeeId: string;
 }
 
-export type GetGuestnotesResponse = Array<GuestNote>;
+export type GetGuestNotesResponse = PagableData<GuestNote[]>;
 
-export interface AddGuestnoteRequest {
+export interface AddGuestNoteRequest {
   homepeeId: string;
   memberId: number;
   content: string;
   visible: boolean;
 }
 
-export interface AddGuestnoteResponse {
+export interface AddGuestNoteResponse {
   id: number;
   memberId: number;
   content: string;
@@ -27,16 +29,15 @@ export interface AddGuestnoteResponse {
   createdAt: string;
 }
 
-export interface EditGuestnoteRequest {
+export interface EditGuestNoteRequest {
   homepeeId: string;
-  id: number;
   memberId: number;
   content: string;
   visible: boolean;
-  guestnoteId: string;
+  guestNoteId: string;
 }
 
-export interface DeleteGuestnoteRequest {
+export interface DeleteGuestNoteRequest {
   homepeeId: string;
-  guestnoteId: string;
+  guestNoteId: string;
 }
