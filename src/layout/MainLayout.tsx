@@ -7,6 +7,8 @@ import { ColorMap } from '@/lib/constants/color';
 import { Link, useHistory } from 'react-router-dom';
 import { routes } from '@/lib/constants/routes';
 import search from '@/assets/images/search.png';
+import { useDispatch } from 'react-redux';
+import { logout } from '@/store/auth';
 
 const options = [
   {
@@ -29,14 +31,25 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const history = useHistory();
-  const { id, name } = useAuth();
+  const dispatch = useDispatch();
+
+  const { id, homepeeId, name } = useAuth();
 
   const [selectedIndex, setSelectedIndex] = useState('popular');
   const [searchText, setSearchText] = useState('');
 
+  const moveMyHome = () => {
+    history.push(routes.HOMEPEE.replace(':id', String(homepeeId)));
+  };
+
   const onSelectedChange = (value: string) => {
     setSelectedIndex(value);
     setSearchText('');
+  };
+
+  const onLogout = () => {
+    localStorage.removeItem('accessToken');
+    dispatch(logout());
   };
 
   const onSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,16 +73,16 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           <div className="auth_box">
             {id ? (
               <>
-                <div>{name} 님</div>
-                <div>로그아웃 </div>
+                <UserInfoWrapper onClick={moveMyHome}>{name} 님</UserInfoWrapper>
+                <UserInfoWrapper onClick={onLogout}>로그아웃 </UserInfoWrapper>
               </>
             ) : (
               <>
                 <Link to={routes.SIGNIN}>
-                  <div style={{ color: `${ColorMap.WHITE100}` }}>로그인</div>
+                  <UserInfoWrapper>로그인</UserInfoWrapper>
                 </Link>
                 <Link to={routes.SIGNUP}>
-                  <div style={{ color: `${ColorMap.WHITE100}` }}>회원가입</div>
+                  <UserInfoWrapper>회원가입</UserInfoWrapper>
                 </Link>
               </>
             )}
@@ -131,6 +144,12 @@ const MainHeader = styled.section`
       margin-right: 0.5rem;
     }
   }
+`;
+
+const UserInfoWrapper = styled.div`
+  color: ${ColorMap.WHITE100};
+  white-space: nowrap;
+  cursor: pointer;
 `;
 
 const MainSection = styled.section`

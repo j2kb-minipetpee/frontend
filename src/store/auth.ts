@@ -24,9 +24,16 @@ export const counterSlice = createSlice({
       state.id = action.payload.id;
       state.homepeeId = action.payload.homepeeId;
     },
+
+    logout: (state) => {
+      state.name = '';
+      state.email = '';
+      state.id = null;
+      state.homepeeId = null;
+    },
   },
 });
 
-export const { login } = counterSlice.actions;
+export const { login, logout } = counterSlice.actions;
 
 export default counterSlice.reducer;

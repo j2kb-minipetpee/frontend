@@ -10,6 +10,7 @@ import { Member } from '@/components/Main/Member';
 import { SearchType } from '@/lib/model';
 import { MainText } from '@/components/Main/MainText';
 import { NextButton } from '@/components/common/NextButton';
+import { routes } from '@/lib/constants/routes';
 
 export const Main = () => {
   const history = useHistory();
@@ -46,6 +47,10 @@ export const Main = () => {
     searchMemberQuery.fetchNextPage();
   };
 
+  const onClickPost = (homepeeId: string) => () => {
+    history.push(routes.HOMEPEE.replace(':id', homepeeId));
+  };
+
   return (
     <MainLayout>
       <MainText type={type} />
@@ -62,7 +67,7 @@ export const Main = () => {
                 coverImage={post.imageUrl}
                 title={post.title}
                 description={post.content}
-                onClick={() => history.push(`/homepee/${homepeeId}`)}
+                onClick={onClickPost(String(homepeeId))}
               ></Post>
             ))}
 
@@ -78,7 +83,7 @@ export const Main = () => {
                 coverImage={post.imageUrl}
                 title={post.title}
                 description={post.content}
-                onClick={() => history.push(`/homepee/${homepeeId}`)}
+                onClick={onClickPost(String(homepeeId))}
               ></Post>
             ))}
 
