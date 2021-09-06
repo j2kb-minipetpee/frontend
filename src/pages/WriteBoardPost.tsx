@@ -27,6 +27,10 @@ export const WriteBoardPost = () => {
     setImageUrl(targetImageUrl);
   };
 
+  const handleImageRemove = () => {
+    setImageUrl('');
+  };
+
   const handleClick = () => {
     addBoardPostMutation.mutate(
       { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl },
@@ -38,7 +42,7 @@ export const WriteBoardPost = () => {
     <HomepeeLayout>
       <WriteContainer>
         <WriteTitle placeholder="제목" onChange={handleWriteTitleChange} />
-        <ImageUploader width="100%" height="auto" handleImageChange={handleImageChange} />
+        <ImageUploader width="100%" height="auto" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} />
         <WriteContent rows={30} onChange={handleWriteContentChange} />
         <WriteButtonWrapper>
           <WriteButton onClick={handleClick}>업로드</WriteButton>
@@ -59,12 +63,12 @@ const WriteContainer = styled.section`
 `;
 
 const WriteTitle = styled.input`
-  margin-top: 33px;
+  width: 100%;
   padding-left: 17px;
   font-size: 16px;
   color: ${ColorMap.GREY70};
   background: ${ColorMap.WHITE80};
-  width: 100%;
+  margin-top: 33px;
   border: 0;
   border-bottom: 2px solid;
   outline: none;
