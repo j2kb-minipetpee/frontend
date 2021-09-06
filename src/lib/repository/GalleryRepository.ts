@@ -16,11 +16,10 @@ class GalleryRepository {
   async getGalleryPost({ homepeeId }: GetGalleryPostRequest): Promise<GetGalleryPostResponse> {
     return client.get(`/${homepeeId}/album/posts`);
   }
-  async addGalleryPost({ homepeeId, title, images, visible }: AddGalleryPostRequest): Promise<AddGalleryPostResponse> {
+  async addGalleryPost({ homepeeId, title, images }: AddGalleryPostRequest): Promise<AddGalleryPostResponse> {
     return client.post(`/${homepeeId}/album/posts`, {
       title,
       images,
-      visible,
     });
   }
   async editGalleryPost({ homepeeId, id, title, image, visible }: EditGalleryPostRequest): Promise<EditGalleryPostResponse> {

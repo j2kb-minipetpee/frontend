@@ -13,37 +13,35 @@ export interface GetGalleryPostResponse {
   visible: boolean;
 }
 export interface AddGalleryPostRequest {
-  homepeeId: string;
+  homepeeId: number;
   title: string;
   images: Array<string>;
-  visible: boolean;
 }
 export interface AddGalleryPostResponse {
   id: number;
   title: string;
   images: Array<string>;
-  visible: boolean;
 }
 export interface EditGalleryPostRequest {
-  homepeeId: string;
+  homepeeId: number;
   id: number;
   title: string;
   image: Array<GalleryImage>;
   visible: boolean;
 }
 export interface EditGalleryPostResponse {
-  homepeeId: string;
+  homepeeId: number;
   id: number;
   title: string;
   images: Array<GalleryImage>;
   visible: boolean;
 }
 export interface DeleteGalleryPostRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
 }
 export interface AddGalleryCommentRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
   memberId: number;
   content: string;
@@ -55,7 +53,7 @@ export interface AddGalleryCommentResponse {
   createdAt: string;
 }
 export interface DeleteGalleryCommentRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
   commentId: number;
 }

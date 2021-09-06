@@ -19,29 +19,29 @@ export const useGetGalleryPostQuery = (homepeeId: number) => {
   );
 };
 
-export const useAddGalleryPost = () => {
-  return useMutation<AddGalleryPostResponse, Error, AddGalleryPostRequest>(({ homepeeId, title, images, visible }) =>
-    GalleryRepository.addGalleryPost({ homepeeId, title, images, visible }),
+export const useAddGalleryPostMutation = () => {
+  return useMutation<AddGalleryPostResponse, Error, AddGalleryPostRequest>(({ homepeeId, title, images }) =>
+    GalleryRepository.addGalleryPost({ homepeeId, title, images }),
   );
 };
 
-export const useAddGalleryComment = () => {
+export const useAddGalleryCommentMutation = () => {
   return useMutation<AddGalleryCommentResponse, Error, AddGalleryCommentRequest>(({ homepeeId, postId, memberId, content }) =>
     GalleryRepository.addGalleryComment({ homepeeId, postId, memberId, content }),
   );
 };
 
-export const useEditGalleryPost = () => {
+export const useEditGalleryPostMutation = () => {
   return useMutation<EditGalleryPostResponse, Error, EditGalleryPostRequest>(({ homepeeId, id, title, image, visible }) =>
     GalleryRepository.editGalleryPost({ homepeeId, id, title, image, visible }),
   );
 };
 
-export const useDeleteGalleryPost = () => {
+export const useDeleteGalleryPostMutation = () => {
   return useMutation<void, Error, DeleteGalleryPostRequest>(({ homepeeId, postId }) => GalleryRepository.deleteGalleryPost({ homepeeId, postId }));
 };
 
-export const useDeleteGalleryComment = () => {
+export const useDeleteGalleryCommentMutation = () => {
   return useMutation<void, Error, DeleteGalleryCommentRequest>(({ homepeeId, postId, commentId }) =>
     GalleryRepository.deleteGalleryComment({ homepeeId, postId, commentId }),
   );
