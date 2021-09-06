@@ -31,7 +31,6 @@ export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => 
       { content, visible: selectedNoteType === 'normal', memberId, homepeeId },
       {
         onSuccess: () => {
-          console.log('성공');
           reset();
           queryClient.invalidateQueries([QueryKey.GetGuestNotes, Number(homepeeId)]);
         },

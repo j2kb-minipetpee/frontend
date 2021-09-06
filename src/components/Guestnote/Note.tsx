@@ -1,16 +1,44 @@
+import { useInput } from '@/hooks';
+import { useDeleteGeustNoteMutation, useEditGeustNoteMutation } from '@/hooks/query/guestNote';
+import { QueryKey } from '@/lib/constants';
+import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Profile, Spacing } from '../common';
+import { useState } from 'react';
+import { useQueryClient } from 'react-query';
+import { ButtonGroup, Profile, Spacing } from '../common';
 
 interface NoteProps {
+  id: string;
+  homepeeId: string;
+  memberId: number;
   name: string;
   profileImage: string;
   createdAt: string;
   content: string;
-  visible: boolean;
+  isHomepeeHost: boolean;
+  isMine: boolean;
 }
 
-export const Note = ({ name, profileImage, content, createdAt, visible }: NoteProps) => {
+type NoteType = 'normal' | 'edit';
+
+export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, isHomepeeHost, isMine, memberId }: NoteProps) => {
+  const [type, setType] = useState<NoteType>('normal');
+  const [value, onValueChange] = useInput(content);
+
+  const editGuestNoteMutation = useEditGeustNoteMutation();
+  const deleteGuestMutation = useDeleteGeustNoteMutation();
+
+  const queryClient = useQueryClient();
+
+  const onTypeChange = () => {
+    setType(type === 'normal' ? 'edit' : 'normal');
+  };
+
+  const onSuccess = () => {
+    queryClient.invalidateQueries([QueryKey.GetGuestNotes, Number(homepeeId)]);
+  };
+
   return (
     <NoteContainer>
       <NoteInfo>
@@ -26,7 +54,57 @@ export const Note = ({ name, profileImage, content, createdAt, visible }: NotePr
 
       <Spacing vertical={16} />
 
-      {visible ? <div>{content}</div> : <div>비밀 글 입니다.</div>}
+      {isHomepeeHost || isMine ? (
+        <ContentWrapper>
+          {type === 'normal' ? content : <TextArea value={value} onChange={onValueChange} />}
+
+          {isMine && (
+            <ButtonWrapper>
+              <ButtonGroup
+                size="large"
+                buttons={[
+                  {
+                    text: '수정',
+                    color: type === 'normal' ? 'GREY70' : 'EMERALD100',
+                    onClick: () => {
+                      if (type === 'edit') {
+                        editGuestNoteMutation.mutate(
+                          {
+                            guestNoteId: id,
+                            homepeeId: homepeeId,
+                            memberId,
+                            content: value,
+                            visible: true,
+                          },
+                          {
+                            onSuccess,
+                          },
+                        );
+                      }
+
+                      onTypeChange();
+                    },
+                  },
+                  {
+                    text: '삭제',
+                    color: 'GREY70',
+                    onClick: () => {
+                      deleteGuestMutation.mutate(
+                        { guestNoteId: String(id), homepeeId: String(homepeeId) },
+                        {
+                          onSuccess,
+                        },
+                      );
+                    },
+                  },
+                ]}
+              />
+            </ButtonWrapper>
+          )}
+        </ContentWrapper>
+      ) : (
+        <ContentWrapper>비밀 글 입니다.</ContentWrapper>
+      )}
     </NoteContainer>
   );
 };
@@ -42,4 +120,26 @@ const NoteInfo = styled.div`
   & .note-info {
     display: flex;
   }
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  border: 1px solid ${ColorMap.GREY70};
+  width: 544px;
+  height: 120px;
+  padding: 12px;
+  font-size: 1rem;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-left: auto;
+  margin-top: auto;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1rem;
 `;

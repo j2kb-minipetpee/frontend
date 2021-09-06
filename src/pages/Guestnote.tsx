@@ -8,15 +8,15 @@ import { useParams } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const GuestNotePage = () => {
-  const { id, name } = useAuth();
-  const { id: homepeeId } = useParams<{ id: string }>();
+  const { id, name, homepeeId } = useAuth();
+  const { id: targetHomepeeId } = useParams<{ id: string }>();
 
-  const getGuestNoteQuery = useGetGuestNoteQuery(Number(homepeeId));
+  const getGuestNoteQuery = useGetGuestNoteQuery(Number(targetHomepeeId));
 
   return (
     <HomepeeLayout>
       <GuestNotePageContainer>
-        <GuestNoteInput memberId={id} homepeeId={homepeeId} />
+        <GuestNoteInput memberId={id} homepeeId={targetHomepeeId} />
 
         {getGuestNoteQuery.data && (
           <ul>
@@ -25,11 +25,15 @@ export const GuestNotePage = () => {
               .map((note) => (
                 <Note
                   key={note.id}
+                  id={String(note.id)}
+                  homepeeId={targetHomepeeId}
+                  memberId={note.member.id}
                   content={note.content}
                   createdAt={note.createdAt}
                   name={note.member.name}
                   profileImage={note.member.profileImageUrl}
-                  visible={note.visible}
+                  isHomepeeHost={homepeeId === Number(targetHomepeeId)}
+                  isMine={id === note.member.id}
                 />
               ))}
           </ul>

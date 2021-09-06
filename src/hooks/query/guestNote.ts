@@ -32,8 +32,8 @@ export const useAddGeustNoteMutation = () => {
 };
 
 export const useEditGeustNoteMutation = () => {
-  return useMutation<void, Error, EditGuestNoteRequest>(({ id, homepeeId, content, guestNoteId, memberId, visible }) =>
-    GuestNoteRepository.editGuestNote({ id, homepeeId, content, guestNoteId, memberId, visible }),
+  return useMutation<void, Error, EditGuestNoteRequest>(({ homepeeId, content, guestNoteId, memberId, visible }) =>
+    GuestNoteRepository.editGuestNote({ homepeeId, content, guestNoteId, memberId, visible }),
   );
 };
 

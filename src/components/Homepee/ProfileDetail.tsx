@@ -8,11 +8,11 @@ import { convertDateToAge } from '@/lib/utils/convertDateToAge';
 
 interface ProfileDetailProps {
   profileImageUrl?: string;
-  birthday: string;
+  birthday?: string;
   name: string;
-  species: string;
-  personality: string;
-  gender: 'MALE' | 'FEMALE';
+  species?: string;
+  personality?: string;
+  gender?: 'MALE' | 'FEMALE';
   visitCount: number;
 }
 
@@ -28,9 +28,9 @@ export const ProfileDetail = ({ profileImageUrl, name, birthday, personality, ge
           <div className="profile_detail">
             <span>{species}</span>
             <Spacing horizon={8} />
-            <span>{convertDateToAge(birthday)}세</span>
+            <span>{birthday && `${convertDateToAge(birthday)}세`}</span>
             <Spacing horizon={8} />
-            <span>{convertGender(gender)}</span>
+            <span>{gender && convertGender(gender)}</span>
           </div>
           <Spacing vertical={12} />
           <div className="profile_detail">공생 {visitCount}</div>

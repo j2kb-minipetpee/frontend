@@ -22,8 +22,8 @@ class GuestNoteRepository {
     });
   }
 
-  async editGuestNote({ homepeeId, guestNoteId, id, memberId, content, visible }: EditGuestNoteRequest): Promise<void> {
-    return client.put(`${homepeeId}/guest/guest-notes/${guestNoteId}`, { id, memberId, content, visible });
+  async editGuestNote({ homepeeId, guestNoteId, memberId, content, visible }: EditGuestNoteRequest): Promise<void> {
+    return client.put(`${homepeeId}/guest/guest-notes/${guestNoteId}`, { memberId, content, visible });
   }
 
   async deleteGuestNote({ homepeeId, guestNoteId }: DeleteGuestNoteRequest): Promise<void> {

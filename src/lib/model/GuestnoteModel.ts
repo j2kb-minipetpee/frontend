@@ -31,7 +31,6 @@ export interface AddGuestNoteResponse {
 
 export interface EditGuestNoteRequest {
   homepeeId: string;
-  id: number;
   memberId: number;
   content: string;
   visible: boolean;
