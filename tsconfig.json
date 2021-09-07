@@ -2,13 +2,17 @@
     "compilerOptions": {
       "outDir": "./dist/",
       "noImplicitAny": true,
+      "lib": ["DOM",  "ES2021"],
       "module": "es6",
       "target": "es5",
       "jsx": "react",
       "allowJs": true,
       "moduleResolution": "node",
-      "esModuleInterop":true
-    }
+      "esModuleInterop":true,
+      "paths": {
+        "@/*": ["src/*"]
+        },
+        "baseUrl": "."
+    },
+    "include": ["./src/**/*"]
   }
-
-  // 더 자세한 정보는... typescript configuration
