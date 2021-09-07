@@ -1,6 +1,6 @@
 import { Member, PagableData } from './SharedModel';
 
-export interface GuestNote {
+export interface GuestBook {
   id: number;
   member: Member;
   content: string;
@@ -8,20 +8,20 @@ export interface GuestNote {
   createdAt: string;
 }
 
-export interface GetGuestNotesRequest {
+export interface GetGuestBooksRequest {
   homepeeId: string;
 }
 
-export type GetGuestNotesResponse = PagableData<GuestNote[]>;
+export type GetGuestBooksResponse = PagableData<GuestBook[]>;
 
-export interface AddGuestNoteRequest {
+export interface AddGuestBookRequest {
   homepeeId: string;
   memberId: number;
   content: string;
   visible: boolean;
 }
 
-export interface AddGuestNoteResponse {
+export interface AddGuestBookResponse {
   id: number;
   memberId: number;
   content: string;
@@ -29,15 +29,15 @@ export interface AddGuestNoteResponse {
   createdAt: string;
 }
 
-export interface EditGuestNoteRequest {
+export interface EditGuestBookRequest {
   homepeeId: string;
   memberId: number;
   content: string;
   visible: boolean;
-  guestNoteId: string;
+  guestBookId: string;
 }
 
-export interface DeleteGuestNoteRequest {
+export interface DeleteGuestBookRequest {
   homepeeId: string;
-  guestNoteId: string;
+  guestBookId: string;
 }

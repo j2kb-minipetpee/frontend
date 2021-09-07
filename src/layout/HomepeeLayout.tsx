@@ -25,7 +25,7 @@ const tabs = [
     text: '갤러리',
   },
   {
-    index: 'GUESTNOTE',
+    index: 'GUESTBook',
     text: '방명록',
   },
   {

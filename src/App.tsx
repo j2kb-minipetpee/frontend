@@ -7,7 +7,7 @@ import { routes } from './lib/constants/routes';
 import { HomepeePage } from './pages/Homepee';
 import { Gallery } from './pages/Gallery';
 import { Board } from './pages/Board';
-import { GuestNotePage } from './pages/GuestNote';
+import { GuestBookPage } from './pages/GuestBook';
 import { PrivateRoute, PublicRoute } from './lib/constants/Route';
 import { SignInPage } from './pages/SiginIn';
 import { SignUpPage } from './pages/SignUp';
@@ -36,14 +36,12 @@ const App = () => {
     }
   }, []);
 
-  console.log('실행');
-
   return (
     <>
       <Global styles={globalStyle}></Global>
-      <div>실행 됐는데..?</div>
+
       <Switch>
-        <PublicRoute path={routes.GUESTNOTE} component={GuestNotePage} />
+        <PublicRoute path={routes.GUESTBOOK} component={GuestBookPage} />
         <PublicRoute path={routes.BOARD} component={Board} exact />
         <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
         <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />

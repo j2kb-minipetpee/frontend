@@ -1,5 +1,5 @@
 import { useInput } from '@/hooks';
-import { useDeleteGuestNoteMutation, useEditGuestNoteMutation } from '@/hooks/query/guestNote';
+import { useDeleteGuestBookMutation, useEditGuestBookMutation } from '@/hooks/query/guestBook';
 import { QueryKey } from '@/lib/constants';
 import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { ButtonGroup, Profile, Spacing } from '../common';
 
-interface NoteProps {
+interface BookProps {
   id: string;
   homepeeId: string;
   memberId: number;
@@ -20,14 +20,14 @@ interface NoteProps {
   isMine: boolean;
 }
 
-type NoteType = 'normal' | 'edit';
+type BookType = 'normal' | 'edit';
 
-export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, isHomepeeHost, isMine, memberId }: NoteProps) => {
-  const [type, setType] = useState<NoteType>('normal');
+export const Book = ({ id, homepeeId, name, profileImage, content, createdAt, isHomepeeHost, isMine, memberId }: BookProps) => {
+  const [type, setType] = useState<BookType>('normal');
   const [value, onValueChange] = useInput(content);
 
-  const editGuestNoteMutation = useEditGuestNoteMutation();
-  const deleteGuestMutation = useDeleteGuestNoteMutation();
+  const editGuestBookMutation = useEditGuestBookMutation();
+  const deleteGuestMutation = useDeleteGuestBookMutation();
 
   const queryClient = useQueryClient();
 
@@ -36,21 +36,21 @@ export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, is
   };
 
   const onSuccess = () => {
-    queryClient.invalidateQueries([QueryKey.GetGuestNotes, Number(homepeeId)]);
+    queryClient.invalidateQueries([QueryKey.GetGuestBooks, Number(homepeeId)]);
   };
 
   return (
-    <NoteContainer>
-      <NoteInfo>
+    <BookContainer>
+      <BookInfo>
         <Profile size="small" imageURL={profileImage} />
         <Spacing horizon={7} />
 
-        <div className="note-info">
+        <div className="Book-info">
           <span>{name}</span>
           <Spacing horizon={5} />
           <span>{createdAt.split(' ')[0]}</span>
         </div>
-      </NoteInfo>
+      </BookInfo>
 
       <Spacing vertical={16} />
 
@@ -68,9 +68,9 @@ export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, is
                     color: type === 'normal' ? 'GREY70' : 'EMERALD100',
                     onClick: () => {
                       if (type === 'edit') {
-                        editGuestNoteMutation.mutate(
+                        editGuestBookMutation.mutate(
                           {
-                            guestNoteId: id,
+                            guestBookId: id,
                             homepeeId: homepeeId,
                             memberId,
                             content: value,
@@ -90,7 +90,7 @@ export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, is
                     color: 'GREY70',
                     onClick: () => {
                       deleteGuestMutation.mutate(
-                        { guestNoteId: String(id), homepeeId: String(homepeeId) },
+                        { guestBookId: String(id), homepeeId: String(homepeeId) },
                         {
                           onSuccess,
                         },
@@ -105,19 +105,19 @@ export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, is
       ) : (
         <ContentWrapper>비밀 글 입니다.</ContentWrapper>
       )}
-    </NoteContainer>
+    </BookContainer>
   );
 };
 
-const NoteContainer = styled.div`
+const BookContainer = styled.div`
   margin: 16px 12px;
 `;
 
-const NoteInfo = styled.div`
+const BookInfo = styled.div`
   display: flex;
   align-items: flex-end;
 
-  & .note-info {
+  & .Book-info {
     display: flex;
   }
 `;

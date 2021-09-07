@@ -7,7 +7,7 @@ export const routes: routesType = {
   BOARD: `/homepee/:id/board/posts`,
   BOARD_DETAILED_POST: '/homepee/:id/board/posts/:postId',
   BOARD_WRITE: '/homepee/:id/board/posts/write',
-  GUESTNOTE: '/homepee/:id/guestnote',
+  GUESTBOOK: '/homepee/:id/guestbook',
   SETTINGS: '/homepee/:id/settings',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
@@ -23,7 +23,7 @@ interface routesType {
   BOARD: string;
   BOARD_DETAILED_POST: string;
   BOARD_WRITE: string;
-  GUESTNOTE: string;
+  GUESTBOOK: string;
   SETTINGS: string;
   SIGNIN: string;
   SIGNUP: string;

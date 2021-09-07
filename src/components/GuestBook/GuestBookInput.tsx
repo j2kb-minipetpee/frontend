@@ -1,5 +1,5 @@
 import { useInput } from '@/hooks';
-import { useAddGuestNoteMutation } from '@/hooks/query/guestNote';
+import { useAddGuestBookMutation } from '@/hooks/query/guestBook';
 import { QueryKey } from '@/lib/constants';
 import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
@@ -7,32 +7,32 @@ import React, { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { Button, Spacing } from '../common';
 
-type SelectedNoteType = 'normal' | 'secret';
+type SelectedBookType = 'normal' | 'secret';
 
-interface GuestNoteInputProps {
+interface GuestBookInputProps {
   memberId: number;
   homepeeId: string;
 }
 
-export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => {
-  const [selectedNoteType, setSelectedNoteType] = useState<SelectedNoteType>('normal');
+export const GuestBookInput = ({ memberId, homepeeId }: GuestBookInputProps) => {
+  const [selectedBookType, setSelectedBookType] = useState<SelectedBookType>('normal');
   const [content, onContentChange, reset] = useInput<HTMLTextAreaElement>('');
   const queryClient = useQueryClient();
 
-  const addGuestNoteMutation = useAddGuestNoteMutation();
+  const addGuestBookMutation = useAddGuestBookMutation();
 
-  const onSelectedNoteTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedNoteType(e.target.value as SelectedNoteType);
+  const onSelectedBookTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedBookType(e.target.value as SelectedBookType);
   };
 
-  const onGuestNoteSubmit = (e: React.FormEvent) => {
+  const onGuestBookSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addGuestNoteMutation.mutate(
-      { content, visible: selectedNoteType === 'normal', memberId, homepeeId },
+    addGuestBookMutation.mutate(
+      { content, visible: selectedBookType === 'normal', memberId, homepeeId },
       {
         onSuccess: () => {
           reset();
-          queryClient.invalidateQueries([QueryKey.GetGuestNotes, Number(homepeeId)]);
+          queryClient.invalidateQueries([QueryKey.GetGuestBooks, Number(homepeeId)]);
         },
       },
     );
@@ -40,13 +40,13 @@ export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => 
 
   return (
     <div>
-      <form onSubmit={onGuestNoteSubmit}>
+      <form onSubmit={onGuestBookSubmit}>
         <TypeLabelWrapper>
-          <Input id="normal" type="radio" value="normal" name="note-type" onChange={onSelectedNoteTypeChange} checked={selectedNoteType === 'normal'} hidden />
+          <Input id="normal" type="radio" value="normal" name="Book-type" onChange={onSelectedBookTypeChange} checked={selectedBookType === 'normal'} hidden />
           <label htmlFor="normal">일반글</label>
           <Spacing horizon={13} />
 
-          <Input id="secret" type="radio" value="secret" name="note-type" onChange={onSelectedNoteTypeChange} checked={selectedNoteType === 'secret'} hidden />
+          <Input id="secret" type="radio" value="secret" name="Book-type" onChange={onSelectedBookTypeChange} checked={selectedBookType === 'secret'} hidden />
           <label htmlFor="secret">비밀글</label>
         </TypeLabelWrapper>
 

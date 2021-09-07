@@ -4,7 +4,7 @@ export enum QueryKey {
   GetHomeData = 'GetHomeData',
   GetPopularPosts = 'GetPopularPosts',
   SearchMembers = 'SearchMembers',
-  GetGuestNotes = 'GetGuestNotes',
+  GetGuestBooks = 'GetGuestBooks',
   SearcgPosts = 'SearchPosts',
   GetBoardPosts = 'GetBoardPosts',
   GetBoardPost = 'GetBoardPost',
@@ -14,4 +14,4 @@ export enum QueryKey {
   GetMyFansData = 'GetMyStarsData',
 }
 
-export type SelectedTab = 'HOMEPEE' | 'BOARD' | 'GALLERY' | 'GUESTNOTE' | 'SETTINGS';
+export type SelectedTab = 'HOMEPEE' | 'BOARD' | 'GALLERY' | 'GUESTBook' | 'SETTINGS';
