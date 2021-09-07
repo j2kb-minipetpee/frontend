@@ -16,7 +16,6 @@ import { ColorMap } from './lib/constants/color';
 import { WriteBoardPost } from './pages/WriteBoardPost';
 import { DetailedBoardPost } from './pages/DetailedBoardPost';
 import { WriteGalleryPost } from './pages/WriteGalleryPost';
-<<<<<<< HEAD
 import { useAuth } from './hooks';
 import { useDispatch } from 'react-redux';
 import { login } from './store/auth';
@@ -57,29 +56,6 @@ const App = () => {
     </>
   );
 };
-=======
-import { DetailedGalleryPost } from './pages/DetailedGalleryPost';
-
-const App = () => (
-  <>
-    <Global styles={globalStyle}></Global>
-    <Switch>
-      <PublicRoute path={routes.GUESTNOTE} component={Guestnote} />
-      <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
-      <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
-      <PublicRoute path={routes.GALLERY_DETAILED_POST} component={DetailedGalleryPost} />
-      <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
-      <PublicRoute path={routes.GALLERY} component={Gallery} />
-      <PublicRoute path={routes.BOARD} component={Board} exact />
-      <PublicRoute path={routes.HOMEPEE} component={HomepeePage} />
-      <PublicRoute path={routes.SIGNIN} component={SignInPage} restricted />
-      <PublicRoute path={routes.SIGNUP} component={SignUpPage} restricted />
-      <PrivateRoute path={routes.SETTINGS} component={Setting} />
-      <PublicRoute path={routes.HOME} component={Main} exact />
-    </Switch>
-  </>
-);
->>>>>>> feat:갤러리 게시글 route 추가
 
 const globalStyle = css`
   * {
