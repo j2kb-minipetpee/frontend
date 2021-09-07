@@ -1,5 +1,5 @@
 import { useInput } from '@/hooks';
-import { useDeleteGeustNoteMutation, useEditGeustNoteMutation } from '@/hooks/query/guestNote';
+import { useDeleteGuestNoteMutation, useEditGuestNoteMutation } from '@/hooks/query/guestNote';
 import { QueryKey } from '@/lib/constants';
 import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
@@ -26,8 +26,8 @@ export const Note = ({ id, homepeeId, name, profileImage, content, createdAt, is
   const [type, setType] = useState<NoteType>('normal');
   const [value, onValueChange] = useInput(content);
 
-  const editGuestNoteMutation = useEditGeustNoteMutation();
-  const deleteGuestMutation = useDeleteGeustNoteMutation();
+  const editGuestNoteMutation = useEditGuestNoteMutation();
+  const deleteGuestMutation = useDeleteGuestNoteMutation();
 
   const queryClient = useQueryClient();
 

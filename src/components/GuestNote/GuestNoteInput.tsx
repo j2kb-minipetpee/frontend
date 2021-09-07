@@ -1,5 +1,5 @@
 import { useInput } from '@/hooks';
-import { useAddGeustNoteMutation } from '@/hooks/query/guestNote';
+import { useAddGuestNoteMutation } from '@/hooks/query/guestNote';
 import { QueryKey } from '@/lib/constants';
 import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
@@ -19,7 +19,7 @@ export const GuestNoteInput = ({ memberId, homepeeId }: GuestNoteInputProps) => 
   const [content, onContentChange, reset] = useInput<HTMLTextAreaElement>('');
   const queryClient = useQueryClient();
 
-  const addGuestNoteMutation = useAddGeustNoteMutation();
+  const addGuestNoteMutation = useAddGuestNoteMutation();
 
   const onSelectedNoteTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedNoteType(e.target.value as SelectedNoteType);

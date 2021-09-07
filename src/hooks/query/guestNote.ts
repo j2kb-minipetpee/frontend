@@ -25,18 +25,18 @@ export const useGetGuestNoteQuery = (homepeeId: number, enabled?: boolean) => {
   );
 };
 
-export const useAddGeustNoteMutation = () => {
+export const useAddGuestNoteMutation = () => {
   return useMutation<AddGuestNoteResponse, Error, AddGuestNoteRequest>(({ homepeeId, content, memberId, visible }) =>
     GuestNoteRepository.addGuestNote({ homepeeId, content, memberId, visible }),
   );
 };
 
-export const useEditGeustNoteMutation = () => {
+export const useEditGuestNoteMutation = () => {
   return useMutation<void, Error, EditGuestNoteRequest>(({ homepeeId, content, guestNoteId, memberId, visible }) =>
     GuestNoteRepository.editGuestNote({ homepeeId, content, guestNoteId, memberId, visible }),
   );
 };
 
-export const useDeleteGeustNoteMutation = () => {
+export const useDeleteGuestNoteMutation = () => {
   return useMutation<void, Error, DeleteGuestNoteRequest>(({ homepeeId, guestNoteId }) => GuestNoteRepository.deleteGuestNote({ homepeeId, guestNoteId }));
 };
