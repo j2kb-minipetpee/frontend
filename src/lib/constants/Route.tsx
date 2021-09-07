@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, RouteProps, useParams } from 'react-router-dom';
+import { Route, Redirect, RouteProps } from 'react-router-dom';
 
 import { useAuth } from '@/hooks';
 

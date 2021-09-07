@@ -4,7 +4,7 @@ import { ColorMap } from '@/lib/constants/color';
 import { GalleryType, Tab } from '@/lib/model';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { QueryClient, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { ButtonGroup, Divider, Spacing } from '../common';
 import { ButtonGroupWrapper, SettingsTitle } from './styles';
 

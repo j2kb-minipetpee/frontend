@@ -4,22 +4,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
-module.exports = {
-  mode: 'development',
+module.exports = (env, argv) => ({
+  mode: argv.mode,
   entry: {
-    main: ['./src/index.tsx', 'react-hot-loader/patch'],
+    main: './src/index.tsx',
   },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: '[name].js',
-    publicPath: '/',
-  },
+
   module: {
     rules: [
       {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_module/,
+      },
+
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_module/,
       },
       {
         test: /\.png|jpg|gif|svg|ttf|woff|woff2|eot|ttf|otf$/,
@@ -42,7 +43,6 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-    fallback: { path: false, os: false },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -51,4 +51,5 @@ module.exports = {
     new CleanWebpackPlugin(),
     new Dotenv(),
   ],
-};
+  optimization: {},
+});

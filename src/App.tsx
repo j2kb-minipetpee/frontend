@@ -36,11 +36,13 @@ const App = () => {
     }
   }, []);
 
+  console.log('실행');
+
   return (
     <>
       <Global styles={globalStyle}></Global>
+      <div>실행 됐는데..?</div>
       <Switch>
-        <PublicRoute path={routes.HOME} component={Main} exact />
         <PublicRoute path={routes.GUESTNOTE} component={GuestNotePage} />
         <PublicRoute path={routes.BOARD} component={Board} exact />
         <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
