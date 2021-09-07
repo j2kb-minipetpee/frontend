@@ -10,7 +10,7 @@ interface SettingTopContentProps {
   profile: Profile;
 }
 
-export const SettingTopContent = ({ profile }: SettingTopContentProps) => {
+export const SettingUserInfoContent = ({ profile }: SettingTopContentProps) => {
   const [profileData, setProfileData] = useState<Profile>({
     birthday: '',
     name: '',

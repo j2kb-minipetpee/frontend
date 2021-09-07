@@ -17,7 +17,7 @@ interface TabsChecekd {
   [key: number]: null | Tab;
 }
 
-export const SettingBottomContent = ({ homepeeId, tabs }: SettingBottomContentProps) => {
+export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentProps) => {
   const queryClient = useQueryClient();
   const [tabsChecked, setTabsChecked] = useState<TabsChecekd>({
     [GalleryType.BOARD]: null,
