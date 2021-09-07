@@ -4,6 +4,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ColorMap } from '@/lib/constants/color';
 import React from 'react';
 import styled from '@emotion/styled';
+import Backbtn from '@/assets/images/back_big.png';
+import { ButtonGroup } from '@/components';
+import { CommentLayout } from '@/layout/CommentLayout';
+import { NextButton } from '@/components/common/NextButton';
 
 interface paramsType {
   id: string;
@@ -23,13 +27,12 @@ export const DetailedBoardPost = () => {
       {!isLoading && (
         <DetailedBoardPostContainer>
           <DetailedBoardPostHeader>
-            <button onClick={() => history.goBack()}>뒤로가기</button>
-            <div>
-              <button>수정</button>
-              <button>삭제</button>
+            <div onClick={() => history.goBack()}>
+              <img src={Backbtn} />
             </div>
+            <ButtonGroup size="large" buttons={[{ text: '수정' }, { text: '삭제' }]}></ButtonGroup>
           </DetailedBoardPostHeader>
-          <h3>{data.title}</h3>
+          <DetailedBoardPostTitle>{data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
             <h4> {homepeeId} </h4>
             <h4> {data.createdAt} </h4>
@@ -37,36 +40,7 @@ export const DetailedBoardPost = () => {
           </DetailedBoardPostSubInfo>
           <DetailedBoardPostImage src={data.image.url} />
           <DetailedBoardPostContent>{data.content}</DetailedBoardPostContent>
-          <DetailedBoardPostCommentContainer>
-            <DetailedBoardPostCommentHeader>댓글</DetailedBoardPostCommentHeader>
-            <DetailedBoardPostCommentContentsContainer>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-            </DetailedBoardPostCommentContentsContainer>
-            <button>댓글 더보기</button>
-          </DetailedBoardPostCommentContainer>
+          <CommentLayout />
         </DetailedBoardPostContainer>
       )}
     </HomepeeLayout>
@@ -87,6 +61,14 @@ const DetailedBoardPostHeader = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 82px;
+`;
+
+const DetailedBoardPostTitle = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
 `;
 
 const DetailedBoardPostSubInfo = styled.section`
@@ -94,27 +76,16 @@ const DetailedBoardPostSubInfo = styled.section`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 22px;
 `;
 
-const DetailedBoardPostImage = styled.img``;
+const DetailedBoardPostImage = styled.img`
+  margin-top: 15px;
+`;
 
 const DetailedBoardPostContent = styled.article`
   width: 50%;
   height: auto;
-`;
-
-const DetailedBoardPostCommentContainer = styled.section`
-  width: 50%;
-  height: auto;
-`;
-const DetailedBoardPostCommentHeader = styled.section`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-`;
-
-const DetailedBoardPostCommentContentsContainer = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-top: 15px;
+  text-align: center;
 `;
