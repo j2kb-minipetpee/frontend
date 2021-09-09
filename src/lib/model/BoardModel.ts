@@ -15,6 +15,7 @@ export interface DetailedBoardPost {
   viewCount: number;
   image: Image;
   comments: Comments;
+  createdAt: string;
 }
 
 // 페이지네이션을 위한 타입 (SimpleBoardPost)
