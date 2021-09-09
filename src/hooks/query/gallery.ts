@@ -8,8 +8,8 @@ import {
   EditGalleryPostResponse,
   GetGalleryPagablePostResponse,
   GetGalleryPagablePostRequest,
-  GetGalleryAllPostRequest,
-  GetGalleryAllPostReponse,
+  GetGalleryTargetPostRequest,
+  GetGalleryTargetPostResponse,
 } from '../../lib/model';
 import { GalleryRepository } from '../../lib/repository';
 
@@ -32,9 +32,9 @@ export const useGetGalleryPostQuery = ({ homepeeId }: GetGalleryPagablePostReque
   );
 };
 
-export const useGetGalleryAllPostQuery = ({ homepeeId }: GetGalleryAllPostRequest) => {
-  return useQuery<GetGalleryAllPostReponse, Error>([QueryKey.GetGalleryAllPost, homepeeId, 'forUnique'], () =>
-    GalleryRepository.getGalleryAllPost({ homepeeId }),
+export const useGetGalleryTargetPostQuery = ({ homepeeId, postId }: GetGalleryTargetPostRequest) => {
+  return useQuery<GetGalleryTargetPostResponse, Error>([QueryKey.GetGalleryTargetPost, homepeeId, postId], () =>
+    GalleryRepository.getGalleryAllPost({ homepeeId, postId }),
   );
 };
 

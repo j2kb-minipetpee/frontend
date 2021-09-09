@@ -17,11 +17,14 @@ export interface GetGalleryPagablePostRequest {
   homepeeId: string;
 }
 
-export type GetGalleryTargetPostResponse = GalleryPost[];
 export type GetGalleryAllPostReponse = GalleryPost[];
-
-export interface GetGalleryAllPostRequest {
+export interface GetGalleryTargetPostResponse {
+  title: string;
+  images: Image[];
+}
+export interface GetGalleryTargetPostRequest {
   homepeeId: number;
+  postId: number;
 }
 
 export interface AddGalleryPostRequest {

@@ -21,6 +21,8 @@ import { useDispatch } from 'react-redux';
 import { login } from './store/auth';
 import jwtDecode from 'jwt-decode';
 import { setAuthToken } from './lib/client';
+import { ModifyGalleryPost } from './pages/ModifyGalleryPost';
+import { ModifyBoardPost } from './pages/ModifyBoardPost';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,8 +45,10 @@ const App = () => {
       <Switch>
         <PublicRoute path={routes.GUESTBOOK} component={GuestBookPage} />
         <PublicRoute path={routes.BOARD} component={Board} exact />
+        <PrivateRoute path={routes.BOARD_MODIFY_POST} component={ModifyBoardPost} />
         <PrivateRoute path={routes.BOARD_WRITE} component={WriteBoardPost} />
         <PublicRoute path={routes.BOARD_DETAILED_POST} component={DetailedBoardPost} />
+        <PrivateRoute path={routes.GALLERY_MODIFY_POST} component={ModifyGalleryPost} />
         <PrivateRoute path={routes.GALLERY_WRITE} component={WriteGalleryPost} />
         <PublicRoute path={routes.GALLERY} component={Gallery} />
         <PrivateRoute path={routes.SETTINGS} component={Setting} />

@@ -36,7 +36,6 @@ export const useGetCommentQuery = ({ homepeeId, postId }: GetCommentRequest) => 
     {
       getNextPageParam: (lastPage, allPages) => {
         const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 3);
-        console.log('now Page!!!', nowPage);
         if (lastPage.page.totalPages > nowPage) {
           return { page: nowPage, size: 3 };
         }

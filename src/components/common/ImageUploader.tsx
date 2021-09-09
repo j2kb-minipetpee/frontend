@@ -5,15 +5,16 @@ import { makeImageFormData, uploadImage } from '@/lib/ImageUploadAPI';
 import bigPlusIcon from '@/assets/images/plus_big.png';
 interface ImageUploaderProps {
   id?: number;
+  src?: string;
   width: string;
   height: string;
   handleImageChange: (targetImageUrl: string, targetDOMId?: number) => void;
   handleImageRemove: (targetDOMId?: number) => void;
 }
 
-export const ImageUploader = ({ width, height, handleImageChange, handleImageRemove, id }: ImageUploaderProps) => {
+export const ImageUploader = ({ width, height, handleImageChange, handleImageRemove, id, src }: ImageUploaderProps) => {
   const inputRef = useRef(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState(src);
 
   const handleRemoveClick = () => {
     setImagePreview(null);
@@ -37,6 +38,7 @@ export const ImageUploader = ({ width, height, handleImageChange, handleImageRem
   return (
     <ImageUploaderContainer width={width} height={height}>
       <RemoveImageButton onClick={handleRemoveClick}>x</RemoveImageButton>
+
       {imagePreview ? <PreviewImage src={imagePreview} /> : <PlusShapedBox src={bigPlusIcon} />}
       <ImageUploaderInput type="file" accept="image/*" onChange={completeImageLoad} ref={inputRef} />
     </ImageUploaderContainer>

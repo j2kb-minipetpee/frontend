@@ -10,10 +10,6 @@ import {
   EditBoardPostResponse,
   GetBoardPagablePostsRequest,
   GetBoardPagablePostsResponse,
-  GetBoardPostRequest,
-  GetBoardPostResponse,
-  GetBoardPostsRequest,
-  GetBoardPostsResponse,
   GetBoardTargetPostRequest,
   GetBoardTargetPostResponse,
 } from '../model';
@@ -38,7 +34,7 @@ class BoardRepository {
   }
 
   async editBoardPost({ homepeeId, postId, title, content, image }: EditBoardPostRequest): Promise<EditBoardPostResponse> {
-    return client.put(`/${homepeeId}/board/posts/${postId}}`, {
+    return client.put(`/${homepeeId}/board/posts/${postId}`, {
       title,
       content,
       image,
@@ -47,16 +43,6 @@ class BoardRepository {
 
   async deleteBoardPost({ homepeeId, postId }: DeleteBoardPostRequset): Promise<null> {
     return client.delete(`/${homepeeId}/board/posts/${postId}`);
-  }
-
-  async addBoardComment({ homepeeId, postId, memberId, content }: AddBoardCommentRequest): Promise<AddBoardCommentResponse> {
-    return client.post(`/${homepeeId}/board/posts/${postId}/comments`, {
-      memberId,
-      content,
-    });
-  }
-  async deleteBoardComment({ homepeeId, commentId }: DeleteBoardCommentRequest): Promise<void> {
-    return client.delete(`/${homepeeId}/board/post/${commentId}}`);
   }
 }
 

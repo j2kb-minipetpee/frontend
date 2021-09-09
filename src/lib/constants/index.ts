@@ -8,7 +8,7 @@ export enum QueryKey {
   SearcgPosts = 'SearchPosts',
   GetBoardPageablePosts = 'GetBoardPageablePosts',
   GetBoardTargetPost = 'GetBoardTargetPost',
-  GetGalleryAllPost = 'GetGalleryAllPost',
+  GetGalleryTargetPost = 'GetGalleryTargetPost',
   GetGalleryPagablePost = 'GetGalleryPagablePost',
   GetSettingData = 'GetSettingData',
   GetMyStarsData = 'GetMyStarsData',

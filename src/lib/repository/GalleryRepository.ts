@@ -8,15 +8,15 @@ import {
   DeleteGalleryPostRequest,
   EditGalleryPostRequest,
   EditGalleryPostResponse,
-  GetGalleryAllPostReponse,
-  GetGalleryAllPostRequest,
   GetGalleryPagablePostRequest,
   GetGalleryPagablePostResponse,
+  GetGalleryTargetPostRequest,
+  GetGalleryTargetPostResponse,
 } from '../model';
 
 class GalleryRepository {
-  async getGalleryAllPost({ homepeeId }: GetGalleryAllPostRequest): Promise<GetGalleryAllPostReponse> {
-    return client.get(`/${homepeeId}/album/posts`);
+  async getGalleryAllPost({ homepeeId, postId }: GetGalleryTargetPostRequest): Promise<GetGalleryTargetPostResponse> {
+    return client.get(`/${homepeeId}/album/posts/${postId}`);
   }
 
   async getGalleryPagablePost({ homepeeId, pageParam }: GetGalleryPagablePostRequest): Promise<GetGalleryPagablePostResponse> {

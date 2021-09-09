@@ -1,5 +1,3 @@
-import { routes } from '@/lib/constants/routes';
-import { SimplifiedPost } from '@/lib/model';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';

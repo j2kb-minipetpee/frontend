@@ -2,6 +2,9 @@ import { AddCommentRequest, AddCommentResponse, DeleteCommentRequest, GetComment
 import client from '../client';
 
 class CommentRepository {
+  async getComment({ homepeeId, postId, pageParam }: GetCommentRequest): Promise<GetCommentResponse> {
+    return client.get(`/${homepeeId}/posts/${postId}/comments?page=${pageParam.page}&size=${pageParam.size}`);
+  }
   async addComment({ homepeeId, postId, member, content }: AddCommentRequest): Promise<AddCommentResponse> {
     return client.post(`/${homepeeId}/posts/${postId}/comments`, {
       member,
@@ -10,10 +13,6 @@ class CommentRepository {
   }
   async deleteComment({ homepeeId, postId, commentId }: DeleteCommentRequest): Promise<void> {
     return client.delete(`/${homepeeId}/posts/${postId}/comments/${commentId}`);
-  }
-
-  async getComment({ homepeeId, postId, pageParam }: GetCommentRequest): Promise<GetCommentResponse> {
-    return client.get(`/${homepeeId}/posts/${postId}/comments?page=${pageParam.page}&size=${pageParam.size}`);
   }
 }
 
