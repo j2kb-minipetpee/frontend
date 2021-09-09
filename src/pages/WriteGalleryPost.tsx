@@ -12,6 +12,7 @@ export const WriteGalleryPost = () => {
   const { id } = useParams<{ id: string }>();
   const addGalleryPostMutation = useAddGalleryPostMutation();
   const history = useHistory();
+  console.log(id);
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
@@ -37,7 +38,14 @@ export const WriteGalleryPost = () => {
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
-    addGalleryPostMutation.mutate({ title: postTitle, images: targetImageList, homepeeId: Number(id) }, { onSuccess: () => history.goBack() });
+    addGalleryPostMutation.mutate(
+      { title: postTitle, images: targetImageList, homepeeId: Number(id) },
+      {
+        onSuccess: () => {
+          alert('게시글을 작성하였습니다.'), history.goBack();
+        },
+      },
+    );
   };
 
   return (

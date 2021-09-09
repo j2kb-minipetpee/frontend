@@ -34,7 +34,12 @@ export const WriteBoardPost = () => {
   const handleClick = () => {
     addBoardPostMutation.mutate(
       { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl },
-      { onSuccess: () => history.goBack() },
+      {
+        onSuccess: () => {
+          alert('게시글을 등록하였습니다. ');
+          history.goBack();
+        },
+      },
     );
   };
 
@@ -42,7 +47,7 @@ export const WriteBoardPost = () => {
     <HomepeeLayout>
       <WriteContainer>
         <WriteTitle placeholder="제목" onChange={handleWriteTitleChange} />
-        <ImageUploader width="100%" height="auto" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} />
+        <ImageUploader width="100%" height="370px" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} />
         <WriteContent rows={30} onChange={handleWriteContentChange} />
         <WriteButtonWrapper>
           <WriteButton onClick={handleClick}>업로드</WriteButton>
@@ -72,6 +77,7 @@ const WriteTitle = styled.input`
   border: 0;
   border-bottom: 2px solid;
   outline: none;
+  margin-bottom: 15px;
 `;
 
 const WriteContent = styled.textarea`

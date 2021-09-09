@@ -1,4 +1,4 @@
-import { useGetBoardPostQuery } from '@/hooks';
+import { useDeleteBoardPostMutation, useGetBoardPostQuery } from '@/hooks';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useHistory, useParams } from 'react-router-dom';
 import { ColorMap } from '@/lib/constants/color';
@@ -7,7 +7,7 @@ import styled from '@emotion/styled';
 import Backbtn from '@/assets/images/back_big.png';
 import { ButtonGroup } from '@/components';
 import { CommentLayout } from '@/layout/CommentLayout';
-import { NextButton } from '@/components/common/NextButton';
+import { useGetCommentQuery } from '@/hooks/query/comment';
 
 interface paramsType {
   id: string;
@@ -18,29 +18,58 @@ export const DetailedBoardPost = () => {
   const params = useParams<paramsType>();
   const history = useHistory();
   const { id: homepeeId, postId } = params;
+  const targetHompee = Number(homepeeId);
+  const targetPostId = Number(postId);
+  console.log('postId is ', postId);
 
-  const { isLoading, data } = useGetBoardPostQuery({ homepeeId, postId });
-  console.log(data);
+  const { data } = useGetBoardPostQuery({ homepeeId: targetHompee, postId: targetPostId });
+  const comment = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
+  if (comment?.data?.pages) {
+    console.log(comment?.data?.pages.flatMap((data) => console.log(data?.content)));
+  }
+
+  const deleteBoardPostMutation = useDeleteBoardPostMutation();
+
+  const handleDeleteClick = () => {
+    confirm('삭제하시곘습니까?') &&
+      deleteBoardPostMutation.mutate(
+        { homepeeId, postId },
+        {
+          onSuccess: () => {
+            alert('삭제하였습니다.');
+          },
+        },
+      );
+  };
+
+  const handleModifyClick = () => {
+    alert('수정하겠습니다.');
+  };
 
   return (
     <HomepeeLayout>
-      {!isLoading && (
+      {data && (
         <DetailedBoardPostContainer>
           <DetailedBoardPostHeader>
             <div onClick={() => history.goBack()}>
               <img src={Backbtn} />
             </div>
-            <ButtonGroup size="large" buttons={[{ text: '수정' }, { text: '삭제' }]}></ButtonGroup>
+            <ButtonGroup
+              size="large"
+              buttons={[
+                { text: '수정', onClick: handleModifyClick },
+                { text: '삭제', onClick: handleDeleteClick },
+              ]}
+            ></ButtonGroup>
           </DetailedBoardPostHeader>
           <DetailedBoardPostTitle>{data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
             <h4> {homepeeId} </h4>
-            <h4> {data.createdAt} </h4>
             <h4> {data.viewCount}</h4>
           </DetailedBoardPostSubInfo>
           <DetailedBoardPostImage src={data.image.url} />
           <DetailedBoardPostContent>{data.content}</DetailedBoardPostContent>
-          <CommentLayout />
+          {comment && <CommentLayout commentList={comment?.data?.pages.flatMap((data) => data.content)} postId={Number(postId)} />}
         </DetailedBoardPostContainer>
       )}
     </HomepeeLayout>
