@@ -1,5 +1,6 @@
 import client from '../client';
-import { GetMyFansResponse, GetMyStarsResponse, StarRequest, UnstarRequest } from '../model/StarFanModel';
+import { PagenationRequest } from '../model';
+import { GetFansResponse, GetStarsResponse, StarRequest, UnstarRequest } from '../model/StarFanModel';
 
 class StarFanRepository {
   async star({ starId }: StarRequest): Promise<void> {
@@ -8,11 +9,11 @@ class StarFanRepository {
   async unStar({ starId }: UnstarRequest): Promise<void> {
     return client.delete(`/stars/${starId}`);
   }
-  async getMyStar(): Promise<GetMyStarsResponse> {
-    return client.get(`/stars`);
+  async getStars({ memberId, page, size }: PagenationRequest & { memberId: number }): Promise<GetStarsResponse> {
+    return client.get(`/${memberId}/stars?page=${page}&size=${size}`);
   }
-  async getMyFan(): Promise<GetMyFansResponse> {
-    return client.get(`/fans`);
+  async getFans({ memberId, page, size }: PagenationRequest & { memberId: number }): Promise<GetFansResponse> {
+    return client.get(`/${memberId}/fans?page=${page}&size=${size}`);
   }
 }
 

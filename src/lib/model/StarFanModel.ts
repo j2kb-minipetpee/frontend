@@ -1,3 +1,5 @@
+import { PagableData } from './SharedModel';
+
 export interface StarRequest {
   starId: number;
 }
@@ -20,6 +22,6 @@ export interface Star {
   createdAt: string;
 }
 
-export type GetMyStarsResponse = Array<Star>;
+export type GetStarsResponse = PagableData<Star>;
 
-export type GetMyFansResponse = Array<Fan>;
+export type GetFansResponse = PagableData<Fan>;

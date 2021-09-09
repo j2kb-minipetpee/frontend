@@ -11,8 +11,8 @@ export enum QueryKey {
   GetGalleryTargetPost = 'GetGalleryTargetPost',
   GetGalleryPagablePost = 'GetGalleryPagablePost',
   GetSettingData = 'GetSettingData',
-  GetMyStarsData = 'GetMyStarsData',
-  GetMyFansData = 'GetMyStarsData',
+  GetStarsData = 'GetStarsData',
+  GetFansData = 'GetFansData',
   GetComment = 'GetComment',
 }
 

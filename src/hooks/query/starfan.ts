@@ -1,14 +1,50 @@
-import { useMutation, useQuery } from 'react-query';
-import { QueryKey } from '../../lib/constants';
-import { GetMyFansResponse, GetMyStarsResponse, StarRequest, UnstarRequest } from '../../lib/model';
-import { StarFanRepository } from '../../lib/repository';
+import { useInfiniteQuery, useMutation } from 'react-query';
+import { QueryKey } from '@/lib/constants';
+import { GetFansResponse, GetStarsResponse, StarRequest, UnstarRequest } from '@/lib/model';
+import { StarFanRepository } from '@/lib/repository';
 
-export const useGetMyStarsQuery = () => {
-  return useQuery<GetMyStarsResponse, Error>(QueryKey.GetMyStarsData, () => StarFanRepository.getMyStar());
+export const useGetStarsQuery = (memberId: number, enabled = false) => {
+  return useInfiniteQuery<GetStarsResponse, Error>(
+    QueryKey.GetStarsData,
+    ({ pageParam = { page: 0, size: 5 } }) => StarFanRepository.getStars({ memberId, ...pageParam }),
+    {
+      enabled,
+      getNextPageParam: (lastPage, allPages) => {
+        const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 5);
+
+        if (lastPage.page.totalPages > nowPage) {
+          return {
+            page: nowPage,
+            size: 5,
+          };
+        }
+
+        return;
+      },
+    },
+  );
 };
 
-export const useGetMyFansQuery = () => {
-  return useQuery<GetMyFansResponse, Error>(QueryKey.GetMyFansData, () => StarFanRepository.getMyFan());
+export const useGetFansQuery = (memberId: number, enabled = false) => {
+  return useInfiniteQuery<GetFansResponse, Error>(
+    QueryKey.GetStarsData,
+    ({ pageParam = { page: 0, size: 5 } }) => StarFanRepository.getFans({ memberId, ...pageParam }),
+    {
+      enabled,
+      getNextPageParam: (lastPage, allPages) => {
+        const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 5);
+
+        if (lastPage.page.totalPages > nowPage) {
+          return {
+            page: nowPage,
+            size: 5,
+          };
+        }
+
+        return;
+      },
+    },
+  );
 };
 
 export const useStar = () => {
