@@ -1,17 +1,21 @@
 import { ColorMap } from '@/lib/constants/color';
 import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
-import { ButtonGroup, Divider, Spacing } from '../common';
+import { ButtonGroup, Divider, ImageUploader, Select, Spacing } from '../common';
 import { ButtonGroupWrapper, SettingsTitle } from './styles';
 import plugSmall from '@/assets/images/plus_small.png';
-import { Profile } from '@/lib/model';
+import { Homepee, Profile } from '@/lib/model';
+import { SettingImageUploader } from './SettingImageUploader';
+import { useEditProfilesMutation } from '@/hooks';
 
 interface SettingTopContentProps {
+  homepeeId: string;
   profile: Profile;
+  homepee: Homepee;
 }
 
-export const SettingUserInfoContent = ({ profile }: SettingTopContentProps) => {
-  const [profileData, setProfileData] = useState<Profile>({
+export const SettingUserInfoContent = ({ homepeeId, profile, homepee }: SettingTopContentProps) => {
+  const [profileData, setProfileData] = useState<Profile & Homepee>({
     birthday: '',
     name: '',
     personality: '',
@@ -19,11 +23,68 @@ export const SettingUserInfoContent = ({ profile }: SettingTopContentProps) => {
     profileImageUrl: '',
     email: '',
     gender: 'MALE',
+    title: '',
+    gateImageUrl: '',
   });
 
+  const [gateImage, setGateImage] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+
+  const editProfileMutation = useEditProfilesMutation();
+
+  const onGateImageUrl = (imageUrl: string) => {
+    setGateImage(imageUrl);
+  };
+
+  const onProfileImageChange = (imageUrl: string) => {
+    setProfileImage(imageUrl);
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProfileData({
+      ...profileData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onCancel = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setProfileData({
+      ...profile,
+      ...homepee,
+    });
+  };
+
+  const onSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    // 성 선택 안됐으면 male로 설정
+    const { birthday, gender, name, species, personality, title } = profileData;
+    editProfileMutation.mutate({
+      homepeeId,
+      profile: {
+        birthday,
+        gender: gender || 'MALE',
+        name,
+        species,
+        personality,
+        profileImageUrl: profileImage,
+      },
+      homepee: {
+        title,
+        gateImageUrl: gateImage,
+      },
+    });
+  };
+
   useEffect(() => {
-    setProfileData(profile);
-  }, [profile]);
+    setProfileData({
+      ...profile,
+      ...homepee,
+    });
+    setGateImage(homepee.gateImageUrl);
+    setProfileImage(profile.profileImageUrl);
+  }, [profile, homepee]);
 
   return (
     <SettingsTopWrapper>
@@ -35,39 +96,57 @@ export const SettingUserInfoContent = ({ profile }: SettingTopContentProps) => {
 
       <SettingsTopContent>
         <form>
-          <SettingsCoverImage>
-            <img src={plugSmall}></img>
-          </SettingsCoverImage>
+          <SettingImageUploader imageUrl={gateImage} type="gate" onChange={onGateImageUrl} />
 
           <section>
             <div>
-              <div>
-                <img src={profileData.profileImageUrl || plugSmall}></img>
-              </div>
+              <SettingImageUploader imageUrl={profileImage} type="profile" onChange={onProfileImageChange} />
             </div>
 
             <div>
               <div>
                 <Label>타이틀</Label>
-                <Input></Input>
+                <Input name="title" onChange={onChange} value={profileData.title} />
               </div>
               <Spacing vertical={11} />
               <div>
                 <Label htmlFor="profile_name">이름</Label>
-                <Input id="profile_name" value={profileData.name} />
+                <Input id="profile_name" value={profileData.name} name="name" onChange={onChange} />
               </div>
               <Spacing vertical={11} />
 
               <div>
-                <Label>종/나이/성별</Label>
-                <Input></Input>
+                <Label>종</Label>
+                <Input name="species" onChange={onChange} value={profileData.species} />
               </div>
               <Spacing vertical={11} />
 
-              <div>
-                <Label>소개글</Label>
-                <Textarea></Textarea>
-              </div>
+              <FlexBox>
+                <Label>성별</Label>
+                <GenderBox>
+                  <Select
+                    selectedIndex={profileData.gender || 'MALE'}
+                    onChange={(value) => {
+                      setProfileData({
+                        ...profileData,
+                        gender: value as 'MALE' | 'FEMALE',
+                      });
+                    }}
+                    options={[
+                      { index: 'MALE', text: '남' },
+                      { index: 'FEMALE', text: '여' },
+                    ]}
+                  />
+                </GenderBox>
+              </FlexBox>
+              <Spacing vertical={11} />
+
+              <Label htmlFor="birthday">생년월일</Label>
+              <Input id="birthday" name="birthday" type="date" onChange={onChange} value={profileData.birthday.split('T')[0]} />
+              <Spacing vertical={11} />
+
+              <Label htmlFor="personality">성격</Label>
+              <Input id="personality" name="personality" value={profileData.personality} onChange={onChange} />
             </div>
           </section>
 
@@ -76,8 +155,8 @@ export const SettingUserInfoContent = ({ profile }: SettingTopContentProps) => {
           <ButtonGroupWrapper>
             <ButtonGroup
               buttons={[
-                { text: '취소', color: 'GREY70' },
-                { text: '완료', color: 'EMERALD100' },
+                { text: '취소', color: 'GREY70', onClick: onCancel },
+                { text: '완료', color: 'EMERALD100', onClick: onSave },
               ]}
               size="large"
             ></ButtonGroup>
@@ -113,15 +192,6 @@ const SettingsTopContent = styled.section`
   }
 `;
 
-const SettingsCoverImage = styled.div`
-  border: 1px dotted ${ColorMap.GREY70};
-  width: 633px;
-  height: 94px;
-  display: flex;
-  justify-content: center;
-  padding: 12px 0;
-`;
-
 const Label = styled.label`
   display: inline-block;
   width: 124px;
@@ -131,10 +201,17 @@ const Label = styled.label`
 const Input = styled.input`
   width: 406px;
   height: 35px;
+  padding: 0 12px;
 `;
 
-const Textarea = styled.textarea`
+const FlexBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const GenderBox = styled.div`
   width: 406px;
-  height: 110px;
-  resize: none;
+  height: 35px;
+  border: 1px solid black;
+  padding: 0 12px;
 `;

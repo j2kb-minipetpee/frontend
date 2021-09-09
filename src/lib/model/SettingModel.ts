@@ -1,9 +1,9 @@
-import { Profile } from './SharedModel';
+import { Homepee, Profile } from './SharedModel';
 
 export enum GalleryType {
-  BOARD,
-  ALBUM,
-  GUEST,
+  BOARD = 'BOARD',
+  ALBUM = 'ALBUM',
+  GUEST = 'GUEST',
 }
 export interface Tab {
   id: number;
@@ -21,16 +21,16 @@ export interface GetSettingRequest {
   homepeeId: string;
 }
 
-export interface EditSettingRequest {
+export interface EditProfileRequest {
   homepeeId: string;
   profile: Profile;
-  tabs: Tab[];
+  homepee: Homepee;
 }
 
-export interface EditSettingResponse {
+export interface EditProfileResponse {
   homepeeId: string;
   profile: Profile;
-  tabs: Tab[];
+  homepee: Homepee;
 }
 
 export interface EditTabsRequest {
@@ -40,5 +40,6 @@ export interface EditTabsRequest {
 
 export interface GetSettingResponse {
   profile: Profile;
+  homepee: Homepee;
   tabs: Tab[];
 }

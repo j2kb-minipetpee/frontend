@@ -14,7 +14,7 @@ interface SettingBottomContentProps {
 }
 
 interface TabsChecekd {
-  [key: number]: null | Tab;
+  [key: string]: null | Tab;
 }
 
 export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentProps) => {
@@ -24,6 +24,8 @@ export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentP
     [GalleryType.ALBUM]: null,
     [GalleryType.GUEST]: null,
   });
+
+  console.log(tabsChecked);
 
   const { mutate } = useEditTabsMutation();
 
@@ -53,7 +55,7 @@ export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentP
       { homepeeId, tabs: Object.values(tabsChecked) },
       {
         onSuccess: () => {
-          queryClient.refetchQueries([QueryKey.GetSettingData, homepeeId]);
+          queryClient.invalidateQueries([QueryKey.GetSettingData, homepeeId]);
         },
       },
     );
@@ -90,15 +92,15 @@ export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentP
           </TableHeader>
           <TableRow>
             <label htmlFor="board">게시판</label>
-            <input id="board" type="checkbox" checked={tabsChecked[GalleryType.BOARD].visible} onChange={onChange(GalleryType.BOARD)} />
+            <input id="board" type="checkbox" checked={tabsChecked[GalleryType.BOARD]?.visible} onChange={onChange(GalleryType.BOARD)} />
           </TableRow>
           <TableRow>
             <label htmlFor="gallery">갤러리</label>
-            <input id="gallery" type="checkbox" checked={tabsChecked[GalleryType.ALBUM].visible} onChange={onChange(GalleryType.ALBUM)} />
+            <input id="gallery" type="checkbox" checked={tabsChecked[GalleryType.ALBUM]?.visible} onChange={onChange(GalleryType.ALBUM)} />
           </TableRow>
           <TableRow>
             <label htmlFor="guest">방명록</label>
-            <input id="guest" type="checkbox" checked={tabsChecked[GalleryType.GUEST].visible} onChange={onChange(GalleryType.GUEST)} />
+            <input id="guest" type="checkbox" checked={tabsChecked[GalleryType.GUEST]?.visible} onChange={onChange(GalleryType.GUEST)} />
           </TableRow>
         </TabTable>
 
