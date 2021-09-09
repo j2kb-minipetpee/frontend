@@ -9,6 +9,9 @@ module.exports = (env, argv) => ({
   entry: {
     main: './src/index.tsx',
   },
+  output: {
+    publicPath: '/',
+  },
 
   module: {
     rules: [
@@ -33,8 +36,7 @@ module.exports = (env, argv) => ({
     ],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    publicPath: '/',
+    contentBase: './',
     historyApiFallback: true,
     hot: true,
   },
