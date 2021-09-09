@@ -1,7 +1,7 @@
 import { MainLayout } from '../layout/MainLayout';
 
 import React, { useMemo } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Post } from '@/components/Main/Post';
 import styled from '@emotion/styled';
 import { useGetPopularPostsQuery, useSearchMembersQuery, useSearchPostsQuery } from '@/hooks';
@@ -47,7 +47,11 @@ export const Main = () => {
     searchMemberQuery.fetchNextPage();
   };
 
-  const onClickPost = (homepeeId: string) => () => {
+  const onClickPost = (homepeeId: string, postId: string) => () => {
+    history.push(routes.BOARD_DETAILED_POST.replace(':id', homepeeId).replace(':postId', postId));
+  };
+
+  const onClickMember = (homepeeId: string) => () => {
     history.push(routes.HOMEPEE.replace(':id', homepeeId));
   };
 
@@ -67,7 +71,7 @@ export const Main = () => {
                 coverImage={post.imageUrl}
                 title={post.title}
                 description={post.content}
-                onClick={onClickPost(String(homepeeId))}
+                onClick={onClickPost(String(homepeeId), String(post.id))}
               ></Post>
             ))}
 
@@ -83,7 +87,7 @@ export const Main = () => {
                 coverImage={post.imageUrl}
                 title={post.title}
                 description={post.content}
-                onClick={onClickPost(String(homepeeId))}
+                onClick={onClickPost(String(homepeeId), String(post.id))}
               ></Post>
             ))}
 
@@ -91,7 +95,9 @@ export const Main = () => {
           searchMemberQuery.data?.pages?.length > 0 &&
           searchMemberQuery.data.pages
             .flatMap((data) => data.content)
-            .map(({ homepeeId, id, name, profileImageUrl }) => <Member key={id} homepeeId={homepeeId} name={name} id={id} profileImageUrl={profileImageUrl} />)}
+            .map(({ homepeeId, id, name, profileImageUrl }) => (
+              <Member key={id} homepeeId={homepeeId} name={name} id={id} profileImageUrl={profileImageUrl} onClick={onClickMember(String(homepeeId))} />
+            ))}
       </PostContainer>
 
       {isMore && <NextButton onClick={onMoreClick} />}
@@ -102,7 +108,7 @@ export const Main = () => {
 const PostContainer = styled.div`
   width: 60%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0 auto;
   flex-wrap: wrap;
   overflow-y: auto;

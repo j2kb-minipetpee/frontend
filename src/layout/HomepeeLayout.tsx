@@ -10,8 +10,10 @@ import { routes } from '@/lib/constants/routes';
 import { useMountedEffect } from '@/hooks/useMountedEffect';
 import { convertPathname } from '@/lib/utils/convertPathname';
 import { SelectedTab } from '@/lib/constants';
+import { useMemo } from 'react';
+import { useIsHomepeeHost } from '@/hooks/useIsHomepeeHost';
 
-const tabs = [
+const defaultTabs = [
   {
     index: 'HOMEPEE',
     text: '홈',
@@ -28,10 +30,6 @@ const tabs = [
     index: 'GUESTBOOK',
     text: '방명록',
   },
-  {
-    index: 'SETTINGS',
-    text: '관리',
-  },
 ];
 
 interface HomepeeLayoutProps {
@@ -44,8 +42,23 @@ export const HomepeeLayout = ({ children }: HomepeeLayoutProps) => {
   const { pathname } = useLocation();
 
   const { id, name } = useAuth();
+  const isHomepeeHost = useIsHomepeeHost();
+
   const { data } = useGetHomeDataQuery(Number(homepeeId));
   const [selectedTab, setSelectedTab] = useState<SelectedTab>(convertPathname(pathname));
+
+  const tabs = useMemo(() => {
+    if (isHomepeeHost) {
+      return [
+        ...defaultTabs,
+        {
+          index: 'SETTINGS',
+          text: '관리',
+        },
+      ];
+    }
+    return [...defaultTabs];
+  }, [isHomepeeHost]);
 
   const onChange = (index: SelectedTab) => {
     setSelectedTab(index);

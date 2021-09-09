@@ -1,15 +1,57 @@
 import { Spacing } from '@/components';
 import { FanComment } from '@/components/Homepee/FanComment';
 import { ProfileDetail } from '@/components/Homepee/ProfileDetail';
-import { useGetHomeDataQuery } from '@/hooks';
+import { useAddFanCommentsMutation, useAuth, useDeleteFanCommentsMutation, useGetFanCommentsQuery, useGetHomeDataQuery } from '@/hooks';
+import { QueryKey } from '@/lib/constants';
 import styled from '@emotion/styled';
 import React from 'react';
+import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
 
 export const HomepeePage = () => {
   const { id } = useParams<{ id: string }>();
+  const { id: memberId } = useAuth();
   const { data } = useGetHomeDataQuery(Number(id));
+  const getFanCommentsQuery = useGetFanCommentsQuery(Number(id));
+
+  const queryClient = useQueryClient();
+
+  const addFanCommentsMutation = useAddFanCommentsMutation();
+  const deleteFanCommentsMutation = useDeleteFanCommentsMutation();
+
+  const handleAddFanComment = (content: string) => {
+    addFanCommentsMutation.mutate(
+      {
+        content,
+        homepeeId: Number(id),
+        memberId,
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKey.GetHomeData, Number(id)]);
+        },
+      },
+    );
+  };
+
+  const handleDeleteFanComment = () => {
+    deleteFanCommentsMutation.mutate(
+      {
+        id: memberId,
+        homepeeId: Number(id),
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKey.GetHomeData, Number(id)]);
+        },
+      },
+    );
+  };
+
+  const onMoreClick = () => {
+    getFanCommentsQuery.fetchNextPage();
+  };
 
   return (
     <HomepeeLayout>
@@ -26,7 +68,16 @@ export const HomepeePage = () => {
           <ContentWrapper>
             <ProfileDetail {...data.profile} visitCount={data.visitCount} />
             <Spacing horizon={50} />
-            <FanComment fanComments={data.fanComments}></FanComment>
+
+            <FanComment
+              memberId={memberId}
+              fanComments={getFanCommentsQuery.data.pages?.flatMap((data) => data.fanComments)}
+              isFan={data.relationship === 'STAR'}
+              isMore={getFanCommentsQuery.hasNextPage}
+              onMoreClick={onMoreClick}
+              onAddFanComment={handleAddFanComment}
+              onDeleteFanComment={handleDeleteFanComment}
+            />
           </ContentWrapper>
         )}
       </ContentContainer>

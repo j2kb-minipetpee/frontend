@@ -1,9 +1,11 @@
 import {
-  AddNeighborCommentRequest,
-  AddNeighborCommentResponse,
-  DeleteNeighborCommentRequest,
-  EditNeighborCommentRequest,
-  EditNeighborCommentResponse,
+  AddFanCommentRequest,
+  AddFanCommentResponse,
+  DeleteFanCommentRequest,
+  EditFanCommentRequest,
+  EditFanCommentResponse,
+  GetFanCommentsRequest,
+  GetFanCommentsResponse,
   GetHomeResponse,
 } from '../model';
 import client from '../client';
@@ -13,16 +15,20 @@ class HomeRepository {
     return await client.get(`/${homepeeId}`);
   }
 
-  async addNeighborComments({ userId, memberId, content }: AddNeighborCommentRequest): Promise<AddNeighborCommentResponse> {
-    return await client.post(`/${userId}/neighbor-comments`, { memberId, content });
+  async getFanComments({ homepeeId, page, size }: GetFanCommentsRequest): Promise<GetFanCommentsResponse> {
+    return await client.get(`/${homepeeId}/fan-comments?page=${page}&size=${size}`);
   }
 
-  async editNeighborComments({ userId, memberId, content }: EditNeighborCommentRequest): Promise<EditNeighborCommentResponse> {
-    return await client.put(`/${userId}/neighbor-comments`, { memberId, content });
+  async addFanComments({ homepeeId, memberId, content }: AddFanCommentRequest): Promise<AddFanCommentResponse> {
+    return await client.post(`/${homepeeId}/fan-comments`, { memberId, content });
   }
 
-  async deleteNeighborComments({ userId, id }: DeleteNeighborCommentRequest): Promise<void> {
-    return await client.delete(`/${userId}/neighbor-comments/${id}`);
+  async editFanComments({ homepeeId, memberId, content }: EditFanCommentRequest): Promise<EditFanCommentResponse> {
+    return await client.put(`/${homepeeId}/fan-comments`, { memberId, content });
+  }
+
+  async deleteFanComments({ homepeeId, id }: DeleteFanCommentRequest): Promise<void> {
+    return await client.delete(`/${homepeeId}/fan-comments/${id}`);
   }
 }
 

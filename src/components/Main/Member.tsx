@@ -1,12 +1,29 @@
 import { SearchMemberInfo } from '@/lib/model';
+import styled from '@emotion/styled';
 import React from 'react';
-import { Profile } from '../common';
+import { Profile, Spacing } from '../common';
 
-export const Member = ({ homepeeId, id, name, profileImageUrl }: SearchMemberInfo) => {
+interface MemberProps extends SearchMemberInfo {
+  onClick: () => void;
+}
+
+export const Member = ({ homepeeId, id, name, profileImageUrl, onClick }: MemberProps) => {
   return (
-    <div>
+    <MemberContainer onClick={onClick}>
       <Profile size="large" imageURL={profileImageUrl} />
+      <Spacing vertical={8} />
       <div>{name}</div>
-    </div>
+    </MemberContainer>
   );
 };
+
+const MemberContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  min-width: 120px;
+  height: 120px;
+  margin: 20px 12px;
+  cursor: pointer;
+`;

@@ -8,6 +8,11 @@ export interface Profile {
   profileImageUrl: string;
 }
 
+export interface Homepee {
+  title: string;
+  gateImageUrl?: string;
+}
+
 export interface Member {
   id: number;
   name: string;

@@ -1,29 +1,48 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { Divider, Spacing } from '../common';
+import { Button, Spacing } from '../common';
 import commentsBubble from '@/assets/images/comments_bubble.png';
-
-interface FanComments {
-  id: number;
-  memberId: number;
-  memberName: string;
-  content: string;
-  createdAt: string;
-}
+import { useInput } from '@/hooks';
+import { ColorMap } from '@/lib/constants/color';
+import { NextButton } from '../common/NextButton';
+import { FanComment as FanCommentType } from '@/lib/model';
 
 interface FanCommentProps {
-  fanComments: FanComments[];
+  memberId: number;
+  fanComments?: FanCommentType[];
+  isMore?: boolean;
+  isFan: boolean;
+  onAddFanComment: (comment: string) => void;
+  onDeleteFanComment: () => void;
+  onMoreClick: () => void;
 }
 
-export const FanComment = ({ fanComments }: FanCommentProps) => {
+export const FanComment = ({ fanComments, memberId, onAddFanComment, onDeleteFanComment, isMore, isFan, onMoreClick }: FanCommentProps) => {
+  const [comment, onChangeComment] = useInput('');
+
   return (
     <FanCommentContainer>
       <h4>공생평</h4>
-      <Spacing vertical={8} />
-      <Divider color="black" type="row" width={1.5} />
+      <Spacing vertical={12} />
+
+      {isFan && (
+        <Form>
+          <Input value={comment} onChange={onChangeComment} />
+          <Spacing horizon={18} />
+          <Button
+            color="EMERALD100"
+            text="작성"
+            onClick={(e) => {
+              e.preventDefault();
+              onAddFanComment(comment);
+            }}
+          />
+        </Form>
+      )}
+
       <Spacing vertical={16} />
 
-      {fanComments.map((comment) => (
+      {fanComments?.map((comment) => (
         <React.Fragment key={comment.id}>
           <FanCommentWrapper>
             <div>
@@ -32,10 +51,13 @@ export const FanComment = ({ fanComments }: FanCommentProps) => {
             <div className="content">{comment.content}</div>
             <div className="name">{comment.memberName}</div>
             <div className="date">{comment.createdAt.split(' ')[0]}</div>
+            {comment.memberId === memberId && <div onClick={onDeleteFanComment}>X</div>}
           </FanCommentWrapper>
           <Spacing vertical={16} />
         </React.Fragment>
       ))}
+
+      {isMore && <NextButton onClick={onMoreClick} />}
     </FanCommentContainer>
   );
 };
@@ -43,6 +65,10 @@ export const FanComment = ({ fanComments }: FanCommentProps) => {
 const FanCommentContainer = styled.div`
   width: 711px;
   padding-top: 117px;
+`;
+
+const Form = styled.form`
+  display: flex;
 `;
 
 const FanCommentWrapper = styled.div`
@@ -61,4 +87,12 @@ const FanCommentWrapper = styled.div`
   & .date {
     width: 100px;
   }
+`;
+
+const Input = styled.input`
+  width: 585px;
+  height: 31px;
+  font-size: 12px;
+  padding: 0 12px;
+  color: ${ColorMap.GREY70};
 `;

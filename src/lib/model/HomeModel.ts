@@ -1,12 +1,5 @@
 import { Profile } from './SharedModel';
-
-export interface recentPost {
-  id: number;
-  title: string;
-  createdAt: string;
-}
-
-export interface fanComments {
+export interface FanComment {
   id: number;
   memberId: number;
   memberName: string;
@@ -14,42 +7,56 @@ export interface fanComments {
   createdAt: string;
 }
 
+export type Relationship = 'NONE' | 'SELF' | 'STAR' | 'UNSTAR';
+
 export interface GetHomeResponse {
   profile: Profile;
   gateImageUrl?: string;
-  recentPosts?: recentPost[];
   title: string;
   visitCount: number;
-  fanComments?: fanComments[];
+  relationship: Relationship;
 }
 
-export interface AddNeighborCommentRequest {
-  userId: number;
+export interface GetFanCommentsRequest {
+  homepeeId: number;
+  page: number;
+  size: number;
+}
+
+export interface GetFanCommentsResponse {
+  fanComments: FanComment[];
+  page: {
+    totalElements: number;
+    totalPages: number;
+  };
+}
+export interface AddFanCommentRequest {
+  homepeeId: number;
   memberId: number;
   content: string;
 }
 
-export interface AddNeighborCommentResponse {
+export interface AddFanCommentResponse {
   id: number;
   memberId: number;
   content: string;
   createdAt: string;
 }
 
-export interface EditNeighborCommentRequest {
-  userId: number;
+export interface EditFanCommentRequest {
+  homepeeId: number;
   memberId: number;
   content: string;
 }
 
-export interface EditNeighborCommentResponse {
+export interface EditFanCommentResponse {
   id: number;
   memberId: number;
   content: string;
   createdAt: string;
 }
 
-export interface DeleteNeighborCommentRequest {
-  userId: number;
+export interface DeleteFanCommentRequest {
+  homepeeId: number;
   id: number;
 }
