@@ -1,49 +1,61 @@
-export interface GalleryImage {
-  id: number;
-  url: string;
-}
-export interface GetGalleryPostRequest {
-  homepeeId: number;
-}
-export interface GetGalleryPostResponse {
+import { PagableData, Comments, Image } from './SharedModel';
+
+export type GetGalleryPagablePostResponse = PagableData<GalleryPost>;
+
+export interface GalleryPost {
   id: number;
   title: string;
-  images: Array<GalleryImage>;
-  viewCount: number;
-  visible: boolean;
+  images: Image[];
+  comments: Comments;
 }
-export interface AddGalleryPostRequest {
+
+export interface GetGalleryPagablePostRequest {
+  pageParam?: {
+    size: number;
+    page: number;
+  };
   homepeeId: string;
+}
+
+export type GetGalleryAllPostReponse = GalleryPost[];
+export interface GetGalleryTargetPostResponse {
+  title: string;
+  images: Image[];
+}
+export interface GetGalleryTargetPostRequest {
+  homepeeId: number;
+  postId: number;
+}
+
+export interface AddGalleryPostRequest {
+  homepeeId: number;
   title: string;
   images: Array<string>;
-  visible: boolean;
 }
 export interface AddGalleryPostResponse {
   id: number;
   title: string;
   images: Array<string>;
-  visible: boolean;
 }
 export interface EditGalleryPostRequest {
-  homepeeId: string;
+  homepeeId: number;
   id: number;
   title: string;
-  image: Array<GalleryImage>;
-  visible: boolean;
+  images: Image[];
 }
 export interface EditGalleryPostResponse {
-  homepeeId: string;
+  homepeeId: number;
   id: number;
   title: string;
-  images: Array<GalleryImage>;
+  images: Image[];
   visible: boolean;
 }
 export interface DeleteGalleryPostRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
 }
 export interface AddGalleryCommentRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
   memberId: number;
   content: string;
@@ -55,7 +67,7 @@ export interface AddGalleryCommentResponse {
   createdAt: string;
 }
 export interface DeleteGalleryCommentRequest {
-  homepeeId: string;
+  homepeeId: number;
   postId: number;
   commentId: number;
 }

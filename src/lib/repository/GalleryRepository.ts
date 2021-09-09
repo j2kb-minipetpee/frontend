@@ -8,40 +8,47 @@ import {
   DeleteGalleryPostRequest,
   EditGalleryPostRequest,
   EditGalleryPostResponse,
-  GetGalleryPostRequest,
-  GetGalleryPostResponse,
+  GetGalleryPagablePostRequest,
+  GetGalleryPagablePostResponse,
+  GetGalleryTargetPostRequest,
+  GetGalleryTargetPostResponse,
 } from '../model';
 
 class GalleryRepository {
-  async getGalleryPost({ homepeeId }: GetGalleryPostRequest): Promise<GetGalleryPostResponse> {
-    return client.get(`/${homepeeId}/album/posts`);
+  async getGalleryAllPost({ homepeeId, postId }: GetGalleryTargetPostRequest): Promise<GetGalleryTargetPostResponse> {
+    return client.get(`/${homepeeId}/album/posts/${postId}`);
   }
-  async addGalleryPost({ homepeeId, title, images, visible }: AddGalleryPostRequest): Promise<AddGalleryPostResponse> {
+
+  async getGalleryPagablePost({ homepeeId, pageParam }: GetGalleryPagablePostRequest): Promise<GetGalleryPagablePostResponse> {
+    return client.get(`/${homepeeId}/album/posts?size=${pageParam.size}&page=${pageParam.page}`);
+  }
+
+  async addGalleryPost({ homepeeId, title, images }: AddGalleryPostRequest): Promise<AddGalleryPostResponse> {
     return client.post(`/${homepeeId}/album/posts`, {
       title,
       images,
-      visible,
     });
   }
-  async editGalleryPost({ homepeeId, id, title, image, visible }: EditGalleryPostRequest): Promise<EditGalleryPostResponse> {
+  async editGalleryPost({ homepeeId, id, title, images }: EditGalleryPostRequest): Promise<EditGalleryPostResponse> {
     return client.put(`/${homepeeId}/album/posts`, {
       id,
       title,
-      image,
-      visible,
+      images,
     });
   }
   async deleteGalleryPost({ homepeeId, postId }: DeleteGalleryPostRequest): Promise<void> {
     return client.delete(`${homepeeId}/album/posts/${postId}`);
   }
+
   async addGalleryComment({ homepeeId, postId, memberId, content }: AddGalleryCommentRequest): Promise<AddGalleryCommentResponse> {
-    return client.post(`${homepeeId}/album/posts/${postId}`, {
+    return client.post(`${homepeeId}/posts/${postId}/comments`, {
       memberId,
       content,
     });
   }
+
   async deleteGalleryComment({ homepeeId, postId, commentId }: DeleteGalleryCommentRequest): Promise<void> {
-    return client.delete(`${homepeeId}/album/posts/${postId}/comments/${commentId}`);
+    return client.delete(`${homepeeId}/posts/${postId}/comments/${commentId}`);
   }
 }
 

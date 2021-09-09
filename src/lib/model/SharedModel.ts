@@ -27,4 +27,25 @@ export interface PagenationRequest {
   size?: number;
 }
 
+export interface Comment {
+  id: number;
+  //이 부분 어떻게 통일할지.
+  member: { id: number; name: string };
+  content: string;
+  createdAt: string;
+}
+
+export interface Comments {
+  content: Comment[];
+  page: {
+    totalPages: number;
+    totalElements: number;
+  };
+}
+
+export interface Image {
+  id: number;
+  url: string;
+}
+
 export type SearchType = 'popular' | 'user' | 'post';

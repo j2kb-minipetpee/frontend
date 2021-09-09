@@ -6,12 +6,14 @@ export enum QueryKey {
   SearchMembers = 'SearchMembers',
   GetGuestBooks = 'GetGuestBooks',
   SearcgPosts = 'SearchPosts',
-  GetBoardPosts = 'GetBoardPosts',
-  GetBoardPost = 'GetBoardPost',
-  GetGalleryPost = 'GetGalleryPost',
+  GetBoardPageablePosts = 'GetBoardPageablePosts',
+  GetBoardTargetPost = 'GetBoardTargetPost',
+  GetGalleryTargetPost = 'GetGalleryTargetPost',
+  GetGalleryPagablePost = 'GetGalleryPagablePost',
   GetSettingData = 'GetSettingData',
   GetMyStarsData = 'GetMyStarsData',
   GetMyFansData = 'GetMyStarsData',
+  GetComment = 'GetComment',
 }
 
 export type SelectedTab = 'HOMEPEE' | 'BOARD' | 'GALLERY' | 'GUESTBOOK' | 'SETTINGS';

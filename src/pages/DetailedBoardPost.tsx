@@ -1,9 +1,12 @@
-import { useGetBoardPostQuery } from '@/hooks';
+import { useDeleteBoardPostMutation, useGetBoardPostQuery } from '@/hooks';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useHistory, useParams } from 'react-router-dom';
 import { ColorMap } from '@/lib/constants/color';
 import React from 'react';
 import styled from '@emotion/styled';
+import Backbtn from '@/assets/images/back_big.png';
+import { ButtonGroup } from '@/components';
+import { CommentLayout } from '@/layout/CommentLayout';
 
 interface paramsType {
   id: string;
@@ -14,59 +17,54 @@ export const DetailedBoardPost = () => {
   const params = useParams<paramsType>();
   const history = useHistory();
   const { id: homepeeId, postId } = params;
+  const getBoardPostQuery = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
+  const deleteBoardPostMutation = useDeleteBoardPostMutation();
 
-  const { isLoading, data } = useGetBoardPostQuery({ homepeeId, postId });
-  console.log(data);
+  const handleDeleteClick = () => {
+    confirm('삭제하시곘습니까?') &&
+      deleteBoardPostMutation.mutate(
+        { homepeeId, postId },
+        {
+          onSuccess: () => {
+            alert('삭제하였습니다.');
+            history.goBack();
+          },
+        },
+      );
+  };
+
+  const handleModifyClick = () => {
+    history.push(`/homepee/${homepeeId}/board/posts/modify/${postId}`);
+  };
 
   return (
     <HomepeeLayout>
-      {!isLoading && (
+      {getBoardPostQuery.data && (
         <DetailedBoardPostContainer>
           <DetailedBoardPostHeader>
-            <button onClick={() => history.goBack()}>뒤로가기</button>
-            <div>
-              <button>수정</button>
-              <button>삭제</button>
+            <div onClick={() => history.goBack()}>
+              <img src={Backbtn} />
             </div>
+            <ButtonGroup
+              size="large"
+              buttons={[
+                { text: '수정', onClick: handleModifyClick },
+                { text: '삭제', onClick: handleDeleteClick },
+              ]}
+            ></ButtonGroup>
           </DetailedBoardPostHeader>
-          <h3>{data.title}</h3>
+          <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
             <h4> {homepeeId} </h4>
-            <h4> {data.createdAt} </h4>
-            <h4> {data.viewCount}</h4>
+            <h4> {getBoardPostQuery.data.viewCount}</h4>
           </DetailedBoardPostSubInfo>
-          <DetailedBoardPostImage src={data.image.url} />
-          <DetailedBoardPostContent>{data.content}</DetailedBoardPostContent>
-          <DetailedBoardPostCommentContainer>
-            <DetailedBoardPostCommentHeader>댓글</DetailedBoardPostCommentHeader>
-            <DetailedBoardPostCommentContentsContainer>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-              <div>
-                <span>작성자</span>
-                <span> 댓글 내용</span>
-              </div>
-            </DetailedBoardPostCommentContentsContainer>
-            <button>댓글 더보기</button>
-          </DetailedBoardPostCommentContainer>
+          <DetailedBoardPostImageWrapper>
+            <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
+          </DetailedBoardPostImageWrapper>
+          <DetailedBoardPostContent>{getBoardPostQuery.data.content}</DetailedBoardPostContent>
+          <DetailedBoardPostCommentWrapper>
+            <CommentLayout postId={Number(postId)} />
+          </DetailedBoardPostCommentWrapper>
         </DetailedBoardPostContainer>
       )}
     </HomepeeLayout>
@@ -87,6 +85,14 @@ const DetailedBoardPostHeader = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 82px;
+`;
+
+const DetailedBoardPostTitle = styled.div`
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
 `;
 
 const DetailedBoardPostSubInfo = styled.section`
@@ -94,27 +100,29 @@ const DetailedBoardPostSubInfo = styled.section`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 22px;
 `;
 
-const DetailedBoardPostImage = styled.img``;
+const DetailedBoardPostImage = styled.img`
+  height: 100%;
+  object-fit: contain;
+`;
 
 const DetailedBoardPostContent = styled.article`
   width: 50%;
   height: auto;
+  margin-top: 15px;
+  text-align: center;
 `;
 
-const DetailedBoardPostCommentContainer = styled.section`
+const DetailedBoardPostCommentWrapper = styled.div`
   width: 50%;
-  height: auto;
-`;
-const DetailedBoardPostCommentHeader = styled.section`
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
 `;
 
-const DetailedBoardPostCommentContentsContainer = styled.section`
+const DetailedBoardPostImageWrapper = styled.div`
+  width: 740px;
+  margin-top: 15px;
+  height: 500px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
 `;

@@ -17,7 +17,6 @@ export const PostListLayout = ({ postList }: IProps) => {
   );
 };
 
-// 1280 70% 기준 양 옆 192px or flex?
 const PostListContainer = styled.section`
   width: 70%;
   height: auto;

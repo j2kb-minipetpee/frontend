@@ -1,29 +1,26 @@
-import { routes } from '@/lib/constants/routes';
-import { SimplifiedPost } from '@/lib/model';
+import { useAuth } from '@/hooks';
+import { SimpleBoardPost } from '@/lib/model';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-export const SimplePost = ({
-  post: {
-    id,
-    title,
-    createdAt,
-    image: { id: imageId, url: imageUrl },
-  },
-}: any) => {
-  const { url } = useRouteMatch();
+interface ISimplePostProps {
+  post: SimpleBoardPost;
+}
 
+export const SimplePost = ({ post }: ISimplePostProps) => {
+  const { url } = useRouteMatch();
+  const myInfo = useAuth();
   return (
     <SimplePostContainer>
-      <SimplePostImage src={imageUrl} />
+      <SimplePostImage src={post.image.url} />
       <SimplePostTitle>
-        <Link to={`${url}/${id}`}>{title}</Link>
+        <Link to={`${url}/${post.id}`}>{post.title}</Link>
       </SimplePostTitle>
       <SimplePostSubDataContainer>
-        <SimplePostUserId>유저Id</SimplePostUserId>
-        <SimplePostCreatedAt>{createdAt}</SimplePostCreatedAt>
-        <SimplePostViewCount>Simple</SimplePostViewCount>
+        <SimplePostUserId>{myInfo.name}</SimplePostUserId>
+        <SimplePostCreatedAt>{post.createdAt.split(' ')[0]}</SimplePostCreatedAt>
+        <SimplePostViewCount>{post.viewCount}</SimplePostViewCount>
       </SimplePostSubDataContainer>
     </SimplePostContainer>
   );
@@ -32,7 +29,7 @@ export const SimplePost = ({
 const SimplePostContainer = styled.section`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 36px;
 `;
@@ -40,11 +37,11 @@ const SimplePostContainer = styled.section`
 const SimplePostImage = styled.img`
   width: 95px;
   height: 95px;
-  border-radius: 50%;
 `;
 
 const SimplePostTitle = styled.section`
   font-size: 15px;
+  width: 408px;
 `;
 
 const SimplePostSubDataContainer = styled.section`
@@ -54,13 +51,13 @@ const SimplePostSubDataContainer = styled.section`
 `;
 
 const SimplePostUserId = styled.section`
-  font-size: 15px;
+  font-size: 12px;
 `;
 
 const SimplePostCreatedAt = styled.section`
-  font-size: 15px;
+  font-size: 12px;
 `;
 
 const SimplePostViewCount = styled.section`
-  font-size: 15px;
+  font-size: 12px;
 `;

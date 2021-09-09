@@ -1,3 +1,43 @@
+import { PagableData, Comments, Image } from './SharedModel';
+
+export interface SimpleBoardPost {
+  id: number;
+  title: string;
+  createdAt: string;
+  image: Image;
+  viewCount: number;
+}
+
+export interface DetailedBoardPost {
+  id: number;
+  title: string;
+  content: string;
+  viewCount: number;
+  image: Image;
+  comments: Comments;
+}
+
+// 페이지네이션을 위한 타입 (SimpleBoardPost)
+export interface GetBoardPagablePostsRequest {
+  homepeeId: number;
+  pageParam?: {
+    page: number;
+    size: number;
+  };
+}
+
+export type GetBoardPagablePostsResponse = PagableData<SimpleBoardPost[]>;
+
+// 단건조회
+
+export interface GetBoardTargetPostRequest {
+  homepeeId: number;
+  postId: number;
+}
+
+export type GetBoardTargetPostResponse = DetailedBoardPost;
+
+//
 export interface AddBoardPostRequest {
   title: string;
   content: string;
@@ -43,20 +83,9 @@ export interface GetBoardPostsRequest {
   page?: number;
 }
 
-export type GetBoardPostsResponse = SimplifiedPost[];
-
-export interface SimplifiedPost {
-  id: number;
-  title: string;
-  createdAt: string;
-  image: {
-    id: number;
-    url: string;
-  };
-}
+export type GetBoardPostsResponse = SimpleBoardPost[];
 
 export interface EditBoardPostRequest {
-  id: number;
   title: string;
   content: string;
   image: {
@@ -77,8 +106,8 @@ export interface EditBoardPostResponse {
 }
 
 export interface DeleteBoardPostRequset {
-  homepeeId: number;
-  postId: number;
+  homepeeId: string;
+  postId: string;
 }
 
 export interface DeleteBoardCommentRequest {

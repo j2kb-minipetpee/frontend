@@ -4,7 +4,7 @@ import { Logo, Tab } from '@/components';
 import { useAuth, useGetHomeDataQuery } from '@/hooks';
 import { HomepeeTitle } from '@/components/Homepee/HomepeeTitle';
 import { ColorMap } from '@/lib/constants/color';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { UserName } from '@/components/common/UserName';
 import { routes } from '@/lib/constants/routes';
 import { useMountedEffect } from '@/hooks/useMountedEffect';
@@ -67,7 +67,7 @@ export const HomepeeLayout = ({ children }: HomepeeLayoutProps) => {
           <HomepeeHeaderTop>
             <Logo width={128} height={80} onClick={onLogoClick} />
 
-            {id ? <UserName name={name} /> : <div>로그인</div>}
+            {id ? <UserName name={name} /> : <Link to={routes.SIGNIN}>로그인</Link>}
           </HomepeeHeaderTop>
 
           <HomepeeHeaderBottom>
@@ -106,8 +106,9 @@ const HomepeeHeaderTop = styled.section`
 `;
 
 const HomepeeContentContainer = styled.section`
-  border: 1px solid ${ColorMap.GREY100};
+  border: 19px solid ${ColorMap.GREY100};
   height: 100%;
+  overflow-y: scroll;
 `;
 
 const HomepeeHeaderBottom = styled.section`
