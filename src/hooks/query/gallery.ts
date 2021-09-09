@@ -1,21 +1,40 @@
-import { useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
 import { QueryKey } from '../../lib/constants';
 import {
-  AddGalleryCommentRequest,
-  AddGalleryCommentResponse,
   AddGalleryPostRequest,
   AddGalleryPostResponse,
-  DeleteGalleryCommentRequest,
   DeleteGalleryPostRequest,
   EditGalleryPostRequest,
   EditGalleryPostResponse,
-  GetGalleryPostResponse,
+  GetGalleryPagablePostResponse,
+  GetGalleryPagablePostRequest,
+  GetGalleryAllPostRequest,
+  GetGalleryAllPostReponse,
 } from '../../lib/model';
 import { GalleryRepository } from '../../lib/repository';
 
-export const useGetGalleryPostQuery = (homepeeId: number) => {
-  return useQuery<GetGalleryPostResponse, Error, GetGalleryPostResponse>([QueryKey.GetGalleryPost, homepeeId], () =>
-    GalleryRepository.getGalleryPost({ homepeeId }),
+export const useGetGalleryPostQuery = ({ homepeeId }: GetGalleryPagablePostRequest) => {
+  return useInfiniteQuery<GetGalleryPagablePostResponse, Error>(
+    [QueryKey.GetGalleryPagablePost, homepeeId],
+    ({ pageParam = { page: 0, size: 4 } }) => GalleryRepository.getGalleryPagablePost({ homepeeId, pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 4);
+        if (lastPage.page.totalPages > nowPage) {
+          return {
+            page: nowPage,
+            size: 4,
+          };
+        }
+        return;
+      },
+    },
+  );
+};
+
+export const useGetGalleryAllPostQuery = ({ homepeeId }: GetGalleryAllPostRequest) => {
+  return useQuery<GetGalleryAllPostReponse, Error>([QueryKey.GetGalleryAllPost, homepeeId, 'forUnique'], () =>
+    GalleryRepository.getGalleryAllPost({ homepeeId }),
   );
 };
 
@@ -25,24 +44,12 @@ export const useAddGalleryPostMutation = () => {
   );
 };
 
-export const useAddGalleryCommentMutation = () => {
-  return useMutation<AddGalleryCommentResponse, Error, AddGalleryCommentRequest>(({ homepeeId, postId, memberId, content }) =>
-    GalleryRepository.addGalleryComment({ homepeeId, postId, memberId, content }),
-  );
-};
-
 export const useEditGalleryPostMutation = () => {
-  return useMutation<EditGalleryPostResponse, Error, EditGalleryPostRequest>(({ homepeeId, id, title, image, visible }) =>
-    GalleryRepository.editGalleryPost({ homepeeId, id, title, image, visible }),
+  return useMutation<EditGalleryPostResponse, Error, EditGalleryPostRequest>(({ homepeeId, id, title, images }) =>
+    GalleryRepository.editGalleryPost({ homepeeId, id, title, images }),
   );
 };
 
 export const useDeleteGalleryPostMutation = () => {
   return useMutation<void, Error, DeleteGalleryPostRequest>(({ homepeeId, postId }) => GalleryRepository.deleteGalleryPost({ homepeeId, postId }));
-};
-
-export const useDeleteGalleryCommentMutation = () => {
-  return useMutation<void, Error, DeleteGalleryCommentRequest>(({ homepeeId, postId, commentId }) =>
-    GalleryRepository.deleteGalleryComment({ homepeeId, postId, commentId }),
-  );
 };

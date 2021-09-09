@@ -1,17 +1,29 @@
-export interface GalleryImage {
-  id: number;
-  url: string;
-}
-export interface GetGalleryPostRequest {
-  homepeeId: number;
-}
-export interface GetGalleryPostResponse {
+import { PagableData, Comments, Image } from './SharedModel';
+
+export type GetGalleryPagablePostResponse = PagableData<GalleryPost>;
+
+export interface GalleryPost {
   id: number;
   title: string;
-  images: Array<GalleryImage>;
-  viewCount: number;
-  visible: boolean;
+  images: Image[];
+  comments: Comments;
 }
+
+export interface GetGalleryPagablePostRequest {
+  pageParam?: {
+    size: number;
+    page: number;
+  };
+  homepeeId: string;
+}
+
+export type GetGalleryTargetPostResponse = GalleryPost[];
+export type GetGalleryAllPostReponse = GalleryPost[];
+
+export interface GetGalleryAllPostRequest {
+  homepeeId: number;
+}
+
 export interface AddGalleryPostRequest {
   homepeeId: number;
   title: string;
@@ -26,14 +38,13 @@ export interface EditGalleryPostRequest {
   homepeeId: number;
   id: number;
   title: string;
-  image: Array<GalleryImage>;
-  visible: boolean;
+  images: Image[];
 }
 export interface EditGalleryPostResponse {
   homepeeId: number;
   id: number;
   title: string;
-  images: Array<GalleryImage>;
+  images: Image[];
   visible: boolean;
 }
 export interface DeleteGalleryPostRequest {

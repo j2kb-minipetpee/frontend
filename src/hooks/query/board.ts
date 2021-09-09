@@ -1,27 +1,39 @@
-import { useMutation, useQuery } from 'react-query';
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query';
 import { QueryKey } from '@/lib/constants';
 import {
-  AddBoardCommentRequest,
-  AddBoardCommentResponse,
   AddBoardPostRequest,
   AddBoardPostResponse,
-  DeleteBoardCommentRequest,
   DeleteBoardPostRequset,
   EditBoardPostRequest,
   EditBoardPostResponse,
-  GetBoardPostRequest,
-  GetBoardPostResponse,
-  GetBoardPostsRequest,
-  GetBoardPostsResponse,
+  GetBoardPagablePostsRequest,
+  GetBoardPagablePostsResponse,
+  GetBoardTargetPostRequest,
+  GetBoardTargetPostResponse,
 } from '@/lib/model';
 import { BoardRepository } from '@/lib/repository';
 
-export const useGetBoardPostsQuery = ({ homepeeId }: GetBoardPostsRequest) => {
-  return useQuery<GetBoardPostsResponse, Error>([QueryKey.GetBoardPosts, homepeeId], () => BoardRepository.getBoardPosts({ homepeeId }));
+export const useGetBoardPostsQuery = ({ homepeeId }: GetBoardPagablePostsRequest) => {
+  return useInfiniteQuery<GetBoardPagablePostsResponse, Error>(
+    [QueryKey.GetBoardPageablePosts, homepeeId],
+    ({ pageParam = { page: 0, size: 4 } }) => BoardRepository.getBoardPosts({ homepeeId, pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 4);
+        if (lastPage.page.totalPages > nowPage) {
+          return {
+            page: nowPage,
+            size: 4,
+          };
+        }
+        return;
+      },
+    },
+  );
 };
 
-export const useGetBoardPostQuery = ({ homepeeId, postId }: GetBoardPostRequest) => {
-  return useQuery<GetBoardPostResponse, Error>(QueryKey.GetBoardPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
+export const useGetBoardPostQuery = ({ homepeeId, postId }: GetBoardTargetPostRequest) => {
+  return useQuery<GetBoardTargetPostResponse, Error>(QueryKey.GetBoardTargetPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
 };
 
 export const useAddBoardPostMutation = () => {
@@ -30,23 +42,12 @@ export const useAddBoardPostMutation = () => {
   );
 };
 
-export const useAddBoardComment = () => {
-  return useMutation<AddBoardCommentResponse, Error, AddBoardCommentRequest>(({ homepeeId, postId, memberId, content }) =>
-    BoardRepository.addBoardComment({ homepeeId, postId, memberId, content }),
-  );
-};
-
 export const useEditBoardPostMutation = () => {
-  return useMutation<EditBoardPostResponse, Error, EditBoardPostRequest>(({ id, title, content, image, homepeeId, postId }) =>
-    BoardRepository.editBoardPost({ id, title, content, image, homepeeId, postId }),
+  return useMutation<EditBoardPostResponse, Error, EditBoardPostRequest>(({ title, content, image, homepeeId, postId }) =>
+    BoardRepository.editBoardPost({ title, content, image, homepeeId, postId }),
   );
 };
 
-//null 부분 괜찮은지...?
-export const useDeleteBoardPost = () => {
+export const useDeleteBoardPostMutation = () => {
   return useMutation<void, Error, DeleteBoardPostRequset>(({ homepeeId, postId }) => BoardRepository.deleteBoardPost({ homepeeId, postId }));
-};
-
-export const useDeleteBoardComment = () => {
-  return useMutation<void, Error, DeleteBoardCommentRequest>(({ homepeeId, commentId }) => BoardRepository.deleteBoardComment({ homepeeId, commentId }));
 };
