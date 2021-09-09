@@ -1,4 +1,4 @@
-import { useDeleteBoardPostMutation, useGetBoardPostQuery } from '@/hooks';
+import { useAuth, useDeleteBoardPostMutation, useGetBoardPostQuery } from '@/hooks';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useHistory, useParams } from 'react-router-dom';
 import { ColorMap } from '@/lib/constants/color';
@@ -19,6 +19,7 @@ export const DetailedBoardPost = () => {
   const { id: homepeeId, postId } = params;
   const getBoardPostQuery = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
   const deleteBoardPostMutation = useDeleteBoardPostMutation();
+  const myInfo = useAuth();
 
   const handleDeleteClick = () => {
     confirm('삭제하시곘습니까?') &&
@@ -55,8 +56,9 @@ export const DetailedBoardPost = () => {
           </DetailedBoardPostHeader>
           <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
-            <h4> {homepeeId} </h4>
-            <h4> {getBoardPostQuery.data.viewCount}</h4>
+            <DetailedBoardPostSubInfoChild>{myInfo.name}</DetailedBoardPostSubInfoChild>
+            <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.createdAt.split(' ')[0]}</DetailedBoardPostSubInfoChild>
+            <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.viewCount}</DetailedBoardPostSubInfoChild>
           </DetailedBoardPostSubInfo>
           <DetailedBoardPostImageWrapper>
             <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
@@ -99,8 +101,11 @@ const DetailedBoardPostSubInfo = styled.section`
   width: 50%;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   margin-top: 22px;
+`;
+const DetailedBoardPostSubInfoChild = styled.div`
+  text-align: center;
+  margin-left: 10px;
 `;
 
 const DetailedBoardPostImage = styled.img`

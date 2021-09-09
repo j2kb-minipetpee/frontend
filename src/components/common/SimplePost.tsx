@@ -3,6 +3,7 @@ import { SimpleBoardPost } from '@/lib/model';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import emptyImg from '@/assets/images/empty_cat.png';
 
 interface ISimplePostProps {
   post: SimpleBoardPost;
@@ -13,7 +14,7 @@ export const SimplePost = ({ post }: ISimplePostProps) => {
   const myInfo = useAuth();
   return (
     <SimplePostContainer>
-      <SimplePostImage src={post.image.url} />
+      <SimplePostImage src={post.image.url ? post.image.url : emptyImg} />
       <SimplePostTitle>
         <Link to={`${url}/${post.id}`}>{post.title}</Link>
       </SimplePostTitle>
