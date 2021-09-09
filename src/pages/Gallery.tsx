@@ -1,6 +1,6 @@
 import React from 'react';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
-import { Button } from '@/components';
+import { Button, Empty } from '@/components';
 import { useHistory, useParams, useRouteMatch } from 'react-router';
 import { useAuth, useGetGalleryPostQuery } from '@/hooks';
 import { DetailedGalleryPost } from './DetailedGalleryPost';
@@ -21,20 +21,28 @@ export const Gallery = () => {
 
   return (
     <HomepeeLayout>
-      {myInfo.id === Number(homepeeId) && (
-        <NewPostBtnContainer>
-          <Button color="GREY100" text="새글" onClick={handleClick} />
-        </NewPostBtnContainer>
-      )}
-      {getGalleryPostQuery.data?.pages?.length > 0 &&
-        getGalleryPostQuery.data.pages
-          .flatMap((data) => data.content)
-          .map((post) => {
-            return <DetailedGalleryPost key={post.id} title={post.title} comments={post.comments} images={post.images} id={post.id} />;
-          })}
-      <MoreLoadBtnContainer>
-        <Button text="더보기" onClick={handleMoreClick} />
-      </MoreLoadBtnContainer>
+      <GalleryContainer>
+        {myInfo.id === Number(homepeeId) && (
+          <NewPostBtnContainer>
+            <Button color="GREY100" text="새글" onClick={handleClick} />
+          </NewPostBtnContainer>
+        )}
+
+        {!getGalleryPostQuery.data?.pages.flatMap((data) => data.content).length ? (
+          <Empty text="갤러리" />
+        ) : (
+          getGalleryPostQuery.data.pages
+            .flatMap((data) => data.content)
+            .map((post) => {
+              return <DetailedGalleryPost key={post.id} title={post.title} comments={post.comments} images={post.images} id={post.id} />;
+            })
+        )}
+        {getGalleryPostQuery.hasNextPage && (
+          <MoreLoadBtnContainer>
+            <Button text="더보기" onClick={handleMoreClick} />
+          </MoreLoadBtnContainer>
+        )}
+      </GalleryContainer>
     </HomepeeLayout>
   );
 };
@@ -48,4 +56,7 @@ const MoreLoadBtnContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+`;
+const GalleryContainer = styled.div`
+  width: 100%;
 `;

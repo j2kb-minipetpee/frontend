@@ -8,13 +8,7 @@ export interface IProps {
 }
 
 export const PostListLayout = ({ postList }: IProps) => {
-  return (
-    <PostListContainer>
-      {postList.map((post) => (
-        <SimplePost key={post.id} post={post} />
-      ))}
-    </PostListContainer>
-  );
+  return <PostListContainer>{postList?.length >= 0 && postList.map((post) => <SimplePost key={post.id} post={post} />)}</PostListContainer>;
 };
 
 const PostListContainer = styled.section`
