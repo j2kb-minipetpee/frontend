@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface AuthState {
   name: string;
   email: string;
-  id: number | null;
-  homepeeId: number | null;
+  id?: number;
+  homepeeId?: number;
 }
 
 const initialState: AuthState = {
