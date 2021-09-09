@@ -142,7 +142,7 @@ export const SettingUserInfoContent = ({ homepeeId, profile, homepee }: SettingT
               <Spacing vertical={11} />
 
               <Label htmlFor="birthday">생년월일</Label>
-              <Input id="birthday" name="birthday" type="date" onChange={onChange} value={profileData.birthday.split('T')[0]} />
+              <Input id="birthday" name="birthday" type="date" onChange={onChange} value={profileData.birthday?.split('T')[0]} />
               <Spacing vertical={11} />
 
               <Label htmlFor="personality">성격</Label>
