@@ -112,9 +112,12 @@ export const CommentLayout = ({ postId }: CommentListProps) => {
               );
             })}
       </CommentWrapper>
-      <NextButtonWrapper>
-        <NextButton onClick={handleMoreClick} />
-      </NextButtonWrapper>
+
+      {getCommentQuery.hasNextPage && (
+        <NextButtonWrapper>
+          <NextButton onClick={handleMoreClick} />
+        </NextButtonWrapper>
+      )}
     </CommentContainer>
   );
 };
