@@ -136,8 +136,8 @@ const DetailedPostBigImage = styled.img`
 `;
 
 const DetailedPostSmallImage = styled.img`
-  width: 171px;
-  height: 171px;
-  margin-left: 10px;
-  margin-top: 5px;
+  width: 175px;
+  height: 175px;
+  margin-left: 5px;
+  margin-top: 2.5px;
 `;
