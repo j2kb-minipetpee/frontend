@@ -6,7 +6,6 @@ import { CommentLayout } from '@/layout/CommentLayout';
 import { useAuth, useDeleteGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
 import { GalleryPost } from '@/lib/model';
-import { useGetCommentQuery } from '@/hooks/query/comment';
 
 export const DetailedGalleryPost = ({ id: postId, title, images, comments }: GalleryPost) => {
   const myInfo = useAuth();
@@ -15,7 +14,6 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
   const numHomepeeId = Number(homepeeId);
   const numpostId = Number(postId);
 
-  const comment = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
   const deleteGalleryPostMutation = useDeleteGalleryPostMutation();
 
   const handleDeleteClick = () => {
@@ -66,12 +64,13 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
           <DetailedPostSmallImagesWrapper>
             {images.map((image, idx) => {
               if (idx) {
+                console.log(idx, 'idx');
                 return <DetailedPostSmallImage src={image.url} key={image.id} />;
               }
             })}
           </DetailedPostSmallImagesWrapper>
         </DetailedGalleryImagesWrapper>
-        {comment?.data && <CommentLayout commentList={comment?.data?.pages.flatMap((data) => data.content)} postId={numpostId} />}
+        <CommentLayout postId={numpostId} />
       </DetailedPostWrapper>
     </DetailedGalleryPostContainer>
   );
@@ -86,9 +85,7 @@ const DetailedGalleryPostContainer = styled.section`
 
 const DetailedPostWrapper = styled.section<{ isMyHomepee: boolean }>`
   width: 740px;
-  margin-top: ${({ isMyHomepee }) => (isMyHomepee ? '20px' : '100px')};
-  // 나중에 지우기
-  border: 1px solid;
+  margin-top: ${({ isMyHomepee }) => (isMyHomepee ? '76px' : '118px')};
 `;
 
 const DetailedGalleryModifyBtnGroup = styled.div`
@@ -122,8 +119,8 @@ const DetailedGalleryPostTitle = styled.div`
 const DetailedGalleryImagesWrapper = styled.section`
   width: 100%;
   height: 370px;
-  border: 1px solid;
   display: flex;
+  margin-top: 22px;
 `;
 
 const DetailedPostSmallImagesWrapper = styled.section`
@@ -139,6 +136,8 @@ const DetailedPostBigImage = styled.img`
 `;
 
 const DetailedPostSmallImage = styled.img`
-  width: 50%;
-  height: 50%;
+  width: 171px;
+  height: 171px;
+  margin-left: 10px;
+  margin-top: 5px;
 `;

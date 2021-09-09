@@ -17,6 +17,8 @@ export const Gallery = () => {
     history.push(`${url}/write`);
   };
 
+  const handleMoreClick = () => getGalleryPostQuery.fetchNextPage();
+
   return (
     <HomepeeLayout>
       {myInfo.id === Number(homepeeId) && (
@@ -30,11 +32,20 @@ export const Gallery = () => {
           .map((post) => {
             return <DetailedGalleryPost key={post.id} title={post.title} comments={post.comments} images={post.images} id={post.id} />;
           })}
-      <button onClick={() => getGalleryPostQuery.fetchNextPage()}>더보기</button>
+      <MoreLoadBtnContainer>
+        <Button text="더보기" onClick={handleMoreClick} />
+      </MoreLoadBtnContainer>
     </HomepeeLayout>
   );
 };
 
 const NewPostBtnContainer = styled.div`
   margin: 42px 0 0 142px;
+`;
+
+const MoreLoadBtnContainer = styled.div`
+  width: 1000px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 `;

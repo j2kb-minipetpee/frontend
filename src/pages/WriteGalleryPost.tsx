@@ -12,6 +12,7 @@ export const WriteGalleryPost = () => {
   const { id } = useParams<{ id: string }>();
   const addGalleryPostMutation = useAddGalleryPostMutation();
   const history = useHistory();
+  const defaultImg = 'https://i.ibb.co/jMQ3GTh/default-profile-large.png';
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
@@ -31,12 +32,15 @@ export const WriteGalleryPost = () => {
     setPostTitle(e.target.value);
   };
 
-  const filterNullImage = (urlList: any[]) => {
-    return urlList.filter((url) => url !== null);
+  const filterNullImage = (urlList: string[]) => {
+    const result = urlList.map((url) => (url !== null ? url : defaultImg));
+    console.log(result);
+    return result;
   };
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
+    console.log(targetImageList);
     addGalleryPostMutation.mutate(
       { title: postTitle, images: targetImageList, homepeeId: Number(id) },
       {

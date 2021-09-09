@@ -39,6 +39,9 @@ export const WriteBoardPost = () => {
           alert('게시글을 등록하였습니다. ');
           history.goBack();
         },
+        onError: () => {
+          alert('등록에 실패하였습니다.');
+        },
       },
     );
   };

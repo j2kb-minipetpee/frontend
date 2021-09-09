@@ -7,7 +7,6 @@ import styled from '@emotion/styled';
 import Backbtn from '@/assets/images/back_big.png';
 import { ButtonGroup } from '@/components';
 import { CommentLayout } from '@/layout/CommentLayout';
-import { useGetCommentQuery } from '@/hooks/query/comment';
 
 interface paramsType {
   id: string;
@@ -18,10 +17,7 @@ export const DetailedBoardPost = () => {
   const params = useParams<paramsType>();
   const history = useHistory();
   const { id: homepeeId, postId } = params;
-
   const getBoardPostQuery = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
-  const getCommentQuery = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
-
   const deleteBoardPostMutation = useDeleteBoardPostMutation();
 
   const handleDeleteClick = () => {
@@ -62,9 +58,13 @@ export const DetailedBoardPost = () => {
             <h4> {homepeeId} </h4>
             <h4> {getBoardPostQuery.data.viewCount}</h4>
           </DetailedBoardPostSubInfo>
-          <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
+          <DetailedBoardPostImageWrapper>
+            <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
+          </DetailedBoardPostImageWrapper>
           <DetailedBoardPostContent>{getBoardPostQuery.data.content}</DetailedBoardPostContent>
-          {getCommentQuery.data && <CommentLayout commentList={getCommentQuery.data?.pages.flatMap((data) => data.content)} postId={Number(postId)} />}
+          <DetailedBoardPostCommentWrapper>
+            <CommentLayout postId={Number(postId)} />
+          </DetailedBoardPostCommentWrapper>
         </DetailedBoardPostContainer>
       )}
     </HomepeeLayout>
@@ -104,7 +104,8 @@ const DetailedBoardPostSubInfo = styled.section`
 `;
 
 const DetailedBoardPostImage = styled.img`
-  margin-top: 15px;
+  height: 100%;
+  object-fit: contain;
 `;
 
 const DetailedBoardPostContent = styled.article`
@@ -112,4 +113,16 @@ const DetailedBoardPostContent = styled.article`
   height: auto;
   margin-top: 15px;
   text-align: center;
+`;
+
+const DetailedBoardPostCommentWrapper = styled.div`
+  width: 50%;
+`;
+
+const DetailedBoardPostImageWrapper = styled.div`
+  width: 740px;
+  margin-top: 15px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
 `;

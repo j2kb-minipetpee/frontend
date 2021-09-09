@@ -106,8 +106,9 @@ const HomepeeHeaderTop = styled.section`
 `;
 
 const HomepeeContentContainer = styled.section`
-  border: 1px solid ${ColorMap.GREY100};
+  border: 19px solid ${ColorMap.GREY100};
   height: 100%;
+  overflow-y: scroll;
 `;
 
 const HomepeeHeaderBottom = styled.section`
