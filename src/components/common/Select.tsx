@@ -62,6 +62,7 @@ const SelectContainer = styled.div`
     width: 108px;
     background: ${ColorMap.WHITE100};
     color: ${ColorMap.BLACK100};
+    border-radius: 6px;
   }
 `;
 
@@ -69,6 +70,16 @@ const SelectItem = styled.li<{ isSelected: boolean }>`
   font-size: 14px;
   padding: 0.5rem;
   cursor: pointer;
+
+  &:first-of-type {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+
+  &:last-of-type {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
 
   ${({ isSelected }) =>
     isSelected &&
