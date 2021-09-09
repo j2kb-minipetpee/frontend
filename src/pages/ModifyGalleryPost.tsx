@@ -1,20 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { ColorMap } from '@/lib/constants/color';
 import { Button, ImageUploader } from '@/components';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
-import { useEditGalleryPostMutation, useGetGalleryAllPostQuery } from '@/hooks';
+import { useEditGalleryPostMutation, useGetGalleryTargetPostQuery } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
 
 export const ModifyGalleryPost = () => {
   const { id: homepeeId, postId } = useParams<{ id: string; postId: string }>();
   const targetHomepeeId = Number(homepeeId);
   const history = useHistory();
-  const [imageUrlList, setImageUrlList] = useState(null);
+  const [imageUrlList, setImageUrlList] = useState([null, null, null, null, null]);
   const [postTitle, setPostTitle] = useState(null);
 
-  const getGalleryAllPostQuery = useGetGalleryAllPostQuery({ homepeeId: targetHomepeeId });
+  const getGalleryTargetPostQuery = useGetGalleryTargetPostQuery({ homepeeId: targetHomepeeId, postId: Number(postId) });
   const editGalleryPostMutation = useEditGalleryPostMutation();
+
+  useEffect(() => {
+    if (getGalleryTargetPostQuery.data) {
+      setPostTitle(getGalleryTargetPostQuery.data.title);
+      setImageUrlList(getGalleryTargetPostQuery.data.images.flatMap((data) => data.url));
+    }
+  }, [getGalleryTargetPostQuery.data]);
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
@@ -60,19 +67,19 @@ export const ModifyGalleryPost = () => {
       },
     );
   };
-
+  // map으로 수정 예정
   return (
     <HomepeeLayout>
-      {getGalleryAllPostQuery.data && (
+      {getGalleryTargetPostQuery.data && (
         <WriteGalleryPostContainer>
-          <WriteGalleryPostTitle placeholder="제목" onChange={handlePostTitleChange} defaultValue={targetData.title} />
+          <WriteGalleryPostTitle placeholder="제목" onChange={handlePostTitleChange} defaultValue={getGalleryTargetPostQuery.data.title} />
           <WriteGalleryPostImagesWrapper>
             <ImageUploader
               width="370px"
               height="370px"
               handleImageChange={handleImageChange}
               handleImageRemove={handleImageRemove}
-              src={getGalleryAllPostQuery.data || ''}
+              src={getGalleryTargetPostQuery.data.images[0]?.url || ''}
               id={1}
             ></ImageUploader>
             <WriteGalleryPostSmallImagesWrapper>
@@ -81,7 +88,7 @@ export const ModifyGalleryPost = () => {
                 height="185px"
                 handleImageChange={handleImageChange}
                 handleImageRemove={handleImageRemove}
-                src={targetUrlList[1] || ''}
+                src={getGalleryTargetPostQuery.data.images[1]?.url || ''}
                 id={2}
               ></ImageUploader>
               <ImageUploader
@@ -89,7 +96,7 @@ export const ModifyGalleryPost = () => {
                 height="185px"
                 handleImageChange={handleImageChange}
                 handleImageRemove={handleImageRemove}
-                src={targetUrlList[2] || ''}
+                src={getGalleryTargetPostQuery.data.images[2]?.url || ''}
                 id={3}
               ></ImageUploader>
               <ImageUploader
@@ -97,7 +104,7 @@ export const ModifyGalleryPost = () => {
                 height="185px"
                 handleImageChange={handleImageChange}
                 handleImageRemove={handleImageRemove}
-                src={targetUrlList[3] || ''}
+                src={getGalleryTargetPostQuery.data.images[3]?.url || ''}
                 id={4}
               ></ImageUploader>
               <ImageUploader
@@ -105,7 +112,7 @@ export const ModifyGalleryPost = () => {
                 height="185px"
                 handleImageChange={handleImageChange}
                 handleImageRemove={handleImageRemove}
-                src={targetUrlList[4] || ''}
+                src={getGalleryTargetPostQuery.data.images[4]?.url || ''}
                 id={5}
               ></ImageUploader>
             </WriteGalleryPostSmallImagesWrapper>

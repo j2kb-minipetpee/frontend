@@ -5,17 +5,18 @@ import { ButtonGroup } from '@/components';
 import { CommentLayout } from '@/layout/CommentLayout';
 import { useAuth, useDeleteGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
-import { Comment, GalleryPost } from '@/lib/model';
+import { GalleryPost } from '@/lib/model';
 import { useGetCommentQuery } from '@/hooks/query/comment';
 
 export const DetailedGalleryPost = ({ id: postId, title, images, comments }: GalleryPost) => {
   const myInfo = useAuth();
-  const deleteGalleryPostMutation = useDeleteGalleryPostMutation();
   const { id: homepeeId } = useParams<{ id: string }>();
   const history = useHistory();
   const numHomepeeId = Number(homepeeId);
   const numpostId = Number(postId);
+
   const comment = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
+  const deleteGalleryPostMutation = useDeleteGalleryPostMutation();
 
   const handleDeleteClick = () => {
     deleteGalleryPostMutation.mutate(
@@ -70,7 +71,7 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
             })}
           </DetailedPostSmallImagesWrapper>
         </DetailedGalleryImagesWrapper>
-        {comment && <CommentLayout commentList={comment?.data?.pages.flatMap((data) => data.content)} postId={numpostId} />}
+        {comment?.data && <CommentLayout commentList={comment?.data?.pages.flatMap((data) => data.content)} postId={numpostId} />}
       </DetailedPostWrapper>
     </DetailedGalleryPostContainer>
   );

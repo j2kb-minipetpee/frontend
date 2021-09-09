@@ -18,15 +18,9 @@ export const DetailedBoardPost = () => {
   const params = useParams<paramsType>();
   const history = useHistory();
   const { id: homepeeId, postId } = params;
-  const targetHompee = Number(homepeeId);
-  const targetPostId = Number(postId);
-  console.log('postId is ', postId);
 
-  const { data } = useGetBoardPostQuery({ homepeeId: targetHompee, postId: targetPostId });
-  const comment = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
-  if (comment?.data?.pages) {
-    console.log(comment?.data?.pages.flatMap((data) => console.log(data?.content)));
-  }
+  const getBoardPostQuery = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
+  const getCommentQuery = useGetCommentQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
 
   const deleteBoardPostMutation = useDeleteBoardPostMutation();
 
@@ -37,18 +31,19 @@ export const DetailedBoardPost = () => {
         {
           onSuccess: () => {
             alert('삭제하였습니다.');
+            history.goBack();
           },
         },
       );
   };
 
   const handleModifyClick = () => {
-    alert('수정하겠습니다.');
+    history.push(`/homepee/${homepeeId}/board/posts/modify/${postId}`);
   };
 
   return (
     <HomepeeLayout>
-      {data && (
+      {getBoardPostQuery.data && (
         <DetailedBoardPostContainer>
           <DetailedBoardPostHeader>
             <div onClick={() => history.goBack()}>
@@ -62,14 +57,14 @@ export const DetailedBoardPost = () => {
               ]}
             ></ButtonGroup>
           </DetailedBoardPostHeader>
-          <DetailedBoardPostTitle>{data.title}</DetailedBoardPostTitle>
+          <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
             <h4> {homepeeId} </h4>
-            <h4> {data.viewCount}</h4>
+            <h4> {getBoardPostQuery.data.viewCount}</h4>
           </DetailedBoardPostSubInfo>
-          <DetailedBoardPostImage src={data.image.url} />
-          <DetailedBoardPostContent>{data.content}</DetailedBoardPostContent>
-          {comment && <CommentLayout commentList={comment?.data?.pages.flatMap((data) => data.content)} postId={Number(postId)} />}
+          <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
+          <DetailedBoardPostContent>{getBoardPostQuery.data.content}</DetailedBoardPostContent>
+          {getCommentQuery.data && <CommentLayout commentList={getCommentQuery.data?.pages.flatMap((data) => data.content)} postId={Number(postId)} />}
         </DetailedBoardPostContainer>
       )}
     </HomepeeLayout>

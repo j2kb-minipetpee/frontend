@@ -8,18 +8,21 @@ import { HomepeeLayout } from '../layout/HomepeeLayout';
 export const Board = () => {
   const history = useHistory();
   const { id: homepeeId } = useParams<{ id: string }>();
+  const targetHomepee = Number(homepeeId);
   const { url } = useRouteMatch();
 
   const handleClick = () => {
     history.push(`${url}/write`);
   };
+  const handleMoreClick = () => getBoardPostsQuery.fetchNextPage();
 
-  const { isLoading, data } = useGetBoardPostsQuery({ homepeeId });
+  const getBoardPostsQuery = useGetBoardPostsQuery({ homepeeId: targetHomepee });
 
   return (
     <HomepeeLayout>
       <Button color="GREY100" text="글쓰기" onClick={handleClick} />
-      {!isLoading && <PostListLayout postList={data}></PostListLayout>}
+      {getBoardPostsQuery.data && <PostListLayout postList={getBoardPostsQuery.data?.pages.flatMap((data) => data.content)} />}
+      <button onClick={handleMoreClick}>더보기</button>
     </HomepeeLayout>
   );
 };

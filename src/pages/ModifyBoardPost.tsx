@@ -2,19 +2,26 @@ import { ImageUploader } from '@/components';
 import { useEditBoardPostMutation, useGetBoardPostQuery } from '@/hooks';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { ColorMap } from '@/lib/constants/color';
-import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
 import styled from '@emotion/styled';
 
 export const ModifyBoardPost = () => {
   const [postTitle, setPostTitle] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
   const [content, setContent] = useState(null);
-
+  const history = useHistory();
   const { id: homepeeId, postId } = useParams<{ id: string; postId: string }>();
-
   const { data } = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
   const editBoardPostMutation = useEditBoardPostMutation();
+
+  useEffect(() => {
+    if (data) {
+      setPostTitle(data.title);
+      setImgUrl(data.image.url);
+      setContent(data.content);
+    }
+  }, [data]);
 
   const handleWriteTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostTitle(e.target.value);
@@ -33,13 +40,24 @@ export const ModifyBoardPost = () => {
   };
 
   const handleClick = () => {
-    editBoardPostMutation.mutate({
-      homepeeId: Number(homepeeId),
-      postId: Number(postId),
-      content,
-      image: imgUrl,
-      title: postTitle,
-    });
+    editBoardPostMutation.mutate(
+      {
+        homepeeId: Number(homepeeId),
+        postId: Number(postId),
+        content,
+        image: {
+          id: data.image.id,
+          url: imgUrl,
+        },
+        title: postTitle,
+      },
+      {
+        onSuccess: () => {
+          alert('수정하였습니다.');
+          history.goBack();
+        },
+      },
+    );
   };
 
   return (
@@ -50,7 +68,7 @@ export const ModifyBoardPost = () => {
           <ImageUploader width="100%" height="370px" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} src={data.image.url} />
           <WriteContent rows={30} defaultValue={data.content} onChange={handleWriteContentChange} />
           <WriteButtonWrapper>
-            <WriteButton onClick={handleClick}>업로드</WriteButton>
+            <WriteButton onClick={handleClick}>수정하기</WriteButton>
           </WriteButtonWrapper>
         </WriteContainer>
       )}

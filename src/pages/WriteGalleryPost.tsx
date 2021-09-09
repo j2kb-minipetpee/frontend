@@ -12,7 +12,6 @@ export const WriteGalleryPost = () => {
   const { id } = useParams<{ id: string }>();
   const addGalleryPostMutation = useAddGalleryPostMutation();
   const history = useHistory();
-  console.log(id);
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
