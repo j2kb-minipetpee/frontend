@@ -14,6 +14,7 @@ interface BookProps {
   memberId: number;
   name: string;
   profileImage: string;
+  visible: boolean;
   createdAt: string;
   content: string;
   isHomepeeHost: boolean;
@@ -22,7 +23,7 @@ interface BookProps {
 
 type BookType = 'normal' | 'edit';
 
-export const Book = ({ id, homepeeId, name, profileImage, content, createdAt, isHomepeeHost, isMine, memberId }: BookProps) => {
+export const Book = ({ id, homepeeId, name, profileImage, visible, content, createdAt, isHomepeeHost, isMine, memberId }: BookProps) => {
   const [type, setType] = useState<BookType>('normal');
   const [value, onValueChange] = useInput(content);
 
@@ -49,12 +50,19 @@ export const Book = ({ id, homepeeId, name, profileImage, content, createdAt, is
           <span>{name}</span>
           <Spacing horizon={5} />
           <span>{createdAt.split(' ')[0]}</span>
+
+          {!visible && (
+            <>
+              <Spacing horizon={12} />
+              <span>비밀 글</span>
+            </>
+          )}
         </div>
       </BookInfo>
 
       <Spacing vertical={16} />
 
-      {isHomepeeHost || isMine ? (
+      {visible || isHomepeeHost || isMine ? (
         <ContentWrapper>
           {type === 'normal' ? content : <TextArea value={value} onChange={onValueChange} />}
 
