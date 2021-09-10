@@ -33,7 +33,7 @@ export const useGetBoardPostsQuery = ({ homepeeId }: GetBoardPagablePostsRequest
 };
 
 export const useGetBoardPostQuery = ({ homepeeId, postId }: GetBoardTargetPostRequest) => {
-  return useQuery<GetBoardTargetPostResponse, Error>(QueryKey.GetBoardTargetPost, () => BoardRepository.getBoardPost({ homepeeId, postId }));
+  return useQuery<GetBoardTargetPostResponse, Error>(QueryKey.GetBoardTargetPost, () => BoardRepository.getBoardPost({ homepeeId, postId }), {});
 };
 
 export const useAddBoardPostMutation = () => {

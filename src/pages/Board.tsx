@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components';
+import { Button, Empty } from '@/components';
 import { useAuth, useGetBoardPostsQuery } from '@/hooks';
 import { PostListLayout } from '@/layout/PostListLayout';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
@@ -30,10 +30,16 @@ export const Board = () => {
             <Button color="GREY100" text="새글" onClick={handleClick} />
           </NewPostBtnContainer>
         )}
-        {getBoardPostsQuery.data?.pages?.length > 0 && <PostListLayout postList={getBoardPostsQuery.data?.pages.flatMap((data) => data.content)} />}
-        <MoreLoadBtnContainer>
-          <Button text="더보기" onClick={handleMoreClick} />
-        </MoreLoadBtnContainer>
+        {!getBoardPostsQuery.data?.pages.flatMap((data) => data.content)?.length ? (
+          <Empty text="게시판" />
+        ) : (
+          <PostListLayout postList={getBoardPostsQuery.data?.pages.flatMap((data) => data.content)} />
+        )}
+        {getBoardPostsQuery.hasNextPage && (
+          <MoreLoadBtnContainer>
+            <Button text="더보기" onClick={handleMoreClick} />
+          </MoreLoadBtnContainer>
+        )}
       </BoardContainer>
     </HomepeeLayout>
   );

@@ -17,14 +17,16 @@ export const Comment = ({ commentId, memberId, name, content, handleCommentDelet
   return (
     <CommentConatiner>
       <CommentWriter>
-        <Link to={`/homepee/${memberId}`}>{name}</Link>
+        <Link to={`/homepee/${memberId}`}>{name.length > 5 ? name.slice(0, 5) + '..' : name}</Link>
       </CommentWriter>
       <CommentContent>{content}</CommentContent>
 
-      {myInfo.id === memberId && (
+      {myInfo.id === memberId ? (
         <CommentDeleteBtn onClick={() => handleCommentDelete(commentId)}>
           <img src={delBtn} />
         </CommentDeleteBtn>
+      ) : (
+        <CommentDeleteBtn></CommentDeleteBtn>
       )}
     </CommentConatiner>
   );
@@ -39,10 +41,14 @@ const CommentConatiner = styled.div`
 
 const CommentWriter = styled.div`
   padding-left: 20px;
+  width: 50px;
 `;
 
 const CommentContent = styled.div`
   width: 80%;
 `;
 
-const CommentDeleteBtn = styled.div``;
+const CommentDeleteBtn = styled.div`
+  width: 12.986px;
+  height: 17.778px;
+`;

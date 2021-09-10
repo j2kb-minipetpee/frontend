@@ -5,6 +5,7 @@ import { Button, ImageUploader } from '@/components';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useAddGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
+import { useGalleryPostValidate } from '@/hooks/usePostValidate';
 
 export const WriteGalleryPost = () => {
   const [imageUrlList, setImageUrlList] = useState([null, null, null, null, null]);
@@ -12,7 +13,6 @@ export const WriteGalleryPost = () => {
   const { id } = useParams<{ id: string }>();
   const addGalleryPostMutation = useAddGalleryPostMutation();
   const history = useHistory();
-  const defaultImg = 'https://i.ibb.co/jMQ3GTh/default-profile-large.png';
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
@@ -33,22 +33,22 @@ export const WriteGalleryPost = () => {
   };
 
   const filterNullImage = (urlList: string[]) => {
-    const result = urlList.map((url) => (url !== null ? url : defaultImg));
-    console.log(result);
+    const result = urlList.filter((url) => url !== null);
     return result;
   };
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
-    console.log(targetImageList);
-    addGalleryPostMutation.mutate(
-      { title: postTitle, images: targetImageList, homepeeId: Number(id) },
-      {
-        onSuccess: () => {
-          alert('게시글을 작성하였습니다.'), history.goBack();
-        },
-      },
-    );
+    useGalleryPostValidate(postTitle, imageUrlList)
+      ? addGalleryPostMutation.mutate(
+          { title: postTitle, images: targetImageList, homepeeId: Number(id) },
+          {
+            onSuccess: () => {
+              alert('게시글을 작성하였습니다.'), history.goBack();
+            },
+          },
+        )
+      : alert('제목 혹은 1개 이상의 사진을 입력해주세요');
   };
 
   return (

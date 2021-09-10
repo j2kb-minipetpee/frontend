@@ -5,6 +5,7 @@ import { Button, ImageUploader } from '@/components';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useEditGalleryPostMutation, useGetGalleryTargetPostQuery } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
+import { useGalleryPostValidate } from '@/hooks/usePostValidate';
 
 export const ModifyGalleryPost = () => {
   const { id: homepeeId, postId } = useParams<{ id: string; postId: string }>();
@@ -38,7 +39,6 @@ export const ModifyGalleryPost = () => {
   };
 
   const handlePostTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setPostTitle(e.target.value);
   };
 
@@ -49,23 +49,23 @@ export const ModifyGalleryPost = () => {
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
-    console.log(targetImageList, 'asdfasdf');
-    console.log({ homepeeId: Number(homepeeId), id: Number(postId), images: targetImageList, title: postTitle });
 
-    editGalleryPostMutation.mutate(
-      {
-        homepeeId: Number(homepeeId),
-        id: Number(postId),
-        images: targetImageList,
-        title: postTitle,
-      },
-      {
-        onSuccess: () => {
-          alert('게시글을 수정하였습니다.');
-          history.goBack();
-        },
-      },
-    );
+    useGalleryPostValidate(postTitle, imageUrlList)
+      ? editGalleryPostMutation.mutate(
+          {
+            homepeeId: Number(homepeeId),
+            id: Number(postId),
+            images: targetImageList,
+            title: postTitle,
+          },
+          {
+            onSuccess: () => {
+              alert('게시글을 수정하였습니다.');
+              history.goBack();
+            },
+          },
+        )
+      : alert('제목 혹은 1개 이상의 사진을 입력해주세요');
   };
   // map으로 수정 예정
   return (

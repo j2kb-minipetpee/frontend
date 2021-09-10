@@ -12,6 +12,7 @@ export const routes: routesType = {
   SETTINGS: '/homepee/:id/settings',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
+  OTHER: '*',
 };
 
 interface routesType {
@@ -29,4 +30,5 @@ interface routesType {
   SETTINGS: string;
   SIGNIN: string;
   SIGNUP: string;
+  OTHER: string;
 }

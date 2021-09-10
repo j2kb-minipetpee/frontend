@@ -5,6 +5,7 @@ import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useHistory, useParams } from 'react-router-dom';
 import { ImageUploader } from '@/components';
 import { ColorMap } from '@/lib/constants/color';
+import { useBoardPostValidate } from '@/hooks/usePostValidate';
 
 export const WriteBoardPost = () => {
   const [writeTitle, setWriteTitle] = useState('');
@@ -32,18 +33,20 @@ export const WriteBoardPost = () => {
   };
 
   const handleClick = () => {
-    addBoardPostMutation.mutate(
-      { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl },
-      {
-        onSuccess: () => {
-          alert('게시글을 등록하였습니다. ');
-          history.goBack();
-        },
-        onError: () => {
-          alert('등록에 실패하였습니다.');
-        },
-      },
-    );
+    useBoardPostValidate(writeTitle, writeContent)
+      ? addBoardPostMutation.mutate(
+          { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl ? imageUrl : '' },
+          {
+            onSuccess: () => {
+              alert('게시글을 등록하였습니다. ');
+              history.goBack();
+            },
+            onError: () => {
+              alert('등록에 실패하였습니다.');
+            },
+          },
+        )
+      : alert('제목 및 내용을 입력해주세요');
   };
 
   return (
