@@ -14,6 +14,7 @@ export const ModifyBoardPost = () => {
   const { id: homepeeId, postId } = useParams<{ id: string; postId: string }>();
   const { data } = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
   const editBoardPostMutation = useEditBoardPostMutation();
+  console.log(data);
 
   useEffect(() => {
     if (data) {

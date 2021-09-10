@@ -6,6 +6,7 @@ import { CommentLayout } from '@/layout/CommentLayout';
 import { useAuth, useDeleteGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
 import { GalleryPost } from '@/lib/model';
+import defaultImg from '@/assets/images/empty_cat.png';
 
 export const DetailedGalleryPost = ({ id: postId, title, images, comments }: GalleryPost) => {
   const myInfo = useAuth();
@@ -60,14 +61,12 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
         </DetailedGalleryPostHeader>
 
         <DetailedGalleryImagesWrapper>
-          <DetailedPostBigImage src={images[0].url}></DetailedPostBigImage>
+          <DetailedPostBigImage src={images[0]?.url}></DetailedPostBigImage>
           <DetailedPostSmallImagesWrapper>
-            {images.map((image, idx) => {
-              if (idx) {
-                console.log(idx, 'idx');
-                return <DetailedPostSmallImage src={image.url} key={image.id} />;
-              }
-            })}
+            <DetailedPostSmallImage src={images[1]?.url || defaultImg} />
+            <DetailedPostSmallImage src={images[2]?.url || defaultImg} />
+            <DetailedPostSmallImage src={images[3]?.url || defaultImg} />
+            <DetailedPostSmallImage src={images[4]?.url || defaultImg} />
           </DetailedPostSmallImagesWrapper>
         </DetailedGalleryImagesWrapper>
         <CommentLayout postId={numpostId} />

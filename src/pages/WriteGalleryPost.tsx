@@ -12,7 +12,6 @@ export const WriteGalleryPost = () => {
   const { id } = useParams<{ id: string }>();
   const addGalleryPostMutation = useAddGalleryPostMutation();
   const history = useHistory();
-  const defaultImg = 'https://i.ibb.co/jMQ3GTh/default-profile-large.png';
 
   const handleImageChange = (imageUrl: string, targetDOMId: number) => {
     if (imageUrl && targetDOMId) {
@@ -33,8 +32,7 @@ export const WriteGalleryPost = () => {
   };
 
   const filterNullImage = (urlList: string[]) => {
-    const result = urlList.map((url) => (url !== null ? url : defaultImg));
-    console.log(result);
+    const result = urlList.filter((url) => url !== null);
     return result;
   };
 

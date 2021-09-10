@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import Backbtn from '@/assets/images/back_big.png';
 import { ButtonGroup } from '@/components';
 import { CommentLayout } from '@/layout/CommentLayout';
+import defaultImg from '@/assets/images/empty_cat.png';
 
 interface paramsType {
   id: string;
@@ -61,7 +62,7 @@ export const DetailedBoardPost = () => {
             <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.viewCount}</DetailedBoardPostSubInfoChild>
           </DetailedBoardPostSubInfo>
           <DetailedBoardPostImageWrapper>
-            <DetailedBoardPostImage src={getBoardPostQuery.data.image.url} />
+            <DetailedBoardPostImage src={getBoardPostQuery.data?.image?.url || defaultImg} />
           </DetailedBoardPostImageWrapper>
           <DetailedBoardPostContent>{getBoardPostQuery.data.content}</DetailedBoardPostContent>
           <DetailedBoardPostCommentWrapper>

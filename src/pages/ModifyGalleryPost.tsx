@@ -49,7 +49,6 @@ export const ModifyGalleryPost = () => {
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
-    console.log(targetImageList, 'asdfasdf');
     console.log({ homepeeId: Number(homepeeId), id: Number(postId), images: targetImageList, title: postTitle });
 
     editGalleryPostMutation.mutate(
