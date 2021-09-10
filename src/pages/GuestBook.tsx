@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
+import { Empty } from '@/components';
 
 export const GuestBookPage = () => {
   const { id, homepeeId } = useAuth();
@@ -14,16 +15,18 @@ export const GuestBookPage = () => {
 
   const getGuestBookQuery = useGetGuestBookQuery(Number(targetHomepeeId));
 
+  const guestBookData = getGuestBookQuery.data.pages.flatMap((value) => value.content);
+
   return (
     <HomepeeLayout>
       <GuestBookPageContainer>
         <GuestBookInput memberId={id} homepeeId={targetHomepeeId} />
 
         {getGuestBookQuery.data && (
-          <ul>
-            {getGuestBookQuery.data.pages
-              .flatMap((value) => value.content)
-              .map((book) => (
+          <>
+            {guestBookData.length === 0 && <Empty />}
+            <ul>
+              {guestBookData.map((book) => (
                 <Book
                   key={book.id}
                   id={String(book.id)}
@@ -37,7 +40,8 @@ export const GuestBookPage = () => {
                   isMine={id === book.member.id}
                 />
               ))}
-          </ul>
+            </ul>
+          </>
         )}
       </GuestBookPageContainer>
     </HomepeeLayout>
@@ -45,6 +49,9 @@ export const GuestBookPage = () => {
 };
 
 const GuestBookPageContainer = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 86px;
-  padding: 0 367px;
 `;

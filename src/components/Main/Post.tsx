@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import React from 'react';
 
 import defaultProfile from '@/assets/images/default_profile_small.png';
+import defaultCover from '@/assets/images/empty_cat.png';
+
 import { Divider, Spacing } from '../common';
 import { ColorMap } from '@/lib/constants/color';
 
@@ -19,7 +21,7 @@ export const Post = ({ description, name, profileImage, title, coverImage, onCli
     <PostContainer onClick={onClick}>
       <PostWrapper>
         <div>
-          <img src={coverImage}></img>
+          <img src={coverImage || defaultCover}></img>
         </div>
         <Spacing vertical={20} />
         <div>

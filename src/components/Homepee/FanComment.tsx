@@ -6,18 +6,21 @@ import { useInput } from '@/hooks';
 import { ColorMap } from '@/lib/constants/color';
 import { NextButton } from '../common/NextButton';
 import { FanComment as FanCommentType } from '@/lib/model';
+import { Empty } from '../common/Empty';
+import { Loading } from '../common/Loading';
 
 interface FanCommentProps {
   memberId: number;
   fanComments?: FanCommentType[];
   isMore?: boolean;
   isFan: boolean;
+  isLoading: boolean;
   onAddFanComment: (comment: string) => void;
   onDeleteFanComment: () => void;
   onMoreClick: () => void;
 }
 
-export const FanComment = ({ fanComments, memberId, onAddFanComment, onDeleteFanComment, isMore, isFan, onMoreClick }: FanCommentProps) => {
+export const FanComment = ({ fanComments, memberId, onAddFanComment, onDeleteFanComment, isMore, isLoading, isFan, onMoreClick }: FanCommentProps) => {
   const [comment, onChangeComment] = useInput('');
 
   return (
@@ -41,6 +44,9 @@ export const FanComment = ({ fanComments, memberId, onAddFanComment, onDeleteFan
       )}
 
       <Spacing vertical={16} />
+
+      {isLoading && <Loading />}
+      {!isLoading && (!fanComments || fanComments?.length === 0) && <Empty />}
 
       {fanComments?.map((comment) => (
         <React.Fragment key={comment.id}>

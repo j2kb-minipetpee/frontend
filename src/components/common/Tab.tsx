@@ -45,7 +45,7 @@ const TabButton = styled.button<{ isSelected: boolean }>`
   border: none;
   outline: none;
   cursor: pointer;
-  background-color: ${({ isSelected }) => (isSelected ? ColorMap.EMERALD100 : ColorMap.GREY100)};
+  background-color: ${({ isSelected }) => (isSelected ? ColorMap.EMERALD100 : ColorMap.GREY70)};
   color: ${ColorMap.WHITE100};
 
   transition: opacity 0.2s ease-in;

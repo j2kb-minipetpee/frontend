@@ -42,6 +42,8 @@ const SettingsContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1280px;
-  padding: 20px 98px 22px 155px;
+  justify-content: center;
+  width: 100%;
+  padding: 50px 100px;
+  box-sizing: border-box;
 `;

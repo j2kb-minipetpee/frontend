@@ -39,7 +39,7 @@ export const GuestBookInput = ({ memberId, homepeeId }: GuestBookInputProps) => 
   };
 
   return (
-    <div>
+    <GuestBookInputWrapper>
       <form onSubmit={onGuestBookSubmit}>
         <TypeLabelWrapper>
           <Input id="normal" type="radio" value="normal" name="Book-type" onChange={onSelectedBookTypeChange} checked={selectedBookType === 'normal'} hidden />
@@ -58,9 +58,13 @@ export const GuestBookInput = ({ memberId, homepeeId }: GuestBookInputProps) => 
           <Button text="업로드" color="EMERALD100" />
         </ButtonWrapper>
       </form>
-    </div>
+    </GuestBookInputWrapper>
   );
 };
+
+const GuestBookInputWrapper = styled.div`
+  margin-bottom: 24px;
+`;
 
 const TypeLabelWrapper = styled.div`
   display: flex;

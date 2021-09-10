@@ -29,7 +29,7 @@ export const Gallery = () => {
         )}
 
         {!getGalleryPostQuery.data?.pages.flatMap((data) => data.content).length ? (
-          <Empty text="갤러리" />
+          <Empty />
         ) : (
           getGalleryPostQuery.data.pages
             .flatMap((data) => data.content)

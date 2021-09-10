@@ -31,7 +31,7 @@ export const Board = () => {
           </NewPostBtnContainer>
         )}
         {!getBoardPostsQuery.data?.pages.flatMap((data) => data.content)?.length ? (
-          <Empty text="게시판" />
+          <Empty />
         ) : (
           <PostListLayout postList={getBoardPostsQuery.data?.pages.flatMap((data) => data.content)} />
         )}

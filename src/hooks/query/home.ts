@@ -22,7 +22,7 @@ export const useGetFanCommentsQuery = (homepeeId: number) => {
     {
       getNextPageParam: (lastPage, allPages) => {
         // MEMO(geonwoo): 나눈 값으로 하여 1페이지이지만 백엔드에서는 0 부터 시작하니 그대로 다시 요청하면 +1 한 다음 값이 된다.
-        const nowPage = Math.ceil(allPages.flatMap((data) => data.fanComments).length / 5);
+        const nowPage = Math.ceil(allPages.flatMap((data) => data.content).length / 5);
 
         if (lastPage.page.totalPages > nowPage) {
           return {

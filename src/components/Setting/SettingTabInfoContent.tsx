@@ -121,14 +121,14 @@ export const SettingTabInfoContent = ({ homepeeId, tabs }: SettingBottomContentP
 const SettingsBottomWrapper = styled.section`
   width: 100%;
   display: flex;
-  padding: 0 98px 22px 155px;
+  justify-content: center;
 `;
 
 const SettingsBottomContent = styled.section`
   display: flex;
   flex-direction: column;
-  width: 634px;
-  margin-left: 91px;
+  width: 100%;
+  margin-left: 300px;
 `;
 
 const TabTable = styled.div`

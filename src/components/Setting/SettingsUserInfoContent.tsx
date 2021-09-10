@@ -170,7 +170,7 @@ export const SettingUserInfoContent = ({ homepeeId, profile, homepee }: SettingT
 const SettingsTopWrapper = styled.section`
   width: 100%;
   display: flex;
-  padding: 0 98px 22px 155px;
+  justify-content: center;
 `;
 
 const SettingsTopContent = styled.section`
