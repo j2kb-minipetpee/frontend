@@ -4,10 +4,10 @@ import { GetFansResponse, GetStarsResponse, StarRequest, UnstarRequest } from '.
 
 class StarFanRepository {
   async star({ starId }: StarRequest): Promise<void> {
-    return client.post(`/stars/${starId}`, null);
+    return client.post(`/star/${starId}`, null);
   }
   async unStar({ starId }: UnstarRequest): Promise<void> {
-    return client.delete(`/stars/${starId}`);
+    return client.delete(`/star/${starId}`);
   }
   async getStars({ memberId, page, size }: PagenationRequest & { memberId: number }): Promise<GetStarsResponse> {
     return client.get(`/${memberId}/stars?page=${page}&size=${size}`);

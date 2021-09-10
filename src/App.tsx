@@ -17,6 +17,7 @@ import {
   ModifyBoardPost,
   NotFound,
 } from './pages';
+
 import { Switch } from 'react-router-dom';
 import { routes } from './lib/constants/routes';
 import { PrivateRoute, PublicRoute } from './lib/constants/Route';
@@ -26,6 +27,8 @@ import { useDispatch } from 'react-redux';
 import { login } from './store/auth';
 import jwtDecode from 'jwt-decode';
 import { setAuthToken } from './lib/client';
+
+import Modal from 'react-modal';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -64,6 +67,8 @@ const App = () => {
     </>
   );
 };
+
+Modal.setAppElement('#root');
 
 const globalStyle = css`
   * {

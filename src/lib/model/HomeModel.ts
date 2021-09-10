@@ -1,4 +1,4 @@
-import { Profile } from './SharedModel';
+import { PagableData, Profile } from './SharedModel';
 export interface FanComment {
   id: number;
   memberId: number;
@@ -23,13 +23,7 @@ export interface GetFanCommentsRequest {
   size: number;
 }
 
-export interface GetFanCommentsResponse {
-  fanComments: FanComment[];
-  page: {
-    totalElements: number;
-    totalPages: number;
-  };
-}
+export type GetFanCommentsResponse = PagableData<FanComment[]>;
 export interface AddFanCommentRequest {
   homepeeId: number;
   memberId: number;

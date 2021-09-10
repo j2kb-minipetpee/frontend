@@ -47,10 +47,10 @@ export const useGetFansQuery = (memberId: number, enabled = false) => {
   );
 };
 
-export const useStar = () => {
+export const useStarMutation = () => {
   return useMutation<void, Error, StarRequest>(({ starId }) => StarFanRepository.star({ starId }));
 };
 
-export const useUnStart = () => {
+export const useUnStarMutation = () => {
   return useMutation<void, Error, UnstarRequest>(({ starId }) => StarFanRepository.unStar({ starId }));
 };

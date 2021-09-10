@@ -1,7 +1,15 @@
 import { Spacing } from '@/components';
 import { FanComment } from '@/components/Homepee/FanComment';
 import { ProfileDetail } from '@/components/Homepee/ProfileDetail';
-import { useAddFanCommentsMutation, useAuth, useDeleteFanCommentsMutation, useGetFanCommentsQuery, useGetHomeDataQuery } from '@/hooks';
+import {
+  useAddFanCommentsMutation,
+  useAuth,
+  useDeleteFanCommentsMutation,
+  useGetFanCommentsQuery,
+  useGetHomeDataQuery,
+  useStarMutation,
+  useUnStarMutation,
+} from '@/hooks';
 import { QueryKey } from '@/lib/constants';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -19,6 +27,9 @@ export const HomepeePage = () => {
 
   const addFanCommentsMutation = useAddFanCommentsMutation();
   const deleteFanCommentsMutation = useDeleteFanCommentsMutation();
+
+  const startMuation = useStarMutation();
+  const unStarMutation = useUnStarMutation();
 
   const handleAddFanComment = (content: string) => {
     addFanCommentsMutation.mutate(
@@ -49,6 +60,32 @@ export const HomepeePage = () => {
     );
   };
 
+  const handleStar = () => {
+    startMuation.mutate(
+      {
+        starId: Number(id),
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKey.GetHomeData, Number(id)]);
+        },
+      },
+    );
+  };
+
+  const handleUnStar = () => {
+    unStarMutation.mutate(
+      {
+        starId: Number(id),
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([QueryKey.GetHomeData, Number(id)]);
+        },
+      },
+    );
+  };
+
   const onMoreClick = () => {
     getFanCommentsQuery.fetchNextPage();
   };
@@ -64,15 +101,24 @@ export const HomepeePage = () => {
             <Spacing vertical={48} />
           </>
         )}
+
         {data && (
           <ContentWrapper>
-            <ProfileDetail {...data.profile} visitCount={data.visitCount} />
+            <ProfileDetail
+              {...data.profile}
+              memberId={id}
+              visitCount={data.visitCount}
+              relationship={data.relationship}
+              onStar={handleStar}
+              onUnStar={handleUnStar}
+            />
             <Spacing horizon={50} />
 
             <FanComment
               memberId={memberId}
-              fanComments={getFanCommentsQuery.data.pages?.flatMap((data) => data.fanComments)}
+              fanComments={getFanCommentsQuery.data.pages?.flatMap((data) => data.content)}
               isFan={data.relationship === 'STAR'}
+              isLoading={getFanCommentsQuery.isLoading}
               isMore={getFanCommentsQuery.hasNextPage}
               onMoreClick={onMoreClick}
               onAddFanComment={handleAddFanComment}
@@ -88,9 +134,10 @@ export const HomepeePage = () => {
 const ContentContainer = styled.section`
   width: 100%;
   height: 100%;
-  padding: 80px 120px 0 198px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const GateImageWrapper = styled.div`
