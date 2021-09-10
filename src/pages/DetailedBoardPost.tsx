@@ -47,13 +47,15 @@ export const DetailedBoardPost = () => {
             <div onClick={() => history.goBack()}>
               <img src={Backbtn} />
             </div>
-            <ButtonGroup
-              size="large"
-              buttons={[
-                { text: '수정', onClick: handleModifyClick },
-                { text: '삭제', onClick: handleDeleteClick },
-              ]}
-            ></ButtonGroup>
+            {myInfo?.id === Number(homepeeId) && (
+              <ButtonGroup
+                size="large"
+                buttons={[
+                  { text: '수정', onClick: handleModifyClick },
+                  { text: '삭제', onClick: handleDeleteClick },
+                ]}
+              />
+            )}
           </DetailedBoardPostHeader>
           <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
@@ -109,6 +111,14 @@ const DetailedBoardPostSubInfoChild = styled.div`
   margin-left: 10px;
 `;
 
+const DetailedBoardPostImageWrapper = styled.div`
+  width: 740px;
+  margin-top: 15px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+`;
+
 const DetailedBoardPostImage = styled.img`
   height: 100%;
   object-fit: contain;
@@ -123,12 +133,4 @@ const DetailedBoardPostContent = styled.article`
 
 const DetailedBoardPostCommentWrapper = styled.div`
   width: 50%;
-`;
-
-const DetailedBoardPostImageWrapper = styled.div`
-  width: 740px;
-  margin-top: 15px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
 `;

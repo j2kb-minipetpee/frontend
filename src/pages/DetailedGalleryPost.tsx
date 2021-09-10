@@ -32,7 +32,7 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
   return (
     <DetailedGalleryPostContainer>
       <DetailedPostWrapper isMyHomepee={myInfo.id === Number(homepeeId)}>
-        {myInfo.id === Number(homepeeId) && (
+        {myInfo?.id === Number(homepeeId) && (
           <DetailedGalleryModifyBtnGroup>
             <ButtonGroup
               size="large"
@@ -113,6 +113,7 @@ const DetailedGalleryPostTitle = styled.div`
   text-align: center;
   font-size: 16px;
   font-weight: 900;
+  padding-right: 100px;
 `;
 
 const DetailedGalleryImagesWrapper = styled.section`

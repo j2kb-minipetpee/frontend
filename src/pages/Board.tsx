@@ -5,7 +5,6 @@ import { PostListLayout } from '@/layout/PostListLayout';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
 import { HomepeeLayout } from '../layout/HomepeeLayout';
 import styled from '@emotion/styled';
-import { NextButton } from '@/components/common/NextButton';
 
 export const Board = () => {
   const history = useHistory();
@@ -58,4 +57,5 @@ const MoreLoadBtnContainer = styled.div`
 
 const BoardContainer = styled.div`
   width: 100%;
+  height: 100%;
 `;
