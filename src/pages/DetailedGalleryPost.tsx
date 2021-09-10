@@ -32,7 +32,7 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
   return (
     <DetailedGalleryPostContainer>
       <DetailedPostWrapper isMyHomepee={myInfo.id === Number(homepeeId)}>
-        {myInfo.id === Number(homepeeId) && (
+        {myInfo?.id === Number(homepeeId) && (
           <DetailedGalleryModifyBtnGroup>
             <ButtonGroup
               size="large"

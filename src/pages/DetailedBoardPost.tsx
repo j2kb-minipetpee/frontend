@@ -47,13 +47,15 @@ export const DetailedBoardPost = () => {
             <div onClick={() => history.goBack()}>
               <img src={Backbtn} />
             </div>
-            <ButtonGroup
-              size="large"
-              buttons={[
-                { text: '수정', onClick: handleModifyClick },
-                { text: '삭제', onClick: handleDeleteClick },
-              ]}
-            ></ButtonGroup>
+            {myInfo?.id === Number(homepeeId) && (
+              <ButtonGroup
+                size="large"
+                buttons={[
+                  { text: '수정', onClick: handleModifyClick },
+                  { text: '삭제', onClick: handleDeleteClick },
+                ]}
+              />
+            )}
           </DetailedBoardPostHeader>
           <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
