@@ -5,6 +5,7 @@ import { ColorMap } from '@/lib/constants/color';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import styled from '@emotion/styled';
+import { useBoardPostValidate } from '@/hooks/usePostValidate';
 
 export const ModifyBoardPost = () => {
   const [postTitle, setPostTitle] = useState(null);
@@ -41,24 +42,26 @@ export const ModifyBoardPost = () => {
   };
 
   const handleClick = () => {
-    editBoardPostMutation.mutate(
-      {
-        homepeeId: Number(homepeeId),
-        postId: Number(postId),
-        content,
-        image: {
-          id: data.image.id,
-          url: imgUrl,
-        },
-        title: postTitle,
-      },
-      {
-        onSuccess: () => {
-          alert('수정하였습니다.');
-          history.goBack();
-        },
-      },
-    );
+    useBoardPostValidate(postTitle, content)
+      ? editBoardPostMutation.mutate(
+          {
+            homepeeId: Number(homepeeId),
+            postId: Number(postId),
+            content,
+            image: {
+              id: data.image.id,
+              url: imgUrl,
+            },
+            title: postTitle,
+          },
+          {
+            onSuccess: () => {
+              alert('수정하였습니다.');
+              history.goBack();
+            },
+          },
+        )
+      : alert('제목 및 내용을 입력해주세요');
   };
 
   return (

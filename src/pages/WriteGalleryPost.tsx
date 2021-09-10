@@ -5,6 +5,7 @@ import { Button, ImageUploader } from '@/components';
 import { HomepeeLayout } from '@/layout/HomepeeLayout';
 import { useAddGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
+import { useGalleryPostValidate } from '@/hooks/usePostValidate';
 
 export const WriteGalleryPost = () => {
   const [imageUrlList, setImageUrlList] = useState([null, null, null, null, null]);
@@ -38,15 +39,16 @@ export const WriteGalleryPost = () => {
 
   const handleClick = () => {
     const targetImageList = filterNullImage(imageUrlList);
-    console.log(targetImageList);
-    addGalleryPostMutation.mutate(
-      { title: postTitle, images: targetImageList, homepeeId: Number(id) },
-      {
-        onSuccess: () => {
-          alert('게시글을 작성하였습니다.'), history.goBack();
-        },
-      },
-    );
+    useGalleryPostValidate(postTitle, imageUrlList)
+      ? addGalleryPostMutation.mutate(
+          { title: postTitle, images: targetImageList, homepeeId: Number(id) },
+          {
+            onSuccess: () => {
+              alert('게시글을 작성하였습니다.'), history.goBack();
+            },
+          },
+        )
+      : alert('제목 혹은 1개 이상의 사진을 입력해주세요');
   };
 
   return (
