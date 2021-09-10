@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks';
 import { useParams } from 'react-router';
 import { useAddCommentMutation, useDeleteCommentMutation, useGetCommentQuery } from '@/hooks/query/comment';
 import { Button } from '@/components';
+import nextImage from '@/assets/images/next_large.png';
 
 const ENTER = 'Enter';
 
@@ -93,7 +94,7 @@ export const CommentLayout = ({ postId }: CommentListProps) => {
         </CommentHeader>
         <CommentInputWrapper>
           <CommentInput onKeyPress={handleCommentChange} ref={commentRef} placeholder="댓글을 남겨주세요" />
-          <Button text="업로드" onClick={handleAddCommentClick} />
+          <Button text="작성" onClick={handleAddCommentClick} />
         </CommentInputWrapper>
 
         {getCommentQuery.data &&
@@ -114,8 +115,9 @@ export const CommentLayout = ({ postId }: CommentListProps) => {
       </CommentWrapper>
 
       {getCommentQuery.hasNextPage && (
-        <NextButtonWrapper>
-          <NextButton onClick={handleMoreClick} />
+        <NextButtonWrapper onClick={handleMoreClick}>
+          <span>댓글 더보기</span>
+          <img src={nextImage} />
         </NextButtonWrapper>
       )}
     </CommentContainer>
@@ -128,6 +130,7 @@ const CommentContainer = styled.section`
   flex-direction: column;
   align-items: center;
   margin-top: 34px;
+  margin-bottom: 34px;
 `;
 
 const CommentWrapper = styled.section`
@@ -154,7 +157,8 @@ const NextButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   margin-top: 33px;
-  border: 1px solid red;
+  justify-content: flex-end;
+  font-size: 12px;
 `;
 
 const CommentInputWrapper = styled.div`

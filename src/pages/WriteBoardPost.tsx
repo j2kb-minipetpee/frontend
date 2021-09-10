@@ -53,7 +53,9 @@ export const WriteBoardPost = () => {
     <HomepeeLayout>
       <WriteContainer>
         <WriteTitle placeholder="제목" onChange={handleWriteTitleChange} />
-        <ImageUploader width="100%" height="370px" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} />
+        <BoardPostImageWrapper>
+          <ImageUploader width="592px" height="383px" handleImageChange={handleImageChange} handleImageRemove={handleImageRemove} />
+        </BoardPostImageWrapper>
         <WriteContent rows={30} onChange={handleWriteContentChange} />
         <WriteButtonWrapper>
           <WriteButton onClick={handleClick}>업로드</WriteButton>
@@ -64,8 +66,7 @@ export const WriteBoardPost = () => {
 };
 
 const WriteContainer = styled.section`
-  width: 663px;
-  height: 100%;
+  width: 592px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +75,8 @@ const WriteContainer = styled.section`
 `;
 
 const WriteTitle = styled.input`
-  width: 100%;
+  width: 447px;
+  height: 35px;
   padding-left: 17px;
   font-size: 16px;
   color: ${ColorMap.GREY70};
@@ -88,6 +90,7 @@ const WriteTitle = styled.input`
 
 const WriteContent = styled.textarea`
   width: 100%;
+  height: 400px;
   vertical-align: top;
   margin-top: 18px;
   resize: none;
@@ -108,4 +111,9 @@ const WriteButton = styled.button`
   background: ${ColorMap.EMERALD100};
   color: ${ColorMap.WHITE100};
   border-radius: 4px;
+`;
+
+const BoardPostImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
 `;

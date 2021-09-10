@@ -59,4 +59,5 @@ const MoreLoadBtnContainer = styled.div`
 `;
 const GalleryContainer = styled.div`
   width: 100%;
+  height: 100%;
 `;

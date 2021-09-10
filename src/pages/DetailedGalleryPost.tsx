@@ -113,6 +113,7 @@ const DetailedGalleryPostTitle = styled.div`
   text-align: center;
   font-size: 16px;
   font-weight: 900;
+  padding-right: 100px;
 `;
 
 const DetailedGalleryImagesWrapper = styled.section`

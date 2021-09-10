@@ -109,6 +109,14 @@ const DetailedBoardPostSubInfoChild = styled.div`
   margin-left: 10px;
 `;
 
+const DetailedBoardPostImageWrapper = styled.div`
+  width: 740px;
+  margin-top: 15px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+`;
+
 const DetailedBoardPostImage = styled.img`
   height: 100%;
   object-fit: contain;
@@ -123,12 +131,4 @@ const DetailedBoardPostContent = styled.article`
 
 const DetailedBoardPostCommentWrapper = styled.div`
   width: 50%;
-`;
-
-const DetailedBoardPostImageWrapper = styled.div`
-  width: 740px;
-  margin-top: 15px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
 `;
