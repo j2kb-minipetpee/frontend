@@ -19,7 +19,7 @@ export const Empty = ({ text }: EmptyType) => {
 
 const EmptyContainer = styled.section`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,7 +31,6 @@ const EmptyWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 50%;
-  margin-top: 250px; ;
 `;
 
 const EmptyImg = styled.img`
