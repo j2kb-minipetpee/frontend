@@ -33,7 +33,7 @@ export const WriteBoardPost = () => {
 
   const handleClick = () => {
     addBoardPostMutation.mutate(
-      { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl },
+      { title: writeTitle, content: writeContent, homepeeId: Number(id), visible: true, image: imageUrl ? imageUrl : '' },
       {
         onSuccess: () => {
           alert('게시글을 등록하였습니다. ');
