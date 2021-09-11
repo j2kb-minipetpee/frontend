@@ -49,9 +49,9 @@ const SimplePostSubDataContainer = styled.section`
   justify-content: space-between;
 `;
 
-// const SimplePostUserId = styled.section`
-//   font-size: 12px;
-// `;
+const SimplePostUserId = styled.section`
+  font-size: 12px;
+`;
 
 const SimplePostCreatedAt = styled.section`
   font-size: 12px;

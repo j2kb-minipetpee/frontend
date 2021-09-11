@@ -4,7 +4,7 @@ import React from 'react';
 import defaultProfile from '@/assets/images/default_profile_small.png';
 import defaultCover from '@/assets/images/empty_cat.png';
 
-import { Divider, Spacing } from '../common';
+import { Spacing } from '../common';
 import { ColorMap } from '@/lib/constants/color';
 
 interface PostProps {

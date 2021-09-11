@@ -48,7 +48,7 @@ export const DetailedBoardPost = () => {
       {getBoardPostQuery.data && (
         <DetailedBoardPostContainer>
           <DetailedBoardPostHeader>
-            <div onClick={() => history.goBack()}>
+            <div onClick={() => history.push(`/homepee/${homepeeId}/board/posts`)}>
               <img src={Backbtn} />
             </div>
             {myInfo?.id === Number(homepeeId) && (
@@ -63,7 +63,7 @@ export const DetailedBoardPost = () => {
           </DetailedBoardPostHeader>
           <DetailedBoardPostTitle>{getBoardPostQuery.data.title}</DetailedBoardPostTitle>
           <DetailedBoardPostSubInfo>
-            <DetailedBoardPostSubInfoChild>{myInfo.name}</DetailedBoardPostSubInfoChild>
+            <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.memberName}</DetailedBoardPostSubInfoChild>
             <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.createdAt.split(' ')[0]}</DetailedBoardPostSubInfoChild>
             <DetailedBoardPostSubInfoChild>{getBoardPostQuery.data.viewCount}</DetailedBoardPostSubInfoChild>
           </DetailedBoardPostSubInfo>

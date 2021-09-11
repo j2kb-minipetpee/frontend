@@ -16,6 +16,10 @@ export interface DetailedBoardPost {
   image: Image;
   comments: Comments;
   createdAt: string;
+
+  memberId: number;
+  memberName: string;
+  profileImageUrl: string;
 }
 
 // 페이지네이션을 위한 타입 (SimpleBoardPost)

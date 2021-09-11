@@ -13,6 +13,12 @@ export const Gallery = () => {
   const history = useHistory();
   const getGalleryPostQuery = useGetGalleryPostQuery({ homepeeId });
 
+  const memberInfo = getGalleryPostQuery.data?.pages?.flatMap((data) => ({
+    memberId: data.memberId,
+    memberName: data.memberName,
+    profileImageUrl: data.profileImageUrl,
+  }))[0];
+
   const handleClick = () => {
     history.push(`${url}/write`);
   };
@@ -34,7 +40,18 @@ export const Gallery = () => {
           getGalleryPostQuery.data.pages
             .flatMap((data) => data.content)
             .map((post) => {
-              return <DetailedGalleryPost key={post.id} title={post.title} comments={post.comments} images={post.images} id={post.id} />;
+              return (
+                <DetailedGalleryPost
+                  key={post.id}
+                  title={post.title}
+                  comments={post.comments}
+                  images={post.images}
+                  id={post.id}
+                  memberId={memberInfo.memberId}
+                  memberName={memberInfo.memberName}
+                  profileImageUrl={memberInfo.profileImageUrl}
+                />
+              );
             })
         )}
         {getGalleryPostQuery.hasNextPage && (

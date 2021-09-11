@@ -9,8 +9,16 @@ import { GalleryPost } from '@/lib/model';
 import defaultImg from '@/assets/images/empty_cat.png';
 import { useQueryClient } from 'react-query';
 import { QueryKey } from '@/lib/constants';
+import { Profile } from '../common';
 
-export const DetailedGalleryPost = ({ id: postId, title, images, comments }: GalleryPost) => {
+export const DetailedGalleryPost = ({
+  id: postId,
+  title,
+  images,
+  comments,
+  profileImageUrl,
+  memberName,
+}: GalleryPost & { profileImageUrl: string; memberName: string; memberId: number }) => {
   const myInfo = useAuth();
   const { id: homepeeId } = useParams<{ id: string }>();
   const history = useHistory();
@@ -58,8 +66,8 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
 
         <DetailedGalleryPostHeader>
           <DetailedGalleryPostProfileWrapper>
-            <DetailedGalleryPostProfileImage src={profileLogo} />
-            <div>{myInfo.name}</div>
+            <Profile imageURL={profileImageUrl || profileLogo} size="small" />
+            <div>{memberName}</div>
           </DetailedGalleryPostProfileWrapper>
           <DetailedGalleryPostTitle>{title}</DetailedGalleryPostTitle>
         </DetailedGalleryPostHeader>

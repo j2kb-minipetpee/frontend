@@ -1,6 +1,6 @@
 import { PagableData, Comments, Image } from './SharedModel';
 
-export type GetGalleryPagablePostResponse = PagableData<GalleryPost>;
+export type GetGalleryPagablePostResponse = PagableData<GalleryPost> & { memberId: number; memberName: string; profileImageUrl: string };
 
 export interface GalleryPost {
   id: number;
