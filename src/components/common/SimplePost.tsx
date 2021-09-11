@@ -1,4 +1,3 @@
-import { useAuth } from '@/hooks';
 import { SimpleBoardPost } from '@/lib/model';
 import styled from '@emotion/styled';
 import React from 'react';
@@ -11,7 +10,7 @@ interface ISimplePostProps {
 
 export const SimplePost = ({ post }: ISimplePostProps) => {
   const { url } = useRouteMatch();
-  const myInfo = useAuth();
+
   return (
     <SimplePostContainer>
       <SimplePostImage src={post.image.url ? post.image.url : emptyImg} />
@@ -19,7 +18,6 @@ export const SimplePost = ({ post }: ISimplePostProps) => {
         <Link to={`${url}/${post.id}`}>{post.title}</Link>
       </SimplePostTitle>
       <SimplePostSubDataContainer>
-        <SimplePostUserId>{myInfo.name}</SimplePostUserId>
         <SimplePostCreatedAt>{post.createdAt.split(' ')[0]}</SimplePostCreatedAt>
         <SimplePostViewCount>{post.viewCount}</SimplePostViewCount>
       </SimplePostSubDataContainer>
@@ -51,9 +49,9 @@ const SimplePostSubDataContainer = styled.section`
   justify-content: space-between;
 `;
 
-const SimplePostUserId = styled.section`
-  font-size: 12px;
-`;
+// const SimplePostUserId = styled.section`
+//   font-size: 12px;
+// `;
 
 const SimplePostCreatedAt = styled.section`
   font-size: 12px;

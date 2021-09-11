@@ -1,9 +1,9 @@
 import React from 'react';
-import { HomepeeLayout } from '../layout/HomepeeLayout';
+import { HomepeeLayout } from '../../layout/HomepeeLayout';
 import { Button, Empty } from '@/components';
 import { useHistory, useParams, useRouteMatch } from 'react-router';
 import { useAuth, useGetGalleryPostQuery } from '@/hooks';
-import { DetailedGalleryPost } from './DetailedGalleryPost';
+import { DetailedGalleryPost } from '@/components/Gallery/DetailedGalleryPost';
 import styled from '@emotion/styled';
 
 export const Gallery = () => {

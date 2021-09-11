@@ -7,6 +7,8 @@ import { useAuth, useDeleteGalleryPostMutation } from '@/hooks';
 import { useHistory, useParams } from 'react-router';
 import { GalleryPost } from '@/lib/model';
 import defaultImg from '@/assets/images/empty_cat.png';
+import { useQueryClient } from 'react-query';
+import { QueryKey } from '@/lib/constants';
 
 export const DetailedGalleryPost = ({ id: postId, title, images, comments }: GalleryPost) => {
   const myInfo = useAuth();
@@ -17,13 +19,15 @@ export const DetailedGalleryPost = ({ id: postId, title, images, comments }: Gal
 
   const deleteGalleryPostMutation = useDeleteGalleryPostMutation();
 
+  const queryClient = useQueryClient();
+
   const handleDeleteClick = () => {
     deleteGalleryPostMutation.mutate(
       { homepeeId: numHomepeeId, postId: numpostId },
       {
         onSuccess: () => {
           alert('게시글이 삭제되었습니다.');
-          history.push('/');
+          queryClient.invalidateQueries([QueryKey.GetGalleryPagablePost, homepeeId]);
         },
       },
     );

@@ -3,7 +3,7 @@ import { Button, Empty } from '@/components';
 import { useAuth, useGetBoardPostsQuery } from '@/hooks';
 import { PostListLayout } from '@/layout/PostListLayout';
 import { useHistory, useParams, useRouteMatch } from 'react-router-dom';
-import { HomepeeLayout } from '../layout/HomepeeLayout';
+import { HomepeeLayout } from '../../layout/HomepeeLayout';
 import styled from '@emotion/styled';
 
 export const Board = () => {

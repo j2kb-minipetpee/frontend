@@ -8,6 +8,8 @@ import Backbtn from '@/assets/images/back_big.png';
 import { ButtonGroup } from '@/components';
 import { CommentLayout } from '@/layout/CommentLayout';
 import defaultImg from '@/assets/images/empty_cat.png';
+import { useQueryClient } from 'react-query';
+import { QueryKey } from '@/lib/constants';
 
 interface paramsType {
   id: string;
@@ -17,19 +19,21 @@ interface paramsType {
 export const DetailedBoardPost = () => {
   const params = useParams<paramsType>();
   const history = useHistory();
+  const queryClient = useQueryClient();
+
   const { id: homepeeId, postId } = params;
   const getBoardPostQuery = useGetBoardPostQuery({ homepeeId: Number(homepeeId), postId: Number(postId) });
   const deleteBoardPostMutation = useDeleteBoardPostMutation();
   const myInfo = useAuth();
 
   const handleDeleteClick = () => {
-    confirm('삭제하시곘습니까?') &&
+    confirm('해당 게시글을 삭제하시곘습니까?') &&
       deleteBoardPostMutation.mutate(
         { homepeeId, postId },
         {
           onSuccess: () => {
-            alert('삭제하였습니다.');
-            history.goBack();
+            alert('게시글을 삭제하였습니다.');
+            queryClient.invalidateQueries([QueryKey.GetBoardPageablePosts, homepeeId]);
           },
         },
       );

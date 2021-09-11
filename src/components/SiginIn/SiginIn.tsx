@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { useHistory } from 'react-router-dom';
 import { routes } from '@/lib/constants/routes';
+import { AxiosError } from 'axios';
 
 export const SiginIn = () => {
   const dispatch = useDispatch();
@@ -23,14 +24,20 @@ export const SiginIn = () => {
   const onLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { accessToken } = await AuthRepository.login({ email, password });
-    setAuthToken(accessToken);
-    localStorage.setItem('accessToken', accessToken);
+    try {
+      const { accessToken } = await AuthRepository.login({ email, password });
+      setAuthToken(accessToken);
+      localStorage.setItem('accessToken', accessToken);
 
-    const { email: userEmail, homepeeId, id, name } = jwtDecode<{ id: number; homepeeId: number; name: string; email: string }>(accessToken);
+      const { email: userEmail, homepeeId, id, name } = jwtDecode<{ id: number; homepeeId: number; name: string; email: string }>(accessToken);
 
-    dispatch(login({ email: userEmail, name, id, homepeeId }));
-    history.push(routes.HOME);
+      dispatch(login({ email: userEmail, name, id, homepeeId }));
+      alert('로그인에 성공하였습니다.');
+
+      history.push(routes.HOME);
+    } catch (e) {
+      alert('로그인에 실패하였습니다.');
+    }
   };
 
   return (

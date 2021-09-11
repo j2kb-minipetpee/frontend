@@ -28,6 +28,7 @@ export const SignUp = () => {
       },
       {
         onSuccess: () => {
+          alert('회원가입에 성공하였습니다.');
           history.push(routes.SIGNIN);
         },
       },
