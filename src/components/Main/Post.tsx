@@ -31,7 +31,6 @@ export const Post = ({ description, name, profileImage, title, coverImage, onCli
         </div>
       </PostWrapper>
       <Spacing vertical={20} />
-      <Divider type="row" width={1} color={ColorMap.GREY100} />
       <Spacing vertical={8} />
 
       <ProfileWrapper>
@@ -70,7 +69,8 @@ const ProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: auto;
-  padding-bottom: 15px;
+  padding: 15px 0;
+  border-top: 1px solid ${ColorMap.GREY70};
   & img {
     width: 30px;
     height: 30px;
