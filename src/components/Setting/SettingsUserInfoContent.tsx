@@ -63,7 +63,7 @@ export const SettingUserInfoContent = ({ homepeeId, profile, homepee }: SettingT
     editProfileMutation.mutate({
       homepeeId,
       profile: {
-        birthday,
+        birthday: birthday.replace('T', ' '),
         gender: gender || 'MALE',
         name,
         species,
