@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://exerciseelasticbeanstalk-env.eba-pmfkjpaq.ap-northeast-2.elasticbeanstalk.com';
+export const BASE_URL = 'https://api.minipetpee.ml';
 
 export enum QueryKey {
   GetHomeData = 'GetHomeData',
